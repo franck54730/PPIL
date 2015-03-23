@@ -17,3 +17,6 @@ www/
 
 Tout ce qui est relatif a la configuration n'a pas a être versionner seul le code et le framework doivent l'être donc
 pensez à les ajouter au .gitignore
+
+Aussi le fichier database.php doit etre versionner car on en a besoin mais chaqu'un doit avoir le sien du coup on
+va l'ignorer aussi mais differement car ca ne marche pas avec .gitignore si le fichier est versionner
