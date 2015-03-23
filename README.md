@@ -1,1 +1,1 @@
-
+Le cakePhp utilisé est la version 2.5
