@@ -1,6 +1,6 @@
 # User specific & automatically generated files #
 #################################################
-/app/Config/database.php
+# /app/Config/database.php
 /app/tmp
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
@@ -19,3 +19,10 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# fichier de configuration eclipse #
+.buildpath
+.project
+.settings/
+
+# fichier de configuration de la base de donnée #
