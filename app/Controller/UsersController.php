@@ -61,11 +61,11 @@ class UsersController extends AppController {
 					// on insert le new user
 					$this->User->set(array(
 							"nom" => $this->data['User']['nom'],
-							"prenom" => $this->data['User']['prenom']));
-							"dateDeNaissance" => $this->data['User']['dateDeNaissance']));
-							"sexe" => $this->data['User']['sexe']));
-							"mail" => $this->data['User']['mail']));	
-							"modDePasse" => $this->data['User']['password']));
+							"prenom" => $this->data['User']['prenom'],
+							"dateDeNaissance" => $this->data['User']['dateDeNaissance'],
+							"sexe" => $this->data['User']['sexe'],
+							"mail" => $this->data['User']['mail'],	
+							"modDePasse" => $this->data['User']['password'],
 							"photo" => $this->data['User']['photo']));
 					$this->User->save($this->data);
 				
@@ -86,4 +86,5 @@ class UsersController extends AppController {
 			}
 			
 		}
+	}
 }
