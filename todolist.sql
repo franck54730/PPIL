@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS users(
 	sexe char(1) NOT NULL,
 	mail varchar(30) NOT NULL,
 	mot_de_passe varchar(30) NOT NULL,
-  	photo varchar(30) NOT NULL,
-  	PRIMARY KEY (id)
+  photo varchar(30) NOT NULL,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS todo_lists (
