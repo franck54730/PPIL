@@ -34,10 +34,10 @@ CREATE TABLE IF NOT EXISTS todo_lists (
 );
 
 CREATE TABLE IF NOT EXISTS notifications (
-  	id_notifications int(11) NOT NULL AUTO_INCREMENT,
+  	id int(11) NOT NULL AUTO_INCREMENT,
   	texte varchar(1000) NOT NULL,
   	consulte boolean NOT NULL,
-  	PRIMARY KEY (id_notifications)
+  	PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS items(
@@ -50,18 +50,18 @@ CREATE TABLE IF NOT EXISTS items(
 );
 
 CREATE TABLE IF NOT EXISTS notifier (
-	id int(11) NOT NULL AUTO_INCREMENT,
+    id int(11) NOT NULL AUTO_INCREMENT,
   	id_notifications int(11) NOT NULL,
   	id_users int(11) NOT NULL,
   	id_todo_lists int(11) NOT NULL,
   	PRIMARY KEY (id),
-  	FOREIGN KEY (id_notifications) REFERENCES notifications(id_notifications),
+  	FOREIGN KEY (id_notifications) REFERENCES notifications(id),
   	FOREIGN KEY (id_users) REFERENCES users(id),
   	FOREIGN KEY (id_todo_lists) REFERENCES todo_lists(id)
 );
 
 CREATE TABLE IF NOT EXISTS appartient (
-	id int(11) NOT NULL AUTO_INCREMENT,
+    id int(11) NOT NULL AUTO_INCREMENT,
   	id_users int(11) NOT NULL,
   	id_todo_lists int(11) NOT NULL,
   	PRIMARY KEY (id),
