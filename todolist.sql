@@ -12,15 +12,15 @@ DROP TABLE IF EXISTS todo_lists;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE IF NOT EXISTS users(
-	id int(11) NOT NULL AUTO_INCREMENT,
-	nom varchar(30) NOT NULL,
-	prenom varchar(30) NOT NULL,
-	date_de_naissance date NOT NULL,
-	sexe char(1) NOT NULL,
-	mail varchar(30) NOT NULL,
-	mot_de_passe varchar(30) NOT NULL,
-  photo varchar(30) NOT NULL,
-  PRIMARY KEY (id)
+    id int(11) NOT NULL AUTO_INCREMENT,
+    nom varchar(30) NOT NULL,
+    prenom varchar(30) NOT NULL,
+    date_de_naissance date NOT NULL,
+    sexe char(1) NOT NULL,
+    mail varchar(30) NOT NULL,
+    mot_de_passe varchar(30) NOT NULL,
+    photo varchar(30) NOT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS todo_lists (
