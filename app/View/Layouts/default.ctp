@@ -38,9 +38,21 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	?>
 </head>
 <body>
+<!--<ul id="menu">
+        <li id="MesListes"><a href="toto.php">Mes Listes</a></li>
+        <li id="Creer"><a href="toto.php">Creer une Liste</a></li>
+        <li id="Afficher"><a href="toto.php">Afficher le profil</a></li>
+        <li id="Compte"><a href="toto.php">Mon compte</a></li>
+        <li id="Notifications"><a href="toto.php">Notifications</a></li>
+        <li id="Deconnexion"><a href="toto.php">Deconnexion</a></li>
+</ul>   -->
+
+<?php
+    echo $this->MenuBuilder->build('left-menu');
+?>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+			<!-- <h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1> -->
 		</div>
 		<div id="content">
 

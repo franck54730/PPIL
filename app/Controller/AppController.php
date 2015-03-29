@@ -31,4 +31,42 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+	var $helpers = array('MenuBuilder.MenuBuilder');
+	
+	function beforeFilter() {
+		
+		// Define your menu
+		$menu = array(
+				'left-menu' => array(
+						array(
+								'title' => 'Mes Listes',
+								'url' => array('controller' => 'items', 'action' => 'view', 1),								
+						),
+						array(
+								'title' => 'Creer une Liste',
+								'url' => array('controller' => 'items', 'action' => 'view', 2),
+						),
+						array(
+								'title' => 'Afficher un profil',
+								'url' => array('controller' => 'items', 'action' => 'view', 2),
+						),
+						array(
+								'title' => 'Mon compte',
+								'url' => array('controller' => 'items', 'action' => 'view', 2),
+						),
+						array(
+								'title' => 'Notifications',
+								'url' => array('controller' => 'items', 'action' => 'view', 2),
+						),
+						array(
+								'title' => 'Deconnexion',
+								'url' => array('controller' => 'items', 'action' => 'view', 2),
+						),
+				),
+		);
+	
+		// For default settings name must be menu
+		$this->set(compact('menu'));
+	
+	}
 }

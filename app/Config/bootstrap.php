@@ -92,6 +92,8 @@ Configure::write('Dispatcher.filters', array(
 	'CacheDispatcher'
 ));
 
+
+CakePlugin::load('MenuBuilder');
 /**
  * Configures default file logging options
  */
