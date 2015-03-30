@@ -31,7 +31,7 @@ class TodoListsController extends AppController {
                     )
                         );
                 $this->Session->setFlash(__('La liste a été sauvegardée'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('action' => 'meslists'));
             } else {
                 $this->Session->setFlash(__('La liste n\'a pas été sauvegardée. Merci de réessayer.'));
             }
@@ -48,5 +48,21 @@ class TodoListsController extends AppController {
             $i++;
         }
         $this->set('lists', $list);
+    }
+    
+    public function delete($id){
+        if ($this->request->is('get')) {
+            throw new MethodNotAllowedException();
+        }
+        $user = $this->Session->read("User");
+        $assocs = $this->Association->find('first',array('conditions' => array('Association.id_user ='=>$user['id'],'Association.id_todolist ='=>$id)));
+        if($this->Association->delete($assocs['Association']['id'])){
+            $this->Session->setFlash(__('La liste  a été supprimé.'));
+            return $this->redirect(array('controller' => 'TodoLists','action' => 'index'));
+        }
+        else {
+            $this->Session->setFlash('La liste n\'a pas pu être supprimé.');
+        }
+        
     }
 }

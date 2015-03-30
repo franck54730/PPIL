@@ -1,7 +1,10 @@
 <h1>BONJOUR</h1>
 
 <table>
-     <?php foreach ($lists as $list): ?>
+     <?php if(!isset($lists)){
+         $lists = array();
+     }
+     foreach ($lists as $list): ?>
     <tr>
         <td><?php echo $list['TodoList']['id']; ?></td>
         <td>
