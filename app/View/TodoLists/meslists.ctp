@@ -5,7 +5,7 @@
     <tr>
         <td><?php echo $list[$i]['TodoList']['id']; ?></td>
         <td>
-            <?php echo $list[$i]['TodoList']['name']; ?>
+            <?php echo $list[$i]['TodoList']['nom']; ?>
         </td>
         <td>
             <?php 

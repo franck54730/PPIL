@@ -13,7 +13,7 @@ class UsersController extends AppController {
 			while(!$connect && $i < count($users)){
 				$user = $users[$i];
 				$userTab = $user["User"];
-				if($userTab['mail'] == $this->data['User']['mail'] && $userTab['motDePasse'] == $this->data['User']['motDePasse']){
+				if($userTab['mail'] == $this->data['User']['mail'] && $userTab['mot_de_passe'] == $this->data['User']['motDePasse']){
 					$thisUser = $this->User->findById($userTab['id']);
 					$this->Session->write("User",$thisUser["User"]);
 					$connect = true;
@@ -65,7 +65,7 @@ class UsersController extends AppController {
 							"dateDeNaissance" => $this->data['User']['dateDeNaissance'],
 							"sexe" => $this->data['User']['sexe'],
 							"mail" => $this->data['User']['mail'],	
-							"modDePasse" => $this->data['User']['password'],
+							"mot_de_passe" => $this->data['User']['password'],
 							"photo" => $this->data['User']['photo']));
 					$this->User->save($this->data);
 				

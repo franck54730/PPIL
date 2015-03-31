@@ -25,9 +25,9 @@ class TodoListsController extends AppController {
             if ($this->TodoList->save($this->request->data)) {
                 $id = $this->TodoList->find('count');
                 $this->Association->create();
-                $list = $this->TodoList->find('all',array('conditions'=>array('TodoList.name =' =>$this->request->data['TodoList']['name'])));
+                $list = $this->TodoList->find('all',array('conditions'=>array('TodoList.nom =' =>$this->request->data['TodoList']['nom'])));
                 $this->Association->save(array(
-                    'Association' => array('id_user'=>$user['id'],'id_todolist'=>$id)
+                    'Association' => array('id_users'=>$user['id'],'id_todo_lists'=>$id)
                     )
                         );
                 $this->Session->setFlash(__('La liste a été sauvegardée'));
@@ -40,11 +40,11 @@ class TodoListsController extends AppController {
     
     public function meslists(){
         $user = $this->Session->read("User");
-        $assocs = $this->Association->find('all',array('conditions' => array('Association.id_user ='=>$user['id'])));
+        $assocs = $this->Association->find('all',array('conditions' => array('Association.id_users ='=>$user['id'])));
         $i= 0;
         $list = array();
         foreach($assocs as $assoc){
-            $list[$i] = $this->TodoList->find('all',array('conditions'=>array('TodoList.id =' =>$assoc['Association']['id_todolist'])));
+            $list[$i] = $this->TodoList->find('all',array('conditions'=>array('TodoList.id =' =>$assoc['Association']['id_todo_lists'])));
             $i++;
         }
         $this->set('lists', $list);
@@ -55,7 +55,7 @@ class TodoListsController extends AppController {
             throw new MethodNotAllowedException();
         }
         $user = $this->Session->read("User");
-        $assocs = $this->Association->find('first',array('conditions' => array('Association.id_user ='=>$user['id'],'Association.id_todolist ='=>$id)));
+        $assocs = $this->Association->find('first',array('conditions' => array('Association.id_users ='=>$user['id'],'Association.id_todo_lists ='=>$id)));
         if($this->Association->delete($assocs['Association']['id'])){
             $this->Session->setFlash(__('La liste  a été supprimé.'));
             return $this->redirect(array('controller' => 'TodoLists','action' => 'index'));
