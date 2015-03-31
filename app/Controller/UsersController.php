@@ -28,6 +28,34 @@ class UsersController extends AppController {
 		}
 	}
 
+	function signup(){
+			if ($this->request->is('post')) {
+				$d =$this->request->data;
+				$d['User']['id'] = null;
+				if (!empty($d['User']['password'])) {
+					$d['User']['password'] = Security::hash($d['User']['password']);
+				}
+
+				if ($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','password','photo'))) {
+					/*$link = array('controller'=>'user','action'=>'activate',$this->User->id.'_'.md5($d['User']['password']));
+					App::uses('CakeEmail','Network/Email');
+					$mail = new CakeEmail();
+					$mail->from('noreply@localhost.com')
+						->to($d['User']['mail'])
+						->subject('Inscription')
+						->emailFormat('html')
+						->template('signup')
+						->viewVars(array('nom'=>$d['User']['nom'],'prenom'=>$d['User']['prenom'],'link'=>$link))
+						->send();*/
+				$this->Session->setFlash("Votre compte à bien été cré","notif");
+				$this->Auth->login($d['User']['mail']);
+				}else{
+					$this->Session->setFlash("Veuillez corriger vos erreurs","notif",array('type'=>'error'));
+				}
+			}
+
+		}
+
 	public function deconnexion(){
 		$this->Session->destroy();
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
