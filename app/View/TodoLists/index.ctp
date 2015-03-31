@@ -8,7 +8,7 @@
     <tr>
         <td><?php echo $list['TodoList']['id']; ?></td>
         <td>
-            <?php echo $list['TodoList']['name']; ?>
+            <?php echo $list['TodoList']['nom']; ?>
         </td>
     </tr>
     <?php endforeach; ?>
