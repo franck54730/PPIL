@@ -34,35 +34,45 @@ class User extends AppModel {
 			),
 
 			'nom'=> array(
-			array(
-				'rule'=> 'alphanumeric',
-				'required'=> true,
-				'allowEmpty' => false
+				array(
+					'rule'=> 'alphanumeric',
+					'required'=> true,
+					'allowEmpty' => false
 
-			)
-		),
-
-		'prenom'=> array(
-			array(
-				'rule'=> 'alphanumeric',
-				'required'=> true,
-				'allowEmpty' => false
-				
-			)
-		),
-
-		'mail'=> array(
-			array(
-				'rule'=> 'email',
-				'required'=> true,
-				'allowEmpty' => false,
-				'message'=>'Email non valide'
+				)
 			),
-			array(
-				'rule'=>'isUnique',
-				'message'=>'Email déjà existante'
-			)
-		),
+
+			'prenom'=> array(
+				array(
+					'rule'=> 'alphanumeric',
+					'required'=> true,
+					'allowEmpty' => false
+					
+				)
+			),
+
+			'mail'=> array(
+				array(
+					'rule'=> 'email',
+					'required'=> true,
+					'allowEmpty' => false,
+					'message'=>'Email non valide'
+				),
+				array(
+					'rule'=>'isUnique',
+					'message'=>'Email déjà existante'
+				)
+			),
+
+			'sexe'=> array(
+				array(
+					'rule'=> 'alphanumeric',
+					'required'=> true,
+					'allowEmpty' => false
+
+				)
+			),
+
 
 	);
 }
