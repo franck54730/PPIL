@@ -9,5 +9,6 @@
 App::uses('Model', 'Model');
 
 class TodoList extends Model{
-    
+        var $name = 'Todolist';
+	var $useTable = 'todo_lists';
 }

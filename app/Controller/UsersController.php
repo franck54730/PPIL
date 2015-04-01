@@ -21,9 +21,9 @@ class UsersController extends AppController {
 				$i++;
 			}
 			if($connect){
-          		$this->Session->setFlash("Votre connexion a réussi.");
+          		$this->Session->setFlash("Votre connexion a rï¿½ussi.");
 			}else{
-          		$this->Session->setFlash("Votre connexion a échouée.");
+          		$this->Session->setFlash("Votre connexion a ï¿½chouï¿½e.");
 			}
 		}
 	}
@@ -62,7 +62,7 @@ class UsersController extends AppController {
 					$this->User->set(array(
 							"nom" => $this->data['User']['nom'],
 							"prenom" => $this->data['User']['prenom'],
-							"dateDeNaissance" => $this->data['User']['dateDeNaissance'],
+							"date_de_naissance" => $this->data['User']['date_de_naissance'],
 							"sexe" => $this->data['User']['sexe'],
 							"mail" => $this->data['User']['mail'],	
 							"mot_de_passe" => $this->data['User']['password'],
@@ -75,7 +75,7 @@ class UsersController extends AppController {
 					if($connect){
 						
 					}else{
-						$this->Session->setFlash("Votre connexion a échouée.");
+						$this->Session->setFlash("Votre inscription a ï¿½chouï¿½e.");
 					}
 				
 				
