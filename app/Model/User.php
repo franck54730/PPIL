@@ -10,14 +10,14 @@ class User extends AppModel {
 					'rule' => array('notEmpty'),
 					'message'=>'Ce champ ne doit pas etre vide!'
 			),
-			'password' => array(
+			'mot_de_passe' => array(
 					'confirm' => array(
-							'rule' => array('password', 'password_r', 'confirm'),
+							'rule' => array('mot_de_passe', 'mot_de_passe_r', 'confirm'),
 							'message' => 'Les mots se doivent d\'être identiques.',
 							'last' => true
 					),
 					'length' => array(
-							'rule' => array('password', 'password_r', 'length'),
+							'rule' => array('mot_de_passe', 'mot_de_passe_r', 'length'),
 							'message' => '6 caracteres minimum.'
 					),
 					'rule'=>'notEmpty',
@@ -25,7 +25,7 @@ class User extends AppModel {
 					'message'=>'Mot de passe obligatoire'
 			),
 
-			'password_r' => array(
+			'mot_de_passe_r' => array(
 					'notempty' => array(
 							'rule' => array('notEmpty'),
 							'allowEmpty' => false,

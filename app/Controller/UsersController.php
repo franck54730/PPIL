@@ -32,12 +32,12 @@ class UsersController extends AppController {
 			if ($this->request->is('post')) {
 				$d =$this->request->data;
 				$d['User']['id'] = null;
-				if (!empty($d['User']['password'])) {
-					$d['User']['password'] = Security::hash($d['User']['password']);
+				if (!empty($d['User']['mot_de_passe'])) {
+					$d['User']['mot_de_passe'] = Security::hash($d['User']['mot_de_passe']);
 				}
 
-				if ($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','password','photo'))) {
-					/*$link = array('controller'=>'user','action'=>'activate',$this->User->id.'_'.md5($d['User']['password']));
+				if ($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'))) {
+					/*$link = array('controller'=>'user','action'=>'activate',$this->User->id.'_'.md5($d['User']['mot_de_passe']));
 					App::uses('CakeEmail','Network/Email');
 					$mail = new CakeEmail();
 					$mail->from('noreply@localhost.com')
@@ -93,7 +93,7 @@ class UsersController extends AppController {
 							"dateDeNaissance" => $this->data['User']['dateDeNaissance'],
 							"sexe" => $this->data['User']['sexe'],
 							"mail" => $this->data['User']['mail'],	
-							"modDePasse" => $this->data['User']['password'],
+							"modDePasse" => $this->data['User']['mot_de_passe'],
 							"photo" => $this->data['User']['photo']));
 					$this->User->save($this->data);
 				
