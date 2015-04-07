@@ -13,7 +13,7 @@ class UsersController extends AppController {
 			while(!$connect && $i < count($users)){
 				$user = $users[$i];
 				$userTab = $user["User"];
-				if($userTab['mail'] == $this->data['User']['mail'] && $userTab['motDePasse'] == $this->data['User']['motDePasse']){
+				if($userTab['mail'] == $this->data['User']['mail'] && $userTab['mot_de_passe'] == $this->data['User']['motDePasse']){
 					$thisUser = $this->User->findById($userTab['id']);
 					$this->Session->write("User",$thisUser["User"]);
 					$connect = true;
@@ -21,9 +21,9 @@ class UsersController extends AppController {
 				$i++;
 			}
 			if($connect){
-          		$this->Session->setFlash("Votre connexion a réussi.");
+          		$this->Session->setFlash("Votre connexion a rï¿½ussi.");
 			}else{
-          		$this->Session->setFlash("Votre connexion a échouée.");
+          		$this->Session->setFlash("Votre connexion a ï¿½chouï¿½e.");
 			}
 		}
 	}
@@ -35,7 +35,6 @@ class UsersController extends AppController {
 				if (!empty($d['User']['mot_de_passe'])) {
 					$d['User']['mot_de_passe'] = Security::hash($d['User']['mot_de_passe']);
 				}
-
 				if ($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'))) {
 					/*$link = array('controller'=>'user','action'=>'activate',$this->User->id.'_'.md5($d['User']['mot_de_passe']));
 					App::uses('CakeEmail','Network/Email');
@@ -90,10 +89,14 @@ class UsersController extends AppController {
 					$this->User->set(array(
 							"nom" => $this->data['User']['nom'],
 							"prenom" => $this->data['User']['prenom'],
-							"dateDeNaissance" => $this->data['User']['dateDeNaissance'],
+							"date_de_naissance" => $this->data['User']['date_de_naissance'],
 							"sexe" => $this->data['User']['sexe'],
 							"mail" => $this->data['User']['mail'],	
+<<<<<<< HEAD
 							"modDePasse" => $this->data['User']['mot_de_passe'],
+=======
+							"mot_de_passe" => $this->data['User']['password'],
+>>>>>>> 59208f003412915dbbe2a79a9b03a72c933b1f64
 							"photo" => $this->data['User']['photo']));
 					$this->User->save($this->data);
 				
@@ -103,7 +106,7 @@ class UsersController extends AppController {
 					if($connect){
 						
 					}else{
-						$this->Session->setFlash("Votre connexion a échouée.");
+						$this->Session->setFlash("Votre inscription a ï¿½chouï¿½e.");
 					}
 				
 				

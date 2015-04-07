@@ -5,7 +5,14 @@
     <tr>
         <td><?php echo $list[$i]['TodoList']['id']; ?></td>
         <td>
-            <?php echo $list[$i]['TodoList']['name']; $i++; ?>
+            <?php echo $list[$i]['TodoList']['nom']; ?>
+        </td>
+        <td>
+            <?php 
+
+                echo $this->Form->create('Todolist',  array('action'=>'delete/'.$list[$i]['TodoList']['id']));
+                echo $this->Form->end('Supprimer');
+             ?>
         </td>
     </tr>
     <?php endforeach; ?>

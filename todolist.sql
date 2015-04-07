@@ -1,10 +1,10 @@
 /* SQL TodoList version 1.0 24/03/2015 */
 
-CREATE DATABASE IF NOT EXISTS todolist;
+CREATE DATABASE IF NOT EXISTS ppil;
 
-USE todolist;
+USE ppil;
 
-DROP TABLE IF EXISTS appartient;
+DROP TABLE IF EXISTS associations;
 DROP TABLE IF EXISTS notifier;
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS notifications;
@@ -26,10 +26,10 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS todo_lists (
   	id int(11) NOT NULL AUTO_INCREMENT,
   	nom varchar(30) NOT NULL,
-  	date date NOT NULL,
-  	frequence int(11) NOT NULL,
-  	unite_frequence int(11) NOT NULL,
-  	date_fin date NOT NULL,
+  	date date NULL,
+  	frequence int(11) NULL,
+  	unite_frequence int(11) NULL,
+  	date_fin date NULL,
   	PRIMARY KEY (id)
 );
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS notifier (
   	FOREIGN KEY (id_todo_lists) REFERENCES todo_lists(id)
 );
 
-CREATE TABLE IF NOT EXISTS appartient (
+CREATE TABLE IF NOT EXISTS associations (
     id int(11) NOT NULL AUTO_INCREMENT,
   	id_users int(11) NOT NULL,
   	id_todo_lists int(11) NOT NULL,

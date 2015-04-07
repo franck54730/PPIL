@@ -1,0 +1,4 @@
+[submodule "Plugin/MenuBuilder"]
+	path = Plugin/MenuBuilder
+	url = git://github.com/torifat/cake-menu_builder.git
+	branch = master

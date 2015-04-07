@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/cakephp-2.5.0/app/Config/database.php.default</file>
-            <file>file:/C:/wamp/www/cakephp-2.5.0/app/Config/core.php</file>
-            <file>file:/C:/wamp/www/cakephp-2.5.0/app/Config/database.php</file>
-            <file>file:/C:/wamp/www/cakephp-2.5.0/index.php</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/Controller/UsersController.php</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/Model/TodoList.php</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/Config/database.php</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/Model/User.php</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/Model/Association.php</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/Controller/TodoListsController.php</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/View/TodoLists/index.ctp</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/View/Users/connect.ctp</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/.git/config</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/View/TodoLists/meslists.ctp</file>
+            <file>file:/C:/wamp/www/ppil/PPIL/app/View/TodoLists/add.ctp</file>
         </group>
     </open-files>
 </project-private>
