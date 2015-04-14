@@ -1,11 +1,11 @@
 <?php
 class UsersController extends AppController {
 	public function index() {
-		echo "toto";
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
 	}
 	
 	public function connect() {
+		$this->set('title_for_layout', "Connexion");
 		if(!empty($this->data)){
 			$connect = false;
 			$i = 0;
@@ -21,20 +21,22 @@ class UsersController extends AppController {
 				$i++;
 			}
 			if($connect){
-          		$this->Session->setFlash("Votre connexion a r�ussi.");
+          		$this->Session->setFlash("Votre connexion a r&eacute;ussi.");
+          		$this->redirect(array('controller' => 'todolists', 'action' => 'index'));
 			}else{
-          		$this->Session->setFlash("Votre connexion a �chou�e.");
+          		$this->Session->setFlash("Votre connexion a &eacute;chou&eacute;e.");
 			}
 		}
 	}
 
 	public function deconnexion(){
+		$this->set('title_for_layout', "Deconnexion");
 		$this->Session->destroy();
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
 	}
 
 	public function inscription(){
-		
+		$this->set('title_for_layout', "Inscription");
 		if(!empty($this->data))
 		{
 			$existe=false;
@@ -86,5 +88,10 @@ class UsersController extends AppController {
 			}
 			
 		}
+	}
+
+	public function profil(){
+		$this->set('user', $this->Session->read("User"));
+		$this->set('title_for_layout', "Mon Compte");
 	}
 }
