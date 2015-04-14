@@ -1,5 +1,3 @@
-<h1>BONJOUR</h1>
-
 <table>
     <?php $i = 0;
     foreach ($lists as $list):

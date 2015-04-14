@@ -1,5 +1,3 @@
-<h1>BONJOUR</h1>
-
 <table>
      <?php if(!isset($lists)){
          $lists = array();

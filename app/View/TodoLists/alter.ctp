@@ -1,5 +1,3 @@
-<h1>bidule</h1>
-
 <?php
 echo $this->Form->create('TodoList',Array('action'=>'modif'));
 echo $this->Form->input("id",Array('value'=>$to['TodoList']['id']));
