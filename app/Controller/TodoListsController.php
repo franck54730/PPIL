@@ -11,13 +11,14 @@ App::uses('AppController', 'Controller');
 class TodoListsController extends AppController {
 
     public $uses = array('TodoList', 'Association');
-    public $var = "banane";
 
     public function index() {
+        $this->set('title_for_layout', "Mes Listes");
         $this->set('lists', $this->TodoList->find('all'));
     }
 
     public function add() {
+        $this->set('title_for_layout', "Nouvelle Liste");
         $user = $this->Session->read("User");
         if ($this->request->is('post')) {
             if ($this->request->data['TodoList']['nom'] == '') {
@@ -35,13 +36,14 @@ class TodoListsController extends AppController {
                     $this->Session->setFlash(__('La liste a été sauvegardée'));
                     return $this->redirect(array('action' => 'meslists'));
                 } else {
-                    $this->Session->setFlash(__('La liste n\'a pas été sauvegardée. Merci de réessayer.'));
+                    $this->Session->setFlash(__('La liste n\'a pas été sauvegard&eacute;e. Merci de r&eacute;essayer.'));
                 }
             }
         }
     }
 
     public function meslists() {
+        $this->set('title_for_layout', "Mes Listes");
         $user = $this->Session->read("User");
         $assocs = $this->Association->find('all', array('conditions' => array('Association.id_users =' => $user['id'])));
         $i = 0;
@@ -54,13 +56,14 @@ class TodoListsController extends AppController {
     }
 
     public function delete($id) {
+        $this->set('title_for_layout', "Supprimer une liste");
         if ($this->request->is('get')) {
             throw new MethodNotAllowedException();
         }
         $user = $this->Session->read("User");
         $assocs = $this->Association->find('first', array('conditions' => array('Association.id_users =' => $user['id'], 'Association.id_todo_lists =' => $id)));
         if ($this->Association->delete($assocs['Association']['id'])) {
-            $this->Session->setFlash(__('La liste  a été supprimé.'));
+            $this->Session->setFlash(__('La liste  a &eacute;t&eacute; supprim&eacute;e.'));
             return $this->redirect(array('controller' => 'TodoLists', 'action' => 'index'));
         } else {
             $this->Session->setFlash('La liste n\'a pas pu être supprimé.');
@@ -69,6 +72,7 @@ class TodoListsController extends AppController {
 
     public function modif() {
 
+        $this->set('title_for_layout', "Modifier une liste");
         $nouvelle = $this->data;
         echo $nouvelle['TodoList']['nom'];
 
@@ -76,7 +80,6 @@ class TodoListsController extends AppController {
 
         if ($vielle != null) {
 
-            echo "bidule";
             $this->TodoList->save(array(
                 'TodoList' => array('id' => $nouvelle['TodoList']['id'], 
                     'nom' => $nouvelle['TodoList']['nom'], 
@@ -87,22 +90,14 @@ class TodoListsController extends AppController {
                     )
             );
         } else {
-            $this->Session->setFlash('La liste n\'a pas pu être trouvée.');
+            $this->Session->setFlash('La liste n\'a pas pu être trouv&eacute;e.');
         }
     }
 
     public function alter($id) {
-
-
-
-
         echo($id);
-
         $list = $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id)));
         $this->set('to', $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id))));
-
-
-
         echo $list['TodoList']['id'];
     }
 
