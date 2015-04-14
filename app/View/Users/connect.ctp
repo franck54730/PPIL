@@ -1,4 +1,4 @@
-<!-- File: /app/View/Users/connexion.ctp -->
+	<!-- File: /app/View/Users/connexion.ctp -->
 
 
  
@@ -22,5 +22,5 @@
     
     
     <?php
-    	echo $this->Html->link("Nouveau Joueur", array('controller' => 'users', 'action' => 'inscription'));
+    	echo $this->Html->link("Inscription", array('controller' => 'users', 'action' => 'inscription'));
     ?>
