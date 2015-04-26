@@ -1,4 +1,6 @@
-<?php
+<?php 
+App::import("Vendor", "FacebookAuto", array("file" => "facebook-php-sdk-v4-4.0-dev/autoload.php"));
+
 /**
  * Application level Controller
  *

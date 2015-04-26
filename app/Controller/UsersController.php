@@ -54,8 +54,6 @@ class UsersController extends AppController {
 			}
 			if(!$existe){
 				$this->User->set( $this->data );
-					
-					
 				
 				if( $this->User->validates() )
 				{
@@ -93,5 +91,20 @@ class UsersController extends AppController {
 	public function profil(){
 		$this->set('user', $this->Session->read("User"));
 		$this->set('title_for_layout', "Mon Compte");
+	}
+	
+	public function edit(){
+		$this->set('title_for_layout', "Modifier mon compte");
+		$this->set('user', $this->Session->read("User"));
+	}
+	
+	public function association_facebook(){
+		if(!empty($this->request->query['id']))
+		{
+			$user = $this->Session->read("User");
+			$user['id_facebook'] = $this->request->query['id'];
+			$this->Session->write("User",$user);
+			$this->User->save($user);
+		}
 	}
 }

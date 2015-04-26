@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS users(
     mail varchar(30) NOT NULL,
     mot_de_passe varchar(30) NOT NULL,
     photo varchar(30) NOT NULL,
+    id_facebook varchar(32) DEFAULT '0',
     PRIMARY KEY (id)
 );
 

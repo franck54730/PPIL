@@ -75,3 +75,6 @@
 		echo "</tr>";
 		echo"</table>";
 	?> 
+	
+	<a href="edit">Modifier mon profil</a>
+	
