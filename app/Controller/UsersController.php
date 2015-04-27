@@ -52,11 +52,11 @@ class UsersController extends AppController {
 					$this->Session->setFlash($messageErreur);
 				}
 				$i++;
-			}
-			if($connect){
-          		$this->Session->setFlash("Votre connexion a rï¿½ussi.");
-			}else{
-          		$this->Session->setFlash($messageErreur);
+				if($connect){
+	          		$this->Session->setFlash("Votre connexion a rï¿½ussi.");
+				}else{
+	          		$this->Session->setFlash($messageErreur);
+				}
 			}
 		}else{
 			$this->Session->setFlash("Vous &ecirc;tes d&eacute;j&agrave; connect&eacute;.");
