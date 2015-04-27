@@ -37,13 +37,11 @@ class AppController extends Controller {
 	var $helpers = array('MenuBuilder.MenuBuilder');
 	public $components = array('Session','Cookie','Auth');
 
-	function beforeFilter(){
-		$this->Auth->allow();
 
 
 	
-	/*function beforeFilter() {
-		
+	function beforeFilter() {
+		$this->Auth->allow();
 		// Define your 
 		if($this->Session->check('User')){
 			$menu = array(
@@ -89,7 +87,7 @@ class AppController extends Controller {
 	
 		// For default settings name must be menu
 		$this->set(compact('menu'));
-	*/
+	
 
 	}
 }

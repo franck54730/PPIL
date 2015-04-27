@@ -1,15 +1,17 @@
 <?php
 class UsersController extends AppController {
+	private $salt = "5148520596358126541562158962514";
+	
 	public function index() {
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
 	}
 	
 	public function connect() {
 		$this->set('title_for_layout', "Connexion");
+		$messageErreur = "Votre connexion &agrave;&nbsp;&eacute;chou&eacute; car :";
 		if($this->Session->read("User") == null){
+			$connect = false;
 			if(!empty($this->data)){
-				$connect = false;
-				$messageErreur = "Votre connexion &agrave;&nbsp;&eacute;chou&eacute; car :";
 				$erreur = false;
 				if(strlen($this->data['User']['mail']) == 0){
 					$messageErreur .= "<br> - le champ email n'a pas &eacute;t&eacute; renseign&eacute;.";
@@ -28,7 +30,8 @@ class UsersController extends AppController {
 						$userTab = $user["User"];
 						if($userTab['mail'] == $this->data['User']['mail']){
 							$trouv = true;
-							if($userTab['mot_de_passe'] == $this->data['User']['motDePasse']){
+							echo $userTab['mot_de_passe']."  ".Security::hash(trim($this->data['User']['motDePasse']), 'md5', $this->salt);
+							if($userTab['mot_de_passe'] == Security::hash($this->data['User']['motDePasse'], 'md5', $this->salt)){
 								$thisUser = $this->User->findById($userTab['id']);
 								$this->Session->write("User",$thisUser["User"]);
 								$connect = true;
@@ -48,15 +51,12 @@ class UsersController extends AppController {
 				}else{
 					$this->Session->setFlash($messageErreur);
 				}
-<<<<<<< HEAD
 				$i++;
 			}
 			if($connect){
           		$this->Session->setFlash("Votre connexion a rï¿½ussi.");
 			}else{
-          		$this->Session->setFlash("Votre connexion a ï¿½chouï¿½e.");
-=======
->>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
+          		$this->Session->setFlash($messageErreur);
 			}
 		}else{
 			$this->Session->setFlash("Vous &ecirc;tes d&eacute;j&agrave; connect&eacute;.");
@@ -69,91 +69,24 @@ class UsersController extends AppController {
 				$d =$this->request->data;
 				$d['User']['id'] = null;
 				if (!empty($d['User']['mot_de_passe'])) {
-					$d['User']['mot_de_passe'] = Security::hash($d['User']['mot_de_passe']);
+					$d['User']['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);
 				}
 				
 				if (!empty($d['User']['mail'])) {
-				$this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'));
-				$this->Session->setFlash("Votre compte à bien été cré","notif");
-				$this->Auth->login($d['User']['mail']);
+					$this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'));
+					$this->Session->setFlash("Votre compte � bien �t� cr�e","notif");
+					$this->Auth->login($d['User']['mail']);
+	        		$this->redirect('/');
 				}else{
 					$this->Session->setFlash("Veuillez corriger vos erreurs","notif",array('type'=>'error'));
 				}
-
-
 			}
-
 		}
 
 	public function deconnexion(){
 		$this->set('title_for_layout', "Deconnexion");
 		$this->Session->destroy();
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
-	}
-
-<<<<<<< HEAD
-	/*public function inscription(){
-		
-=======
-	public function inscription(){
-		$this->set('title_for_layout', "Inscription");
->>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
-		if(!empty($this->data))
-		{
-			$existe=false;
-			$i = 0;
-			$users = $this->User->find('all');
-			while( $i < count($users)){
-				$user = $users[$i];
-				$userTab = $user["User"];
-				if($userTab['mail'] == $this->data['User']['mail'] && !$existe){
-					$this->Session->setFlash("Cet identifiant existe deja.");
-					$this->redirect(array('controller' => 'users','action' => 'inscription'));
-					$existe=true;
-				}
-				$i++;
-			}
-			if(!$existe){
-				$this->User->set( $this->data );
-				
-				if( $this->User->validates() )
-				{
-					$connect = false;
-					// on insert le new user
-					$this->User->set(array(
-							"nom" => $this->data['User']['nom'],
-							"prenom" => $this->data['User']['prenom'],
-							"date_de_naissance" => $this->data['User']['date_de_naissance'],
-							"sexe" => $this->data['User']['sexe'],
-							"mail" => $this->data['User']['mail'],	
-<<<<<<< HEAD
-							"modDePasse" => $this->data['User']['mot_de_passe'],
-=======
-							"mot_de_passe" => $this->data['User']['password'],
->>>>>>> 59208f003412915dbbe2a79a9b03a72c933b1f64
-							"photo" => $this->data['User']['photo']));
-					$this->User->save($this->data);
-				
-					/*$id_user = count($this->User->find('all'));*/
-						
-					/*$connect = true;
-					if($connect){
-						
-					}else{
-						$this->Session->setFlash("Votre inscription a ï¿½chouï¿½e.");
-					}
-				
-				
-				}else
-				{
-					$this->validateErrors($this->User);
-				}
-			}
-			
-		}
-<<<<<<< HEAD
-	}*/
-=======
 	}
 
 	public function profil(){
@@ -175,5 +108,4 @@ class UsersController extends AppController {
 			$this->User->save($user);
 		}
 	}
->>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
 }

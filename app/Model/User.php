@@ -3,35 +3,24 @@ class User extends AppModel {
 
 	var $name = 'User';
 	var $useTable = 'users';
-<<<<<<< HEAD
 	public $actsAs = array(
 						'Upload.Upload' => array(
 						'fields' => array(
 						'photo' => 'img/avatars/%id1000/%id'))
 					);
-=======
-
->>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
 
 	public $validate = array(
 			'login' => array(
 					'rule' => array('notEmpty'),
 					'message'=>'Ce champ ne doit pas etre vide!'
 			),
-<<<<<<< HEAD
 			'mot_de_passe' => array(
 					'confirm' => array(
 							'rule' => array('mot_de_passe', 'mot_de_passe_r', 'confirm'),
-=======
-			'password' => array(
-					'confirm' => array(
-							'rule' => array('password', 'password_r', 'confirm'),
->>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
 							'message' => 'Les mots se doivent d\'être identiques.',
 							'last' => true
 					),
 					'length' => array(
-<<<<<<< HEAD
 							'rule' => array('mot_de_passe', 'mot_de_passe_r', 'length'),
 							'message' => '6 caracteres minimum.'
 					),
@@ -41,19 +30,11 @@ class User extends AppModel {
 			),
 
 			'mot_de_passe_r' => array(
-=======
-							'rule' => array('password', 'password_r', 'length'),
-							'message' => '6 caracteres minimum.'
-					)
-			),
-			'password_r' => array(
->>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
 					'notempty' => array(
 							'rule' => array('notEmpty'),
 							'allowEmpty' => false,
 							'message' => 'Confirmer votre mot de passe.'
 					)
-<<<<<<< HEAD
 			),
 
 			'nom'=> array(
@@ -112,8 +93,3 @@ class User extends AppModel {
 	
 }
 ?>
-=======
-			)
-	);
-}
->>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c

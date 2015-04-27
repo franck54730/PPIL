@@ -27,3 +27,6 @@ Thumbs.db
 # fichier de configuration de la base de donnée #
 /app/Config/database.php
 nbproject/private/private.xml
+
+# avatar utilisateur #
+/app/webroot/img/avatars/

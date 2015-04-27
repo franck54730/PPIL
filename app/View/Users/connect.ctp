@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<!-- File: /app/View/Users/connexion.ctp -->
-=======
 	<!-- File: /app/View/Users/connexion.ctp -->
->>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
 
 
  
@@ -26,9 +22,5 @@
     
     
     <?php
-<<<<<<< HEAD
-    	echo $this->Html->link("Nouveau Joueur", array('controller' => 'users', 'action' => 'inscription'));
-=======
-    	echo $this->Html->link("Inscription", array('controller' => 'users', 'action' => 'inscription'));
->>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
+    	echo $this->Html->link("Inscription", array('controller' => 'users', 'action' => 'signup'));
     ?>

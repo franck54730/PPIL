@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS users(
     date_de_naissance date NOT NULL,
     sexe char(1) NOT NULL,
     mail varchar(30) NOT NULL,
-    mot_de_passe varchar(30) NOT NULL,
+    mot_de_passe varchar(100) NOT NULL,
     photo varchar(30) NOT NULL,
     id_facebook varchar(32) DEFAULT '0',
     PRIMARY KEY (id)
