@@ -24,18 +24,9 @@ class ItemsController extends AppController {
           //  echo "fvsdgk";
         }
     }
-    public function add($list) {
-        echo "id de la liste " + $list;
+    
 
-        $this->set('id', $list);
-    }
-
-    public function delete($id) {
-        echo $id;
-        $item = $this->Item->find('first', array('conditions' => array('Item.id =' => $id)));
-        $this->Item->delete($item['Item']['id']);
-        return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
-    }
+   
 
     public function ajoutItem() {
 
