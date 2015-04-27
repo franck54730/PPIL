@@ -1,30 +1,66 @@
 <?php
 class UsersController extends AppController {
 	public function index() {
-		echo "toto";
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
 	}
 	
 	public function connect() {
-		if(!empty($this->data)){
-			$connect = false;
-			$i = 0;
-			$users = $this->User->find('all');
-			while(!$connect && $i < count($users)){
-				$user = $users[$i];
-				$userTab = $user["User"];
-				if($userTab['mail'] == $this->data['User']['mail'] && $userTab['mot_de_passe'] == $this->data['User']['motDePasse']){
-					$thisUser = $this->User->findById($userTab['id']);
-					$this->Session->write("User",$thisUser["User"]);
-					$connect = true;
+		$this->set('title_for_layout', "Connexion");
+		if($this->Session->read("User") == null){
+			if(!empty($this->data)){
+				$connect = false;
+				$messageErreur = "Votre connexion &agrave;&nbsp;&eacute;chou&eacute; car :";
+				$erreur = false;
+				if(strlen($this->data['User']['mail']) == 0){
+					$messageErreur .= "<br> - le champ email n'a pas &eacute;t&eacute; renseign&eacute;.";
+					$erreur = true;
 				}
+				if(strlen($this->data['User']['motDePasse']) == 0){
+					$messageErreur .= "<br> - le champ mot de passe n'a pas &eacute;t&eacute; renseign&eacute;.";
+					$erreur = true;
+				}
+				if(!$erreur){
+					$trouv = false;
+					$i = 0;
+					$users = $this->User->find('all');
+					while(!$trouv && $i < count($users)){
+						$user = $users[$i];
+						$userTab = $user["User"];
+						if($userTab['mail'] == $this->data['User']['mail']){
+							$trouv = true;
+							if($userTab['mot_de_passe'] == $this->data['User']['motDePasse']){
+								$thisUser = $this->User->findById($userTab['id']);
+								$this->Session->write("User",$thisUser["User"]);
+								$connect = true;
+							}else{
+								$messageErreur .= "<br> - le mot de passe est incorrect.";
+							}
+						}
+						$i++;
+					}
+					if(!$trouv){
+						$messageErreur .= "<br> - cette email n'est pas connu.";
+					}
+				}
+				if($connect){
+					$this->Session->setFlash("Votre connexion a r&eacute;ussi.");
+					$this->redirect('/');
+				}else{
+					$this->Session->setFlash($messageErreur);
+				}
+<<<<<<< HEAD
 				$i++;
 			}
 			if($connect){
           		$this->Session->setFlash("Votre connexion a rï¿½ussi.");
 			}else{
           		$this->Session->setFlash("Votre connexion a ï¿½chouï¿½e.");
+=======
+>>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
 			}
+		}else{
+			$this->Session->setFlash("Vous &ecirc;tes d&eacute;j&agrave; connect&eacute;.");
+	        $this->redirect('/');
 		}
 	}
 
@@ -50,12 +86,18 @@ class UsersController extends AppController {
 		}
 
 	public function deconnexion(){
+		$this->set('title_for_layout', "Deconnexion");
 		$this->Session->destroy();
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
 	}
 
+<<<<<<< HEAD
 	/*public function inscription(){
 		
+=======
+	public function inscription(){
+		$this->set('title_for_layout', "Inscription");
+>>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
 		if(!empty($this->data))
 		{
 			$existe=false;
@@ -73,8 +115,6 @@ class UsersController extends AppController {
 			}
 			if(!$existe){
 				$this->User->set( $this->data );
-					
-					
 				
 				if( $this->User->validates() )
 				{
@@ -111,5 +151,29 @@ class UsersController extends AppController {
 			}
 			
 		}
+<<<<<<< HEAD
 	}*/
+=======
+	}
+
+	public function profil(){
+		$this->set('user', $this->Session->read("User"));
+		$this->set('title_for_layout', "Mon Compte");
+	}
+	
+	public function edit(){
+		$this->set('title_for_layout', "Modifier mon compte");
+		$this->set('user', $this->Session->read("User"));
+	}
+	
+	public function association_facebook(){
+		if(!empty($this->request->query['id']))
+		{
+			$user = $this->Session->read("User");
+			$user['id_facebook'] = $this->request->query['id'];
+			$this->Session->write("User",$user);
+			$this->User->save($user);
+		}
+	}
+>>>>>>> 3e9bfef52c1b409f37811418de88aafac8478a3c
 }

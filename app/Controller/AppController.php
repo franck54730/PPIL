@@ -1,4 +1,6 @@
-<?php
+<?php 
+App::import("Vendor", "FacebookAuto", array("file" => "facebook-php-sdk-v4-4.0-dev/autoload.php"));
+
 /**
  * Application level Controller
  *
@@ -42,35 +44,48 @@ class AppController extends Controller {
 	
 	/*function beforeFilter() {
 		
-		// Define your menu
-		$menu = array(
-				'left-menu' => array(
-						array(
-								'title' => 'Mes Listes',
-								'url' => array('controller' => 'items', 'action' => 'view', 1),								
-						),
-						array(
-								'title' => 'Creer une Liste',
-								'url' => array('controller' => 'items', 'action' => 'view', 2),
-						),
-						array(
-								'title' => 'Afficher un profil',
-								'url' => array('controller' => 'items', 'action' => 'view', 2),
-						),
-						array(
-								'title' => 'Mon compte',
-								'url' => array('controller' => 'items', 'action' => 'view', 2),
-						),
-						array(
-								'title' => 'Notifications',
-								'url' => array('controller' => 'items', 'action' => 'view', 2),
-						),
-						array(
-								'title' => 'Deconnexion',
-								'url' => array('controller' => 'items', 'action' => 'view', 2),
-						),
-				),
-		);
+		// Define your 
+		if($this->Session->check('User')){
+			$menu = array(
+					'left-menu' => array(
+							array(
+									'title' => 'Mes Listes',
+									'url' => array('controller' => 'todolists', 'action' => 'meslists'),								
+							),
+							array(
+									'title' => 'Creer une Liste',
+									'url' => array('controller' => 'todolists', 'action' => 'add'),
+							),
+							array(
+									'title' => 'Afficher un profil',
+									'url' => array('controller' => 'users', 'action' => 'profil'),
+							),
+							array(
+									'title' => 'Mon compte',
+									'url' => array('controller' => 'users', 'action' => 'profil'),
+							),
+							array(
+									'title' => 'Notifications',
+									'url' => array('controller' => 'notifications', 'action' => 'view'),
+							),
+							array(
+									'title' => 'Deconnexion',
+									'url' => array('controller' => 'users', 'action' => 'deconnexion'),
+							),
+					),
+			);
+		}
+		else{
+			$menu = array(
+					'left-menu' => array(
+							array(
+									'title' => 'Connexion',
+									'url' => array('controller' => 'users', 'action' => 'connect'),
+							),
+					),
+			);
+
+		}
 	
 		// For default settings name must be menu
 		$this->set(compact('menu'));
