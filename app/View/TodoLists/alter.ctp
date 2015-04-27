@@ -8,11 +8,9 @@ echo $this->Form->input("unite_frequence",Array('value'=>$to['TodoList']['unite_
 echo $this->Form->input("date_fin",Array('value'=>$to['TodoList']['date_fin']));
 echo $this->Form->end('Valider');
 
-//foreach($to as $t){
-////    echo $t;
-//    foreach($t as $a){
-//        echo $a;
-//    }
-//}
+echo $this->Form->create('Item', array('action' => 'add/'. $to['TodoList']['id']));
+                echo $this->Form->end('ajouter un item');
+
+
 
 ?> 
