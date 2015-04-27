@@ -3,9 +3,13 @@
     foreach ($lists as $list):
         ?>
         <tr>
-            <td><?php echo $list[$i]['TodoList']['id']; ?></td>
+         <!-- <td><?php echo $list[$i]['TodoList']['id']; ?></td> -->
             <td>
-    <?php echo $list[$i]['TodoList']['nom']; ?>
+            
+      <?php echo   $this->Form->create('TodoList', array('action' => 'seeList/' . $list[$i]['TodoList']['id']));
+      echo $this->Form->end($list[$i]['TodoList']['nom']);?>
+      
+   <!-- <?php echo $list[$i]['TodoList']['nom']; ?> -->
             </td>
             <td><td>
                 <?php

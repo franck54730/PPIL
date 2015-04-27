@@ -7,8 +7,7 @@ echo $this->Form->input("frequence",Array('value'=>$to['TodoList']['frequence'])
 echo $this->Form->input("unite_frequence",Array('value'=>$to['TodoList']['unite_frequence']));
 echo $this->Form->input("date_fin",Array('value'=>$to['TodoList']['date_fin']));
 echo $this->Form->end('Valider');
-
-echo $this->Form->create('Item', array('action' => 'add/'. $to['TodoList']['id']));
+echo $this->Form->create('Item', array('action' => 'add/'. $to['TodoList']['nom'] .'/'.$to['TodoList']['id']));
                 echo $this->Form->end('ajouter un item');
 
 

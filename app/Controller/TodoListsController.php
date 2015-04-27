@@ -98,7 +98,13 @@ class TodoListsController extends AppController {
         echo($id);
         $list = $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id)));
         $this->set('to', $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id))));
-        echo $list['TodoList']['id'];
+        echo $list['TodoList']['nom'];
     }
 
+    public function seeList($id){
+    	return $this->redirect(array('controller' => 'Items', 'action' => 'seeList/' . $id));
+    	//$list = $this->Item->find('all', array('conditions' => array('Item.id_todo_lists' => $id)));
+    	//$this->set('to', $this->Item->find('first', Array('conditions' => array('Item.id_todo_lists' => $id))));
+    	//echo $list['Item']['nom'];
+    }
 }
