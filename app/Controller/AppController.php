@@ -43,7 +43,7 @@ class AppController extends Controller {
 					'left-menu' => array(
 							array(
 									'title' => 'Mes Listes',
-									'url' => array('controller' => 'todolists', 'action' => 'index'),								
+									'url' => array('controller' => 'todolists', 'action' => 'meslists'),								
 							),
 							array(
 									'title' => 'Creer une Liste',
