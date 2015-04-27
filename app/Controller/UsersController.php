@@ -6,26 +6,52 @@ class UsersController extends AppController {
 	
 	public function connect() {
 		$this->set('title_for_layout', "Connexion");
-		if(!empty($this->data)){
-			$connect = false;
-			$i = 0;
-			$users = $this->User->find('all');
-			while(!$connect && $i < count($users)){
-				$user = $users[$i];
-				$userTab = $user["User"];
-				if($userTab['mail'] == $this->data['User']['mail'] && $userTab['mot_de_passe'] == $this->data['User']['motDePasse']){
-					$thisUser = $this->User->findById($userTab['id']);
-					$this->Session->write("User",$thisUser["User"]);
-					$connect = true;
+		if($this->Session->read("User") == null){
+			if(!empty($this->data)){
+				$connect = false;
+				$messageErreur = "Votre connexion &agrave;&nbsp;&eacute;chou&eacute; car :";
+				$erreur = false;
+				if(strlen($this->data['User']['mail']) == 0){
+					$messageErreur .= "<br> - le champ email n'a pas &eacute;t&eacute; renseign&eacute;.";
+					$erreur = true;
 				}
-				$i++;
+				if(strlen($this->data['User']['motDePasse']) == 0){
+					$messageErreur .= "<br> - le champ mot de passe n'a pas &eacute;t&eacute; renseign&eacute;.";
+					$erreur = true;
+				}
+				if(!$erreur){
+					$trouv = false;
+					$i = 0;
+					$users = $this->User->find('all');
+					while(!$trouv && $i < count($users)){
+						$user = $users[$i];
+						$userTab = $user["User"];
+						if($userTab['mail'] == $this->data['User']['mail']){
+							$trouv = true;
+							if($userTab['mot_de_passe'] == $this->data['User']['motDePasse']){
+								$thisUser = $this->User->findById($userTab['id']);
+								$this->Session->write("User",$thisUser["User"]);
+								$connect = true;
+							}else{
+								$messageErreur .= "<br> - le mot de passe est incorrect.";
+							}
+						}
+						$i++;
+					}
+					if(!$trouv){
+						$messageErreur .= "<br> - cette email n'est pas connu.";
+					}
+				}
+				if($connect){
+					$this->Session->setFlash("Votre connexion a r&eacute;ussi.");
+					$this->redirect('/');
+				}else{
+					$this->Session->setFlash($messageErreur);
+				}
 			}
-			if($connect){
-          		$this->Session->setFlash("Votre connexion a r&eacute;ussi.");
-          		$this->redirect(array('controller' => 'todolists', 'action' => 'index'));
-			}else{
-          		$this->Session->setFlash("Votre connexion a &eacute;chou&eacute;e.");
-			}
+		}else{
+			$this->Session->setFlash("Vous &ecirc;tes d&eacute;j&agrave; connect&eacute;.");
+	        $this->redirect('/');
 		}
 	}
 
