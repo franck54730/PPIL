@@ -13,6 +13,7 @@ class ItemsController extends AppController {
     	$this->set('items', $this->Item->find('all'));
     }
 
+<<<<<<< HEAD
     public function add($list,$id) {
         echo "nom de la liste ".$list ;
         echo "id de la liste ".$id ;
@@ -22,6 +23,19 @@ class ItemsController extends AppController {
 
           //  echo "fvsdgk";
         }
+=======
+    public function add($list) {
+        echo "id de la liste " + $list;
+
+        $this->set('id', $list);
+    }
+
+    public function delete($id) {
+        echo $id;
+        $item = $this->Item->find('first', array('conditions' => array('Item.id =' => $id)));
+        $this->Item->delete($item['Item']['id']);
+        return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
+>>>>>>> 70d06f39f7f20b5bb87efe441c15ddb528437bdb
     }
 
     public function ajoutItem() {
@@ -34,11 +48,12 @@ class ItemsController extends AppController {
                 $this->Item->create();
                 if ($this->Item->save($this->request->data)) {
                     
-                }else{
+                } else {
                     $this->Session->setFlash(__('echec de la reation de l\'item'));
                 }
             }
         }
+        return $this->redirect(array('controller' => 'TodoLists', 'action' => 'alter/'.$this->data['Item']['id_todo_lists']));
     }
     
     
