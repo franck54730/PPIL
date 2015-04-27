@@ -3,7 +3,11 @@ class User extends AppModel {
 
 	var $name = 'User';
 	var $useTable = 'users';
-
+	public $actsAs = array(
+						'Upload.Upload' => array(
+						'fields' => array(
+						'photo' => 'img/avatars/%id1000/%id'))
+					);
 
 	public $validate = array(
 			'login' => array(
@@ -73,6 +77,19 @@ class User extends AppModel {
 				)
 			),
 
+			'photo_file'=> array(
+			array(
+				'required'=> false,
+				'allowEmpty' => true,
+				'rule'=> array('fileExtension',array('jpg','jpeg','png')),
+				'message'=> 'Vous ne pouvez envoyer que des jpg, jpeg, png'
+				
 
+			)
+		),
+			
 	);
+
+	
 }
+?>

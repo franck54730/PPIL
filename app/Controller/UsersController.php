@@ -21,9 +21,9 @@ class UsersController extends AppController {
 				$i++;
 			}
 			if($connect){
-          		$this->Session->setFlash("Votre connexion a r�ussi.");
+          		$this->Session->setFlash("Votre connexion a rï¿½ussi.");
 			}else{
-          		$this->Session->setFlash("Votre connexion a �chou�e.");
+          		$this->Session->setFlash("Votre connexion a ï¿½chouï¿½e.");
 			}
 		}
 	}
@@ -35,22 +35,16 @@ class UsersController extends AppController {
 				if (!empty($d['User']['mot_de_passe'])) {
 					$d['User']['mot_de_passe'] = Security::hash($d['User']['mot_de_passe']);
 				}
-				if ($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'))) {
-					/*$link = array('controller'=>'user','action'=>'activate',$this->User->id.'_'.md5($d['User']['mot_de_passe']));
-					App::uses('CakeEmail','Network/Email');
-					$mail = new CakeEmail();
-					$mail->from('noreply@localhost.com')
-						->to($d['User']['mail'])
-						->subject('Inscription')
-						->emailFormat('html')
-						->template('signup')
-						->viewVars(array('nom'=>$d['User']['nom'],'prenom'=>$d['User']['prenom'],'link'=>$link))
-						->send();*/
-				$this->Session->setFlash("Votre compte � bien �t� cr�","notif");
+				
+				if (!empty($d['User']['mail'])) {
+				$this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'));
+				$this->Session->setFlash("Votre compte à bien été cré","notif");
 				$this->Auth->login($d['User']['mail']);
 				}else{
 					$this->Session->setFlash("Veuillez corriger vos erreurs","notif",array('type'=>'error'));
 				}
+
+
 			}
 
 		}
@@ -60,7 +54,7 @@ class UsersController extends AppController {
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
 	}
 
-	public function inscription(){
+	/*public function inscription(){
 		
 		if(!empty($this->data))
 		{
@@ -102,11 +96,11 @@ class UsersController extends AppController {
 				
 					/*$id_user = count($this->User->find('all'));*/
 						
-					$connect = true;
+					/*$connect = true;
 					if($connect){
 						
 					}else{
-						$this->Session->setFlash("Votre inscription a �chou�e.");
+						$this->Session->setFlash("Votre inscription a ï¿½chouï¿½e.");
 					}
 				
 				
@@ -117,5 +111,5 @@ class UsersController extends AppController {
 			}
 			
 		}
-	}
+	}*/
 }

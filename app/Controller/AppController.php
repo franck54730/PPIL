@@ -32,15 +32,15 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-
+	var $helpers = array('MenuBuilder.MenuBuilder');
 	public $components = array('Session','Cookie','Auth');
 
 	function beforeFilter(){
 		$this->Auth->allow();
 
-	var $helpers = array('MenuBuilder.MenuBuilder');
+
 	
-	function beforeFilter() {
+	/*function beforeFilter() {
 		
 		// Define your menu
 		$menu = array(
@@ -74,7 +74,7 @@ class AppController extends Controller {
 	
 		// For default settings name must be menu
 		$this->set(compact('menu'));
-	
+	*/
 
 	}
 }
