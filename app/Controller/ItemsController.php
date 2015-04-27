@@ -13,7 +13,7 @@ class ItemsController extends AppController {
     	$this->set('items', $this->Item->find('all'));
     }
 
-<<<<<<< HEAD
+
     public function add($list,$id) {
         echo "nom de la liste ".$list ;
         echo "id de la liste ".$id ;
@@ -23,7 +23,7 @@ class ItemsController extends AppController {
 
           //  echo "fvsdgk";
         }
-=======
+    }
     public function add($list) {
         echo "id de la liste " + $list;
 
@@ -35,7 +35,6 @@ class ItemsController extends AppController {
         $item = $this->Item->find('first', array('conditions' => array('Item.id =' => $id)));
         $this->Item->delete($item['Item']['id']);
         return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
->>>>>>> 70d06f39f7f20b5bb87efe441c15ddb528437bdb
     }
 
     public function ajoutItem() {
