@@ -12,7 +12,7 @@
                 ?>
             </td><td>
                 <?php
-                echo $this->Form->create('Item', array('action' => 'alter/'. $list['Item']['id']));
+                echo $this->Form->create('Item', array('action' => 'alter/'. $list['Item']['id'].'/'.$list['Item']['id_todo_lists']));
                 echo $this->Form->end('Modifier');
                 ?></td>
             </td>

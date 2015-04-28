@@ -73,5 +73,36 @@ class ItemsController extends AppController {
     	$this->set('lists', $lists);
     	//echo $lists['Item']['nom'];
     }
+    
+    public function alter($id,$id_todolist) {
+        
+        $lists = $this->Item->find('first', array('conditions' => array('Item.id' => $id)));
+        $this->set('id', $id);
+        $this->set('nom',$lists['Item']['nom']);
+        $this->set('id_todolist',$id_todolist);
+        
+        if ($this->request->is('post')) {
+        }
+    }
+    
+    public function modif($id,$id_todolist){
+        $this->set('title_for_layout', "Modifier une liste");
+        $nouvelle = $this->data;
+        echo $nouvelle['Item']['nom'];
+        
+        $vielle = $this->Item->find('first', Array('condition' => Array('Item.id' => $id)));
+        
+        if ($vielle != null) {
+        
+            $this->Item->save(array(
+                    'Item' => array('id' => $id,
+                            'nom' => $nouvelle['Item']['nom']
+            )
+            ));
+            return $this->redirect(array('controller' => 'Items', 'action' => 'seeList/'.$id_todolist));
+        } else {
+            $this->Session->setFlash('L\'item n\'a pas pu être trouv&eacute;e.');
+        }
+    }
 
 }
