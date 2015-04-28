@@ -1,74 +1,52 @@
-<?php
-/**
- *
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.View.Layouts
- * @since         CakePHP(tm) v 0.10.0.1076
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
-
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
-$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
-?>
 <!DOCTYPE html>
-<html>
-<head>
-	<?php echo $this->Html->charset(); ?>
-	<title>
-		<?php echo $title_for_layout; ?>
-	</title>
-	<?php
-		echo $this->Html->meta('icon');
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		echo $this->Html->css('cake.generic');
+    <title><?php echo $title_for_layout; ?></title>
 
-		echo $this->fetch('meta');
-		echo $this->fetch('css');
-		echo $this->fetch('script');
-	?>
-</head>
-<body>
-<!--<ul id="menu">
-        <li id="MesListes"><a href="toto.php">Mes Listes</a></li>
-        <li id="Creer"><a href="toto.php">Creer une Liste</a></li>
-        <li id="Afficher"><a href="toto.php">Afficher le profil</a></li>
-        <li id="Compte"><a href="toto.php">Mon compte</a></li>
-        <li id="Notifications"><a href="toto.php">Notifications</a></li>
-        <li id="Deconnexion"><a href="toto.php">Deconnexion</a></li>
-</ul>   -->
+    <!-- Bootstrap core CSS -->
+    <?php echo $this->Html->css('bootstrap'); ?>
+    <?php echo $this->Html->css('style'); ?>
+    <?php echo $this->fetch("script"); ?>
 
-<?php
-    echo $this->MenuBuilder->build('left-menu');
-?>
-	<div id="container">
-		<div id="content">
-			<h1><?php echo $title_for_layout ?></h1>
-			
-			<?php echo $this->Session->flash(); ?>
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 
-			<?php echo $this->fetch('content'); ?>
-		</div>
-		<div id="footer">
-			<?php /*echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false, 'id' => 'cake-powered')
-				);*/
-			?>
-			<p>
-				<?php //echo $cakeVersion; ?>
-			</p>
-		</div>
-	</div>
-	<?php //echo $this->element('sql_dump'); ?>
-</body>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body> 
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <?php echo $this->MenuBuilder->build('left-menu'); ?>
+        </div>
+        <div class="col-sm-8">
+          <?php echo $this->Session->flash(); ?>
+          <?php echo $this->fetch("content"); ?>
+        </div>
+      </div>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <?php echo $this->Html->script('bootstrap'); ?>
+    <?php echo $this->fetch("script"); ?>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug 
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+  </body>
+
 </html>
