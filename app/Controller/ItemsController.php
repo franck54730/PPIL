@@ -15,8 +15,6 @@ class ItemsController extends AppController {
 
 
     public function add($list,$id) {
-        echo "nom de la liste ".$list ;
-        echo "id de la liste ".$id ;
         $this->set('nom', $list);
         $this->set('id', $id);
         if ($this->request->is('post')) {
@@ -31,7 +29,6 @@ class ItemsController extends AppController {
     public function ajoutItem() {
 
         if ($this->request->is('post')) {
-            echo " liste recu";
             if ($this->request->data['Item']['nom'] == '') {
                 $this->Session->setFlash(__('Vous avez oublié de remplir le nom'));
             } else {
@@ -88,7 +85,6 @@ class ItemsController extends AppController {
     public function modif($id,$id_todolist){
         $this->set('title_for_layout', "Modifier une liste");
         $nouvelle = $this->data;
-        echo $nouvelle['Item']['nom'];
         
         $vielle = $this->Item->find('first', Array('condition' => Array('Item.id' => $id)));
         

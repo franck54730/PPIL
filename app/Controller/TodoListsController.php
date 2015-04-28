@@ -74,7 +74,6 @@ class TodoListsController extends AppController {
 
         $this->set('title_for_layout', "Modifier une liste");
         $nouvelle = $this->data;
-        echo $nouvelle['TodoList']['nom'];
 
         $vielle = $this->TodoList->find('first', Array('condition' => Array('TodoList.id' => $nouvelle['TodoList']['id'])));
 
@@ -95,11 +94,8 @@ class TodoListsController extends AppController {
     }
 
     public function alter($id) {
-        echo($id);
         $list = $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id)));
         $this->set('to', $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id))));
-        echo $list['TodoList']['nom'];
-        echo $list['TodoList']['id'];
         $this->loadModel('Item');
         $this->set('it',$this->Item->find('all', array('conditions' => array('Item.id_todo_lists' => $id))));
     }
