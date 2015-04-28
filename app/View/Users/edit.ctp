@@ -110,7 +110,7 @@ if($user['id_facebook']!= 0){
 	}
 	echo "</ul>";
 }else{
-	echo '<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">';
+	echo '<fb:login-button scope="public_profile,user_friends" onlogin="checkLoginState();">';
 	echo '</fb:login-button>';
 }
 ?>
