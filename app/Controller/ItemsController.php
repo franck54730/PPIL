@@ -19,7 +19,7 @@ class ItemsController extends AppController {
         $this->set('id', $id);
         if ($this->request->is('post')) {
 
-          //  echo "fvsdgk";
+         
         }
     }
     
@@ -36,11 +36,11 @@ class ItemsController extends AppController {
                 if ($this->Item->save($this->request->data)) {
                     
                 } else {
-                    $this->Session->setFlash(__('echec de la reation de l\'item'));
+                    $this->Session->setFlash(__('echec de la création de l\'item'));
                 }
             }
         }
-        return $this->redirect(array('controller' => 'TodoLists', 'action' => 'alter/'.$this->data['Item']['id_todo_lists']));
+        return $this->redirect(array('controller' => 'TodoLists', 'action' => 'seeList/'.$this->data['Item']['id_todo_lists']));
     }
     
     
@@ -53,7 +53,7 @@ class ItemsController extends AppController {
     	$user = $this->Session->read("User");
     	if ($this->Item->delete($id)) {
     		$this->Session->setFlash(__('L item  a &eacute;t&eacute; supprim&eacute;e.'));
-    		//return $this->redirect(array('controller' => 'Items', 'action' => 'seeList'));
+    		return $this->redirect(array('controller' => 'Items', 'action' => 'seeList/'.$id));
     	} else {
     		$this->Session->setFlash('L item n\'a pas pu être supprimé.');
     	}
@@ -88,17 +88,25 @@ class ItemsController extends AppController {
         
         $vielle = $this->Item->find('first', Array('condition' => Array('Item.id' => $id)));
         
-        if ($vielle != null) {
-        
-            $this->Item->save(array(
-                    'Item' => array('id' => $id,
-                            'nom' => $nouvelle['Item']['nom']
-            )
-            ));
-            return $this->redirect(array('controller' => 'Items', 'action' => 'seeList/'.$id_todolist));
-        } else {
-            $this->Session->setFlash('L\'item n\'a pas pu être trouv&eacute;e.');
+        $chaine = $nouvelle['Item']['nom'];
+        $chaine = trim($chaine);
+        if(strlen($chaine)!=0){
+        	if ($vielle != null) {
+        	
+        		$this->Item->save(array(
+        				'Item' => array('id' => $id,
+        						'nom' => $nouvelle['Item']['nom']
+        				)
+        		));
+        		return $this->redirect(array('controller' => 'Items', 'action' => 'seeList/'.$id_todolist));
+        	} else {
+        		$this->Session->setFlash('L\'item n\'a pas pu être trouv&eacute;e.');
+        	}
+        }else{
+        	$this->Session->setFlash('Le champ ne dois pas être vide.');
+        	return $this->redirect(array('controller' => 'Items', 'action' => 'alter/'.$id.'/'.$id_todolist));
         }
+        
     }
 
 }

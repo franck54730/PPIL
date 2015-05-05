@@ -34,7 +34,8 @@ class TodoListsController extends AppController {
                             )
                     );
                     $this->Session->setFlash(__('La liste a été sauvegardée'));
-                    return $this->redirect(array('action' => 'meslists'));
+                    
+                    return $this->redirect(array('controller' => 'Item','action' => 'seeList/'.$id));
                 } else {
                     $this->Session->setFlash(__('La liste n\'a pas été sauvegard&eacute;e. Merci de r&eacute;essayer.'));
                 }
@@ -64,7 +65,7 @@ class TodoListsController extends AppController {
         $assocs = $this->Association->find('first', array('conditions' => array('Association.id_users =' => $user['id'], 'Association.id_todo_lists =' => $id)));
         if ($this->Association->delete($assocs['Association']['id'])) {
             $this->Session->setFlash(__('La liste  a &eacute;t&eacute; supprim&eacute;e.'));
-            return $this->redirect(array('controller' => 'TodoLists', 'action' => 'index'));
+            return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
         } else {
             $this->Session->setFlash('La liste n\'a pas pu être supprimé.');
         }
@@ -88,6 +89,9 @@ class TodoListsController extends AppController {
                     'date_fin'=>$nouvelle['TodoList']['date_fin'])
                     )
             );
+            $this->Session->setFlash('La liste a pas pu être modifiée.');
+            return $this->redirect(array('controller' => 'Items', 'action' => 'seeList/' . $nouvelle['TodoList']['id']));
+            
         } else {
             $this->Session->setFlash('La liste n\'a pas pu être trouv&eacute;e.');
         }
