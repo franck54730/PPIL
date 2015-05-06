@@ -8,7 +8,6 @@ class UsersController extends AppController {
 	
 	public function connect() {
 		$this->set('title_for_layout', "Connexion");
-		$messageErreur = "Votre connexion &agrave;&nbsp;&eacute;chou&eacute; car :";
 		if($this->Session->read("User") == null){
 			$connect = false;
 			if(!empty($this->data)){
@@ -36,13 +35,13 @@ class UsersController extends AppController {
 								$this->Session->write("User",$thisUser["User"]);
 								$connect = true;
 							}else{
-								$messageErreur .= "<br> - le mot de passe est incorrect.";
+								$messageErreur = "<br> Identifiants de connexion incorrects";
 							}
 						}
 						$i++;
 					}
 					if(!$trouv){
-						$messageErreur .= "<br> - cette email n'est pas connu.";
+						$messageErreur = "<br> Identifiants de connexion incorrects";
 					}
 				}
 				if($connect){
@@ -53,7 +52,7 @@ class UsersController extends AppController {
 				}
 				$i++;
 				if($connect){
-	          		$this->Session->setFlash("Votre connexion a rÃ¯Â¿Â½ussi.");
+	          		$this->Session->setFlash("Votre connexion a r&eacute;ussi.");
 				}else{
 	          		$this->Session->setFlash($messageErreur);
 				}
@@ -65,23 +64,29 @@ class UsersController extends AppController {
 	}
 
 	function signup(){
-			if ($this->request->is('post')) {
-				$d =$this->request->data;
-				$d['User']['id'] = null;
-				if (!empty($d['User']['mot_de_passe'])) {
-					$d['User']['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);
-				}
-				
+		if ($this->request->is('post')) {
+			$d =$this->request->data;
+			$d['User']['id'] = null;
+			if (!empty($d['User']['mot_de_passe']) && $d['User']['mot_de_passe'] == $d['User']['mot_de_passe_verif']) {
+				$d['User']['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);
 				if (!empty($d['User']['mail'])) {
-					$this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'));
-					$this->Session->setFlash("Votre compte à bien été crée","notif");
-					$this->Auth->login($d['User']['mail']);
-	        		$this->redirect('/');
+					if($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'))){
+						$this->Session->write("User",$this->User);
+						$this->Session->setFlash("Votre compte a bien &eacute;t&eacute; cr&eacute;e","notif");
+		        		$this->redirect('/');
+		        	}
+		        	else{
+		        		$this->Session->setFlash("Email existant");
+		        	}
 				}else{
 					$this->Session->setFlash("Veuillez corriger vos erreurs","notif",array('type'=>'error'));
 				}
 			}
+			else{
+				$this->Session->setFlash("Les 2 mots de passe ne correspondent pas");
+			}				
 		}
+	}
 
 	public function deconnexion(){
 		$this->set('title_for_layout', "Deconnexion");
