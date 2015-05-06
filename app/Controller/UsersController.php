@@ -9,57 +9,28 @@ class UsersController extends AppController {
 	public function connect() {
 		$this->set('title_for_layout', "Connexion");
 		if($this->Session->read("User") == null){
-			$connect = false;
 			if(!empty($this->data)){
-				$erreur = false;
-				if(strlen($this->data['User']['mail']) == 0){
-					$messageErreur .= "<br> - le champ email n'a pas &eacute;t&eacute; renseign&eacute;.";
-					$erreur = true;
+				if(empty($this->data['User']['mail']) || empty($this->data['User']['motDePasse'])){
+					$this->Session->setFlash("Identifiants de connexion incorrects");
 				}
-				if(strlen($this->data['User']['motDePasse']) == 0){
-					$messageErreur .= "<br> - le champ mot de passe n'a pas &eacute;t&eacute; renseign&eacute;.";
-					$erreur = true;
-				}
-				if(!$erreur){
-					$trouv = false;
-					$i = 0;
-					$users = $this->User->find('all');
-					while(!$trouv && $i < count($users)){
-						$user = $users[$i];
-						$userTab = $user["User"];
-						if($userTab['mail'] == $this->data['User']['mail']){
-							$trouv = true;
-							echo $userTab['mot_de_passe']."  ".Security::hash(trim($this->data['User']['motDePasse']), 'md5', $this->salt);
-							if($userTab['mot_de_passe'] == Security::hash($this->data['User']['motDePasse'], 'md5', $this->salt)){
-								$thisUser = $this->User->findById($userTab['id']);
-								$this->Session->write("User",$thisUser["User"]);
-								$connect = true;
-							}else{
-								$messageErreur = "<br> Identifiants de connexion incorrects";
-							}
+				else{
+					$user = $this->User->find('first', array('conditions' => array('User.mail' => $this->data['User']['mail'])));
+					if(!empty($user)){
+						$user=$user['User'];
+						if($user['mot_de_passe'] == Security::hash($this->data['User']['motDePasse'], 'md5', $this->salt)){
+							$this->Session->write("User",$user);
+							$this->Session->setFlash("Connexion r&eacute;ussie");
+							$this->redirect('/');
 						}
-						$i++;
+						else{
+							$this->Session->setFlash("Identifiants de connexion incorrects");
+						}
 					}
-					if(!$trouv){
-						$messageErreur = "<br> Identifiants de connexion incorrects";
+					else{
+						$this->Session->setFlash("Identifiants de connexion incorrects");
 					}
-				}
-				if($connect){
-					$this->Session->setFlash("Votre connexion a r&eacute;ussi.");
-					$this->redirect('/');
-				}else{
-					$this->Session->setFlash($messageErreur);
-				}
-				$i++;
-				if($connect){
-	          		$this->Session->setFlash("Votre connexion a r&eacute;ussi.");
-				}else{
-	          		$this->Session->setFlash($messageErreur);
 				}
 			}
-		}else{
-			$this->Session->setFlash("Vous &ecirc;tes d&eacute;j&agrave; connect&eacute;.");
-	        $this->redirect('/');
 		}
 	}
 
