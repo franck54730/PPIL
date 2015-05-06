@@ -78,8 +78,24 @@ class UsersController extends AppController {
 	}
 	
 	public function edit(){
-		$this->set('title_for_layout', "Modifier mon compte");
+		$this->set('title_for_layout', "Modifier mon profil");
 		$this->set('user', $this->Session->read("User"));
+		$user = $this->Session->read("User");
+		if(!empty($this->data)){
+			$user['nom'] = $this->data['User']['nom'];
+			$user['prenom'] = $this->data['User']['prenom'];
+			$datenaiss = $this->data['User']['date_de_naissance']['year'].'-'.$this->data['User']['date_de_naissance']['month'].'-'.$this->data['User']['date_de_naissance']['day'];
+			$user['date_de_naissance'] = $datenaiss;
+			$user['sexe'] = $this->data['User']['sexe'];
+			$this->Session->write("User",$user);
+			if($this->User->save($user)){
+				$this->Session->setFlash("Vos modifications ont bien &eacute;t&eacute; enregistr&eacute;es","notif");
+			    $this->redirect('/users/profil');
+			}
+			else{
+				$this->Session->setFlash("Erreur");
+			}
+		}
 	}
 	
 	public function association_facebook(){
