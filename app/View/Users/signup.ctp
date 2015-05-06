@@ -3,7 +3,10 @@
 <?php echo $this->Form->create('User',array('type' => 'file')); ?>
 	<?php echo $this->Form->input('nom',array('label'=>"Votre nom"));?>
 	<?php echo $this->Form->input('prenom',array('label'=>"Votre prénom"));?>
-	<?php echo $this->Form->input('date_de_naissance',array('label'=>"Date de naissance"));?>
+	<?php echo $this->Form->input('date_de_naissance', array( 'label' => 'Date de naissance', 
+								   'dateFormat' => 'DMY', 
+								   'minYear' => date('Y') - 100,
+								   'maxYear' => date('Y')));?>
 
 	<?php echo "<b>Sexe :</b>";
 	$options=array('M'=>'Masculin','F'=>'Féminin');
