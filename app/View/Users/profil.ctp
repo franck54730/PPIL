@@ -69,7 +69,7 @@
 		echo"</td>";
 
 	    echo "<td>";
-		echo $user["photo"];
+	    echo $this->Html->image($user["photo"], array('alt' => 'Photo de profil', 'width'=>200, 'height'=>200));
 		echo"</td>";
 
 		echo "</tr>";
