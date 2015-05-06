@@ -117,3 +117,20 @@ if($user['id_facebook']!= 0){
 
 <div id="status">
 </div>
+
+<?php echo $this->Form->create('User',array('type' => 'file')); 
+	echo $this->Form->input('nom',array('label'=>"Votre nom", 'default'=>$user["nom"]));
+	echo $this->Form->input('prenom',array('label'=>"Votre prénom",'default'=>$user["prenom"]));
+	echo $this->Form->input('date_de_naissance', array( 'selected' => $user['date_de_naissance'],'label' => 'Date de naissance', 
+								   'dateFormat' => 'DMY', 
+								   'minYear' => date('Y') - 100,
+								   'maxYear' => date('Y')));
+
+	
+	echo "<b>Sexe :</b>";
+	$options=array('M'=>'Masculin','F'=>'Féminin');
+	$attributes=array('legend'=>false,'value'=>$user["sexe"]);
+	echo $this->Form->radio('sexe',$options,$attributes);
+	echo $this->Form->end("Valider les modifications");
+
+	?>
