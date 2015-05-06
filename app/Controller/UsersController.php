@@ -71,7 +71,9 @@ class UsersController extends AppController {
 				$d['User']['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);
 				if (!empty($d['User']['mail'])) {
 					if($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'))){
-						$this->Session->write("User",$this->User);
+						$user = $this->User->find('first', array('conditions' => array('User.mail' => $d['User']['mail'])));
+						$user=$user['User'];
+						$this->Session->write("User",$user);
 						$this->Session->setFlash("Votre compte a bien &eacute;t&eacute; cr&eacute;e","notif");
 		        		$this->redirect('/');
 		        	}
