@@ -10,7 +10,7 @@ App::uses('AppController', 'Controller');
 
 class TodoListsController extends AppController {
 
-    public $uses = array('TodoList', 'Association');
+    public $uses = array('TodoList', 'Association', 'User');
 
     public function index() {
         $this->set('title_for_layout', "Mes Listes");
@@ -28,14 +28,23 @@ class TodoListsController extends AppController {
                 if ($this->TodoList->save($this->request->data)) {
                     $id = $this->TodoList->find('count');
                     $this->Association->create();
-                    //$list = $this->TodoList->find('all',array('conditions'=>array('TodoList.nom =' =>$this->request->data['TodoList']['nom'])));
                     $this->Association->save(array(
                         'Association' => array('id_users' => $user['id'], 'id_todo_lists' => $id)
                             )
                     );
+                    $amis = $this->request->data['TodoList']['amis'];
+                    foreach($amis as $ami){
+                         $friend = $this->User->find('first', array('conditions' => array('User.id_facebook =' => $ami)));
+                         if ($friend != null) {
+                              $this->Association->create();
+                              $this->Association->save(array(
+                                'Association' => array('id_users' => $friend['User']['id'], 'id_todo_lists' => $id)
+                            ));
+                         }
+                    }
                     $this->Session->setFlash(__('La liste a été sauvegardée'));
                     
-                    return $this->redirect(array('controller' => 'Item','action' => 'seeList/'.$id));
+                    return $this->redirect(array('controller' => 'Items','action' => 'seeList/'.$id));
                 } else {
                     $this->Session->setFlash(__('La liste n\'a pas été sauvegard&eacute;e. Merci de r&eacute;essayer.'));
                 }

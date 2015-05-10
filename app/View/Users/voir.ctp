@@ -8,7 +8,7 @@
 		echo"</td>";
 
 	    echo "<td>";
-		echo $user["nom"];
+		echo $utilisateur["nom"];
 		echo"</td>";
 
 		echo "</tr>";
@@ -21,7 +21,7 @@
 		echo"</td>";
 
 	    echo "<td>";
-		echo $user["prenom"];
+		echo $utilisateur["prenom"];
 		echo"</td>";
 
 		echo "</tr>";
@@ -33,7 +33,7 @@
 		echo"</td>";
 
 	    echo "<td>";
-		echo $user["date_de_naissance"];
+		echo $utilisateur["date_de_naissance"];
 		echo"</td>";
 
 		echo "</tr>";
@@ -45,7 +45,7 @@
 		echo"</td>";
 
 	    echo "<td>";
-		echo $user["sexe"];
+		echo $utilisateur["sexe"];
 		echo"</td>";
 
 		echo "</tr>";
@@ -57,7 +57,7 @@
 		echo"</td>";
 
 	    echo "<td>";
-		echo $user["mail"];
+		echo $utilisateur["mail"];
 		echo"</td>";
 
 		echo "</tr>";
@@ -68,15 +68,12 @@
 		echo "Photo";
 		echo"</td>";
 
-	    echo "<td>";
-                if($user["photo"]!=""){
-                    echo $this->Html->image($user["photo"], array('alt' => 'Photo de profil', 'width'=>200, 'height'=>200));
+                echo "<td>";
+                if($utilisateur["photo"]!=""){
+                    echo $this->Html->image($utilisateur["photo"], array('alt' => 'Photo de profil', 'width'=>200, 'height'=>200));
                 }
-            echo"</td>";
+		echo"</td>";
 
 		echo "</tr>";
 		echo"</table>";
-	?> 
-	
-	<a href="edit">Modifier mon profil</a>
-	
+	?>

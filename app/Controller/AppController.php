@@ -56,7 +56,7 @@ class AppController extends Controller {
 							),
 							array(
 									'title' => 'Afficher un profil',
-									'url' => array('controller' => 'users', 'action' => 'profil'),
+									'url' => array('controller' => 'users', 'action' => 'liste_profil'),
 							),
 							array(
 									'title' => 'Mon compte',

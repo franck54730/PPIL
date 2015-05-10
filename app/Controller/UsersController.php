@@ -5,6 +5,20 @@ class UsersController extends AppController {
 	public function index() {
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
 	}
+        
+        public function liste_profil(){
+                $this->set('title_for_layout', "Liste des Profils");
+                $users = $this->User->find('all');
+                $this->set('utilisateurs',$users);
+            
+        }
+        
+        public function voir($id){
+            if($this->request->is('post')){
+                $user = $this->User->find('first', array('conditions' => array('User.id' => $id)));
+                $this->set('utilisateur',$user['User']);
+            }
+        }
 	
 	public function connect() {
 		$this->set('title_for_layout', "Connexion");
@@ -43,12 +57,12 @@ class UsersController extends AppController {
 				$d['User']['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);
 				// Si le mail n'est pas vide
 				if (!empty($d['User']['mail'])) {
-					// Si on arrive à l'écrire en BDD
+					// Si on arrive ï¿½ l'ï¿½crire en BDD
 					if($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'))){
-						// On récupère l'objet qu'on vient d'écrire en BDD (pour récupérer son ID)
+						// On rï¿½cupï¿½re l'objet qu'on vient d'ï¿½crire en BDD (pour rï¿½cupï¿½rer son ID)
 						$user = $this->User->find('first', array('conditions' => array('User.mail' => $d['User']['mail'])));
 						$user=$user['User'];
-						// On l'écrit en Session, l'utilisateur est maintenant inscrit ET connecté
+						// On l'ï¿½crit en Session, l'utilisateur est maintenant inscrit ET connectï¿½
 						$this->Session->write("User",$user);
 						$this->Session->setFlash("Votre compte a bien &eacute;t&eacute; cr&eacute;e","notif");
 		        		$this->redirect('/');
