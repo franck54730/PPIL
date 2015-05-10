@@ -82,6 +82,23 @@ class ItemsController extends AppController {
         }
     }
     
+    //fonction de gestion du cochage/décochage d'un item d'une liste
+    public function check($id,$id_todolist) {
+    	$lists = $this->Item->find('first', array('conditions' => array('Item.id' => $id)));
+    	$check = $this->data;
+    	$toto = $check['Item']['checked'];
+    	if($toto != ""){
+    		//cochage
+    		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '1')));
+    	}else{
+    		//décochage
+    		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '0')));
+    	}
+    	//redirection 
+    	return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
+    	
+    }
+    
     public function modif($id,$id_todolist){
         $this->set('title_for_layout', "Modifier une liste");
         $nouvelle = $this->data;
