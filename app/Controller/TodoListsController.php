@@ -32,15 +32,17 @@ class TodoListsController extends AppController {
                         'Association' => array('id_users' => $user['id'], 'id_todo_lists' => $id)
                             )
                     );
-                    $amis = $this->request->data['TodoList']['amis'];
-                    foreach($amis as $ami){
-                         $friend = $this->User->find('first', array('conditions' => array('User.id_facebook =' => $ami)));
-                         if ($friend != null) {
-                              $this->Association->create();
-                              $this->Association->save(array(
-                                'Association' => array('id_users' => $friend['User']['id'], 'id_todo_lists' => $id)
-                            ));
-                         }
+                    if($this->request->data['TodoList']['amis']!=""){
+                        $amis = $this->request->data['TodoList']['amis'];
+                        foreach($amis as $ami){
+                             $friend = $this->User->find('first', array('conditions' => array('User.id_facebook =' => $ami)));
+                             if ($friend != null) {
+                                  $this->Association->create();
+                                  $this->Association->save(array(
+                                    'Association' => array('id_users' => $friend['User']['id'], 'id_todo_lists' => $id)
+                                ));
+                             }
+                        }
                     }
                     $this->Session->setFlash(__('La liste a été sauvegardée'));
                     
