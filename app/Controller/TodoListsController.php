@@ -60,40 +60,25 @@ class TodoListsController extends AppController {
         $assocs = $this->Association->find('all', array('conditions' => array('Association.id_users =' => $user['id'])));
         $i = 0;
         $list = array();
+        $listId=array();
         foreach ($assocs as $assoc) {
-        	
-        	//$arrayitems[$i][0] = $list['id']; 
             $list[$i] = $this->TodoList->find('all', array('conditions' => array('TodoList.id =' => $assoc['Association']['id_todo_lists'])));
-           
+            $listId[]=$list[$i][0]['TodoList']['id'];
             $i++;
         }
-        $j = 0;
-        $assocs = $this->TodoList->find('all');
-        foreach($assocs as $assoc){
-        	$j++;
-        }
-        for($x=0; $x<$i;$x++){
-        	$id_todo_lists[$x] = $list[$x][0]['TodoList']['id'];
-        }
-        //print $i;
-       //print $j;
-        
         $this->loadModel('Item');
-        for($x=0; $x<=$j;$x++){
-        	//print $x;
-        	$items[$x]= $this->Item->find('all', array('conditions' => array('Item.id_todo_lists' => $x)));
-        	
-        	
+        $items = $this->Item->find('all');
+        $arrayitems = array();
+        foreach($listId as $idTodo){
+        	$array = array();
+        	foreach($items as $item){
+        		if($item['Item']['id_todo_lists'] == $idTodo)
+        			$array[$item['Item']['id']] = $item['Item'];
+        	}
+        	$arrayitems[$idTodo]=$array;
         }
-        print_r($items);
-        foreach($items as $item){
-        	$arrayitems[$item['id_todo_lists']][$item['id']]=$item;
-        }
-        
-        
-        
-        
         $this->set('lists', $list);
+        $this->set('arrayitems', $arrayitems);
     }
 
     public function delete($id) {

@@ -40,7 +40,7 @@ class ItemsController extends AppController {
                 }
             }
         }
-        return $this->redirect(array('controller' => 'TodoLists', 'action' => 'seeList/'.$this->data['Item']['id_todo_lists']));
+        return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
     }
     
     
@@ -83,7 +83,7 @@ class ItemsController extends AppController {
     }
     
     //fonction de gestion du cochage/décochage d'un item d'une liste
-    public function check($id,$id_todolist) {
+    public function check($id) {
     	$lists = $this->Item->find('first', array('conditions' => array('Item.id' => $id)));
     	$check = $this->data;
     	$toto = $check['Item']['checked'];
