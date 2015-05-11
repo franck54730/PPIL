@@ -17,12 +17,12 @@ function toggle(id)
 			<td style="padding-right: 10px"><?php echo $list[$i]['TodoList']['id']; ?>
 			</td>
 			<td><?php
-				echo $this->Form->create('Todolist', array('action' => 'delete/' . $list[$i]['TodoList']['id']));
+				echo $this->Form->create('TodoList', array('action' => 'delete/' . $list[$i]['TodoList']['id']));
 				echo $this->Form->end('Supprimer');
 			?>
 	        </td>
 			<td><?php
-				echo $this->Form->create('Todolist', array('action' => 'alter/'. $list[$i]['TodoList']['id']));
+				echo $this->Form->create('TodoList', array('action' => 'alter/'. $list[$i]['TodoList']['id']));
 	            echo $this->Form->end('Modifier');
 	                ?>
 	         </td>
