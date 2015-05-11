@@ -121,4 +121,11 @@ class UsersController extends AppController {
 			$this->User->save($user);
 		}
 	}
+	
+	public function dissociation_facebook(){
+		$user = $this->Session->read("User");
+		$user['id_facebook'] = "0";
+		$this->Session->write("User",$user);
+		$this->User->save($user);
+	}
 }
