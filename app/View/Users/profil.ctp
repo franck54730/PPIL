@@ -1,82 +1,61 @@
 	<?php
-	    echo "<table>";
 
-	    echo "<tr>";
+		echo "<h1 class='text-center login-title'>Gérer mon compte</h1>";
+		echo "<div class='row'>";
+			echo "<div class='col-sm-3'>";
+				echo "Nom : ";
+			echo "</div>";
+			echo "<div class='col-sm-offset-0 col-sm-2'>";
+				echo $user["nom"];
+			echo "</div>";
+		echo "</div>";
 
-	    echo "<td>";
-		echo "Nom";
-		echo"</td>";
+		echo "<div class='row'>";
+			echo "<div class='col-sm-3'>";
+				echo "Prénom : ";
+			echo "</div>";
+			echo "<div class='col-sm-offset-0 col-sm-2'>";
+				echo $user["prenom"];
+			echo "</div>";
+		echo "</div>";
 
-	    echo "<td>";
-		echo $user["nom"];
-		echo"</td>";
+		echo "<div class='row'>";
+			echo "<div class='col-sm-3'>";
+				echo "Date de naissance : ";
+			echo "</div>";
+			echo "<div class='col-sm-offset-0 col-sm-2'>";
+				echo $user["date_de_naissance"];
+			echo "</div>";
+		echo "</div>";
 
-		echo "</tr>";
-		 
+		echo "<div class='row'>";
+			echo "<div class='col-sm-3'>";
+				echo "Sexe : ";
+			echo "</div>";
+			echo "<div class='col-sm-offset-0 col-sm-2'>";
+				echo $user["sexe"];
+			echo "</div>";
+		echo "</div>";
 
-		echo "<tr>";
-	    
-	    echo "<td>";
-		echo "Prénom";
-		echo"</td>";
+		echo "<div class='row'>";
+			echo "<div class='col-sm-3'>";
+				echo "Mail : ";
+			echo "</div>";
+			echo "<div class='col-sm-offset-0 col-sm-2'>";
+				echo $user["mail"];
+			echo "</div>";
+		echo "</div>";
 
-	    echo "<td>";
-		echo $user["prenom"];
-		echo"</td>";
+		echo "<div class='row'>";
+			echo "<div class='col-sm-3'>";
+				echo "Photo : ";
+			echo "</div>";
+			echo "<div class='col-sm-offset-0 col-sm-2'>";
+				if($user["photo"]!=""){
+                	echo $this->Html->image($user["photo"], array('alt' => 'Photo de profil', 'width'=>200, 'height'=>200));
+            	}
+            echo "</div>";
+        echo "</div>";
 
-		echo "</tr>";
-
-		echo "<tr>";
-	    
-	    echo "<td>";
-		echo "Date de naissance";
-		echo"</td>";
-
-	    echo "<td>";
-		echo $user["date_de_naissance"];
-		echo"</td>";
-
-		echo "</tr>";
-
-		echo "<tr>";
-	    
-	    echo "<td>";
-		echo "Sexe";
-		echo"</td>";
-
-	    echo "<td>";
-		echo $user["sexe"];
-		echo"</td>";
-
-		echo "</tr>";
-
-		echo "<tr>";
-	    
-	    echo "<td>";
-		echo "Mail";
-		echo"</td>";
-
-	    echo "<td>";
-		echo $user["mail"];
-		echo"</td>";
-
-		echo "</tr>";
-
-		echo "<tr>";
-	    
-	    echo "<td>";
-		echo "Photo";
-		echo"</td>";
-
-	    echo "<td>";
-                if($user["photo"]!=""){
-                    echo $this->Html->image($user["photo"], array('alt' => 'Photo de profil', 'width'=>200, 'height'=>200));
-                }
-            echo"</td>";
-
-		echo "</tr>";
-		echo"</table>";
-	?> 
-	
-	<a href="edit">Modifier mon profil</a>
-	
+         echo $this->Html->link("Modifier mon profil", array('controller' => 'users', 'action' => 'edit'));
+	?>
