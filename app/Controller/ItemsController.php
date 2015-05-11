@@ -84,10 +84,10 @@ class ItemsController extends AppController {
     		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '0')));
     	}
     
-	App::import('Controller', 'Notifications');
+		App::import('Controller', 'Notifications');
     	$notification = new NotificationsController;
-        $user = $this->Session->read("User");
-    	$notification->create($id, $user['id']);
+    	$notification->create($id);
+		
     	//redirection 
     	return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
     	
