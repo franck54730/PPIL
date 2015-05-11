@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 class ItemsController extends AppController {
 
     public function index() {
@@ -13,18 +7,13 @@ class ItemsController extends AppController {
     	$this->set('items', $this->Item->find('all'));
     }
 
-
     public function add($list,$id) {
         $this->set('nom', $list);
         $this->set('id', $id);
         if ($this->request->is('post')) {
 
-         
         }
     }
-    
-
-   
 
     public function ajoutItem() {
 
@@ -86,14 +75,19 @@ class ItemsController extends AppController {
     public function check($id) {
     	$lists = $this->Item->find('first', array('conditions' => array('Item.id' => $id)));
     	$check = $this->data;
-    	$toto = $check['Item']['checked'];
-    	if($toto != ""){
+    	$coche = $check['Item']['checked'];
+    	if($coche != ""){
     		//cochage
     		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '1')));
     	}else{
     		//décochage
     		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '0')));
     	}
+    
+	App::import('Controller', 'Notifications');
+    	$notification = new NotificationsController;
+        $user = $this->Session->read("User");
+    	$notification->create($id, $user['id']);
     	//redirection 
     	return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
     	
