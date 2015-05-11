@@ -7,7 +7,7 @@ USE ppil;
 DROP TABLE IF EXISTS associations;
 DROP TABLE IF EXISTS notifier;
 DROP TABLE IF EXISTS items;
-DROP TABLE IF EXISTS nofitifications;
+DROP TABLE IF EXISTS notifications;
 DROP TABLE IF EXISTS todo_lists;
 DROP TABLE IF EXISTS users;
 
