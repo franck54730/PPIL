@@ -14,6 +14,13 @@ body {
   text-align: center;
 }
 
+[class*="col-sm-6"]{
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 2px;
+  text-align: center;
+}
+
 .form-signin
 {
     max-width: 330px;
@@ -245,4 +252,11 @@ body
 {
     display: inline-block;
     margin-right: 10px;
+}
+
+.img-liste
+{
+    width : 16px;
+    height : 16px;
+    margin-left:10px;
 }

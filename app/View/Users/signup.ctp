@@ -18,7 +18,7 @@
 								   	'dateFormat' => 'DMY', 
 								   	'minYear' => date('Y') - 100,
 								   	'maxYear' => date('Y')));
-			echo "<br>";
+			echo "</div><br>";
 
 			$options=array('M'=>'Masculin','F'=>'Féminin');
 			$attributes=array('legend'=>false,'value'=>'M',);

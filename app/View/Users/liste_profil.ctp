@@ -1,5 +1,5 @@
 <?php
-    echo "<h1 class='text-center login-title'>Les profils :</h1>";
+    echo "<h1 class='text-center login-title'>Liste des profils :</h1>";
 ?>
 <table>
     <?php
