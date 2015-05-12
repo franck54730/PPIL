@@ -45,7 +45,8 @@
 	<?php 
 		$items= $arrayitems[$list[$i]['TodoList']['id']];
 		foreach($items as $item){
-			if(!$item['checked']){
+			//if(!$item['checked']){
+				echo $this->Form->create('Item', array('action' => 'check/'.$item['id']));
 				echo "<div class='row'>";
 					echo "<div class='col-sm-6 col-sm-offset-1 liste-item'>";
 						echo "<div class='col-sm-1 text-left'>";
@@ -54,11 +55,10 @@
 						echo "<div class='col-sm-10 col-sm-offset-1 text-left'>";
 							echo $item['nom'];
 						echo "</div>";
-						echo $this->Form->create('Item', array('action' => 'check/'.$item['id']));
 					echo "</div>";
 				echo "</div>";
 				echo $this->Form->end();
-			}
+			//}
 		}
 	echo "</div>";
 	?>

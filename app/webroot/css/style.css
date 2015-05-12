@@ -259,6 +259,8 @@ body
     width : 16px;
     height : 16px;
     margin-left: 10px;
+    margin-bottom: 2px;
+    vertical-align: middle;
 }
 
 .text-left

@@ -6,18 +6,21 @@
 			</div>
 			<div class='col-sm-1 col-sm-offset-3 text-right'>
 				<?php
-					echo $this->Html->link(
-							$this->Html->image('poubelle.png', array('alt' => 'Supprimer', 'title'=>'Supprimer la liste', 'class' => 'poubelle')),
-							array('action' => 'delete/' . $to['TodoList']['id']), array('escape' => false));
+					echo $this->Form->create('Todolist', array('action' => 'delete/' . $to['TodoList']['id']));
+						echo $this->Form->submit('poubelle.png', array('alt' => 'Supprimer', 'title'=>'Supprimer la liste', 'class' => 'poubelle'));
+					echo $this->Form->end();
 				?>
 			</div>
 		</div>
 	</div>
 </div>
-
-
 <?php
 	echo $this->Form->create('TodoList', Array('class' => 'form-signin', 'action' => 'modif'));
+
+		echo $this->Form->Hidden("id", Array('value' => $to['TodoList']['id']));
+		echo $this->Form->Hidden("frequence", Array('value' => $to['TodoList']['frequence']));
+		echo $this->Form->Hidden("unite_frequence", Array('value' => $to['TodoList']['unite_frequence']));
+		echo $this->Form->Hidden("date_fin", Array('value' => $to['TodoList']['date_fin']));
 
 		echo $this->Form->input('nom', array('value' => $to['TodoList']['nom'], "label" => false, 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nom', 'required autofocus', 'div' => false));
 
@@ -31,23 +34,23 @@
 
 	foreach($it as $item){
 		echo "<div class='container'>
-			<div class='row'>
-				<div class='col-sm-6 col-sm-offset-1 liste-item'>
-        			<div class='col-sm-5 text-left'>";
-						echo  $item['Item']['nom'];
-					echo "</div>";
-					echo "<div class='col-sm-5 col-sm-offset-2 text-right'>";
-						echo $this->Html->link(
-									$this->Html->image('crayon.png', array('alt' => 'Modifier', 'title'=>'Modifier la liste', 'class' => 'img-liste')),
-									array('action' => 'modif/' . $item['Item']['id']."/".$item['Item']['id_todo_lists']),
-									array('escape' => false));
-						echo $this->Html->link(
-									$this->Html->image('supprimer-item.png', array('alt' => 'Supprimer', 'title'=>'Supprimer item', 'class' => 'img-liste')),
-									array('action' => 'delete/' . $item['Item']['id']),
-									array('escape' => false));
+				<div class='row'>
+					<div class='col-sm-6 col-sm-offset-1 liste-item'>
+        				<div class='col-sm-5 text-left'>";
+							echo  $item['Item']['nom'];
+						echo "</div>";
+						echo "<div class='col-sm-1 col-sm-offset-5 text-right'>";
+							echo $this->Form->create('Item', array('action' => 'modif/' . $item['Item']['id']."/".$item['Item']['id_todo_lists']));
+								echo $this->Form->submit('crayon.png', array('alt' => 'Modifier', 'title'=>'Modifier l\'item', 'class' => 'img-liste'));;
+							echo $this->Form->end();
+						echo "</div>";
+						echo "<div class='col-sm-1 text-right'>";
+							echo $this->Form->create('Item', array('action' => 'delete/' . $item['Item']['id']));
+								echo $this->Form->submit('supprimer-item.png', array('alt' => 'Supprimer', 'title'=>'Supprimer l\'item', 'class' => 'img-liste'));;
+							echo $this->Form->end();
+						echo "</div>";
 					echo "</div>";
 				echo "</div>";
-			echo "</div>";
 		echo "</div>";
 	}
 
