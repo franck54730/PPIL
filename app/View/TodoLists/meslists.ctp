@@ -1,3 +1,4 @@
+
 <script type="text/javascript">
 	function toggle(id){
 		var divId = document.getElementById(id);
@@ -14,9 +15,10 @@
 
 	echo "<h1 class='text-center login-title'>Mes listes</h1>";
 
+	$id = $list[$i]['TodoList']['id'];
 	echo "<div class='container'>
-			<div class='row'>
-				<div class='col-sm-6 col-sm-offset-1'>
+			<div class='row' >
+				<div class='col-sm-6 col-sm-offset-1' onclick=\"toggle($id)\">
         			<div class='col-sm-5 text-left'>";
 						echo $list[$i]['TodoList']['nom'];
 						echo $this->Html->link(
@@ -33,11 +35,10 @@
 	/* Ne dois pas être ici !
 	echo $this->Form->create('TodoList', array('action' => 'delete/' . $list[$i]['TodoList']['id']));
 	echo $this->Form->end('Supprimer');*/
-
-	$id = $list[$i]['TodoList']['id'];         
+      
 	$disabled = '';//a ameliorer pour désactiver le bouton count($arrayitems[$list[$i]['TodoList']['id']])>0?'':'disabled';
 
-	echo '<input type="button" id="b'.$id.'" onclick="toggle('.$id.')" '.$disabled.' value="Show">' ;
+	//echo '<input type="button" id="b'.$id.'" onclick="toggle('.$id.')" '.$disabled.' value="Show">' ;
 ?>
 
 	    		<div id="<?php echo $id;?>" style="display:none;"> 
