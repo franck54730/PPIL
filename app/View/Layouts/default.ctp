@@ -27,10 +27,10 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-sm-4 menu">
+        <div class="col-sm-4">
           <?php echo $this->MenuBuilder->build('left-menu'); ?>
         </div>
-        <div class="col-sm-8 page-principale">
+        <div class="col-sm-8">
           <?php echo $this->Session->flash(); ?>
           <?php echo $this->fetch("content"); ?>
         </div>

@@ -10,14 +10,15 @@
 </script>
 
 <?php 
-	echo "<h1 class='text-center login-title'>Mes listes</h1>";
 	$i = 0;
 	foreach ($lists as $list):
+
+	echo "<h1 class='text-center login-title'>Mes listes</h1>";
 
 	$id = $list[$i]['TodoList']['id'];
 	echo "<div class='container'>
 			<div class='row' >
-				<div class='col-sm-6 col-sm-offset-1 liste-item' onclick=\"toggle($id)\">
+				<div class='col-sm-6 col-sm-offset-1' onclick=\"toggle($id)\">
         			<div class='col-sm-5 text-left'>";
 						echo $list[$i]['TodoList']['nom'];
 						echo $this->Html->link(
@@ -29,7 +30,7 @@
 					echo "</div>";
 				echo "</div>";
 			echo "</div>";
-	
+	echo "</div>";
 
 	/* Ne dois pas être ici !
 	echo $this->Form->create('TodoList', array('action' => 'delete/' . $list[$i]['TodoList']['id']));
@@ -40,6 +41,7 @@
 	//echo '<input type="button" id="b'.$id.'" onclick="toggle('.$id.')" '.$disabled.' value="Show">' ;
 ?>
 
+<<<<<<< HEAD
 <div id="<?php echo $id;?>" style="display:none;"> 
 	<!-- <table style="display:inline;"> -->
 	<?php 
@@ -64,6 +66,23 @@
 	?>
 	<!--  </table> -->
 </div>
+=======
+	    		<div id="<?php echo $id;?>" style="display:none;"> 
+	    			<!-- <table style="display:inline;"> -->
+		    			<?php 
+		    			$items= $arrayitems[$list[$i]['TodoList']['id']];
+		    			foreach($items as $item){
+		    				if(!$item['checked']){
+								echo $this->Form->create('Item', array('action' => 'check/'.$item['id']));
+								echo "<div>".$item['nom']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".
+								$this->Form->checkbox('checked', array('onCLick' => 'submit()'))."</div>";
+								echo $this->Form->end();
+							}
+		    			}
+		    			?>
+	    			<!--  </table> -->
+	    		</div>
+>>>>>>> 7557688cd18b6d1584420f35db01a9d176ea8615
 
 <?php 
     endforeach; 

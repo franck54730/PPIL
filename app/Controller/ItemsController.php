@@ -76,17 +76,19 @@ class ItemsController extends AppController {
     	$lists = $this->Item->find('first', array('conditions' => array('Item.id' => $id)));
     	$check = $this->data;
     	$coche = $check['Item']['checked'];
+    
+        App::import('Controller', 'Notifications');
+        $notification = new NotificationsController;
     	if($coche != ""){
     		//cochage
     		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '1')));
+            $notification->create($id,1);
     	}else{
     		//décochage
     		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '0')));
+            $notification->create($id,0);
     	}
-    
-		App::import('Controller', 'Notifications');
-    	$notification = new NotificationsController;
-    	$notification->create($id);
+    	
 		
     	//redirection 
     	return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
