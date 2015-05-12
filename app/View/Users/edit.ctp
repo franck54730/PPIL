@@ -19,10 +19,16 @@ function updateFacebookId(id) {
     http.send(null);
 }
 
+function dissociationFacebookId(){
+    http.open('get', 'dissociation_facebook');
+    http.onreadystatechange = processResponse;
+    http.send(null);
+}
+
 function processResponse() {
     if(http.readyState == 4){
         document.getElementById('status').innerHTML = 'Profil mis a jour !';
-		location.reload();
+	location.reload();
     }
 }
 
@@ -38,8 +44,7 @@ function statusChangeCallback(response) {
 		document.getElementById('status').innerHTML = 'Please log ' +
 		'into this app.';
 	} else {
-		document.getElementById('status').innerHTML = 'Please log ' +
-		'into Facebook.';
+		
 	}
 }
 
@@ -52,7 +57,7 @@ function checkLoginState() {
 window.fbAsyncInit = function() {
 	FB.init({
 		appId      : '795142420534653',
-		cookie     : true,
+		cookie     : false,
 
 		xfbml      : true,
 		version    : 'v2.2'
@@ -61,7 +66,6 @@ window.fbAsyncInit = function() {
 	FB.getLoginStatus(function(response) {
 		statusChangeCallback(response);
 	});
-
 };
 
 (function(d, s, id) {
@@ -75,62 +79,40 @@ window.fbAsyncInit = function() {
 </script>
 
 <?php
-use Facebook\FacebookSession; 
-use Facebook\FacebookRedirectLoginHelper;
-use Facebook\FacebookRequest;
-use Facebook\FacebookResponse;
-use Facebook\GraphObject;
-use Facebook\GraphUser;
-
-$session = FacebookSession::setDefaultApplication('795142420534653', '4d3da35606e8450794bbeb3e7492c4c8');
-$facebookRedirect = Router::url('/users/edit', true);
-$helper = new FacebookRedirectLoginHelper($facebookRedirect);
-$session = FacebookSession::newAppSession();
-
-try{
-	$session->validate();
-}catch (FacebookRequestException $ex) {
-	echo $ex->getMessage();
-}catch (\Exception $ex) {
-	echo $ex->getMessage();
-}
-
-
-if($user['id_facebook']!= 0){
-	$request = new FacebookRequest( $session, 'GET', '/'.$user['id_facebook'].'/friends' );
-	$response = $request->execute();
-	$users = $response->getGraphObject();
-	$data = $users->asArray();
-	$data = $data["data"];
-	
-	echo "<p>Liste des amis facebook: </p>";
-	echo "<ul>";
-	foreach($data as $test){
-		echo "<li>id: " .$test->id."<br/>nom: ".$test->name."</li><br/>";
-	}
-	echo "</ul>";
-}else{
-	echo '<fb:login-button scope="public_profile,user_friends" onlogin="checkLoginState();">';
-	echo '</fb:login-button>';
-}
-?>
-
-<div id="status">
-</div>
-
-<?php echo $this->Form->create('User',array('type' => 'file')); 
-	echo $this->Form->input('nom',array('label'=>"Votre nom", 'default'=>$user["nom"]));
-	echo $this->Form->input('prenom',array('label'=>"Votre prénom",'default'=>$user["prenom"]));
-	echo $this->Form->input('date_de_naissance', array( 'selected' => $user['date_de_naissance'],'label' => 'Date de naissance', 
+	echo $this->Form->create('User',array('class' => 'form-signin', 'type' => 'file')); 
+		echo $this->Form->input('nom',array('label'=>"Nom : ", 'class' => 'form-control', 'placeholder' => 'Nom', 'default'=>$user["nom"]));
+		echo $this->Form->input('prenom',array('label'=>"Prénom : ", 'class' => 'form-control', 'placeholder' => 'Prénom', 'default'=>$user["prenom"]));
+		echo $this->Form->input('date_de_naissance', array( 'selected' => $user['date_de_naissance'],'label' => false, 
 								   'dateFormat' => 'DMY', 
 								   'minYear' => date('Y') - 100,
 								   'maxYear' => date('Y')));
 
 	
-	echo "<b>Sexe :</b>";
-	$options=array('M'=>'Masculin','F'=>'Féminin');
-	$attributes=array('legend'=>false,'value'=>$user["sexe"]);
-	echo $this->Form->radio('sexe',$options,$attributes);
-	echo $this->Form->end("Valider les modifications");
+		echo "<br>";
 
-	?>
+		$options=array('M'=>'Masculin','F'=>'Féminin');
+		$attributes=array('legend'=>false,'value'=>$user["sexe"]);
+		echo "<div class='inline_labels'>";
+		echo $this->Form->radio('sexe',$options,$attributes);
+		echo "</div>";
+
+		if($user['id_facebook']== 0){
+			echo '<br><fb:login-button scope="public_profile,user_friends" onlogin="checkLoginState();">';
+			echo '</fb:login-button><br>';
+		}else{
+		  echo"
+		  <button type=\"button\" onclick=\"dissociationFacebookId();\">
+		    Dissocier son compte Facebook
+		   </button>";	
+		}
+
+		echo "<br>";
+
+		echo $this->Form->button("Valider les modifications", array('class' => 'btn btn-lg btn-primary btn-block', 'type' => 'submit', 'div' => false));
+
+	echo $this->Form->end();
+
+?>
+
+<div id="status">
+</div>

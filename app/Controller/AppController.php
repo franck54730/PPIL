@@ -44,15 +44,18 @@ class AppController extends Controller {
 		$this->Auth->allow();
 		// Define your 
 		if($this->Session->check('User')){
+			$this->loadModel("Notification");
+			$user = $this->Session->read('User');
+			$nb = $this->Notification->find('count',array('conditions' => array('Notification.id_utilisateur' => $user['id'], 'Notification.consulte'=>'0')));
 			$menu = array(
 					'left-menu' => array(
 							array(
 									'title' => 'Mes Listes',
-									'url' => array('controller' => 'todolists', 'action' => 'meslists'),								
+									'url' => array('controller' => 'todoLists', 'action' => 'meslists'),								
 							),
 							array(
 									'title' => 'Creer une Liste',
-									'url' => array('controller' => 'todolists', 'action' => 'add'),
+									'url' => array('controller' => 'todoLists', 'action' => 'add'),
 							),
 							array(
 									'title' => 'Afficher un profil',
@@ -63,8 +66,8 @@ class AppController extends Controller {
 									'url' => array('controller' => 'users', 'action' => 'profil'),
 							),
 							array(
-									'title' => 'Notifications',
-									'url' => array('controller' => 'notifications', 'action' => 'view'),
+									'title' => 'Notifications ('.$nb.')',
+									'url' => array('controller' => 'notifications', 'action' => 'index'),
 							),
 							array(
 									'title' => 'Deconnexion',

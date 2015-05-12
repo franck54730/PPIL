@@ -1,3 +1,6 @@
+<?php
+    echo "<h1 class='text-center login-title'>Les profils :</h1>";
+?>
 <table>
     <?php
     foreach ($utilisateurs as $user):
@@ -10,8 +13,9 @@
         </td>
             <td>
                 <?php
-                echo $this->Form->create('User', array('action' => 'voir/' . $user['User']['id']));
-                echo $this->Form->end('Voir');
+                echo $this->Form->create('User', array('action' => 'voir/' . $user['User']['id'],'class' => 'form-signin'));
+                echo $this->Form->button("Voir", array('class' => 'btn btn-sm btn-primary btn-block', 'type' => 'submit', 'div' => false));
+                echo $this->Form->end();
                 ?>
             </td>
         </tr>

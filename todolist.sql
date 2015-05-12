@@ -36,9 +36,12 @@ CREATE TABLE IF NOT EXISTS todo_lists (
 
 CREATE TABLE IF NOT EXISTS notifications (
   	id int(11) NOT NULL AUTO_INCREMENT,
+	id_utilisateur int(11) NOT NULL,
+	id_todolist int(11) NOT NULL,
   	texte varchar(1000) NOT NULL,
   	consulte boolean NOT NULL,
-  	PRIMARY KEY (id)
+  	PRIMARY KEY (id),
+  	FOREIGN KEY (id_utilisateur) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS items(
