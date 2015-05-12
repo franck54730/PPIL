@@ -39,18 +39,20 @@ class User extends AppModel {
 
 			'nom'=> array(
 				array(
-					'rule'=> 'alphanumeric',
+					'rule'=> array('custom', '/^[a-zA-Z]{1,}[a-zA-Z -]{1,}$/'),
 					'required'=> true,
-					'allowEmpty' => false
+					'allowEmpty' => false,
+					'message' => 'Champ incorrect'
 
 				)
 			),
 
 			'prenom'=> array(
 				array(
-					'rule'=> 'alphanumeric',
+					'rule'=> array('custom', '/^[a-zA-Z]{1,}[a-zA-Z -]{1,}$/'),
 					'required'=> true,
-					'allowEmpty' => false
+					'allowEmpty' => false,
+					'message' => 'Champ incorrect'
 					
 				)
 			),
@@ -64,7 +66,7 @@ class User extends AppModel {
 				),
 				array(
 					'rule'=>'isUnique',
-					'message'=>'Email déjà existante'
+					'message'=>'Email déjà existant'
 				)
 			),
 
