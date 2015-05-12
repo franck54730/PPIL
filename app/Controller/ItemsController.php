@@ -42,7 +42,7 @@ class ItemsController extends AppController {
     	$user = $this->Session->read("User");
     	if ($this->Item->delete($id)) {
     		$this->Session->setFlash(__('L item  a &eacute;t&eacute; supprim&eacute;e.'));
-    		return $this->redirect(array('controller' => 'Items', 'action' => 'seeList/'.$id));
+    		return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
     	} else {
     		$this->Session->setFlash('L item n\'a pas pu être supprimé.');
     	}
@@ -67,8 +67,6 @@ class ItemsController extends AppController {
         $this->set('nom',$lists['Item']['nom']);
         $this->set('id_todolist',$id_todolist);
         
-        if ($this->request->is('post')) {
-        }
     }
     
     //fonction de gestion du cochage/d�cochage d'un item d'une liste
@@ -106,12 +104,17 @@ class ItemsController extends AppController {
         if(strlen($chaine)!=0){
         	if ($vielle != null) {
         	
-        		$this->Item->save(array(
+        		if($this->Item->save(array(
         				'Item' => array('id' => $id,
         						'nom' => $nouvelle['Item']['nom']
         				)
-        		));
-        		return $this->redirect(array('controller' => 'Items', 'action' => 'seeList/'.$id_todolist));
+        		))){
+					$this->Session->setFlash('L\'item a &eacute;t&eacute; modif&eacute;.');
+					return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
+				}else{
+					$this->Session->setFlash('L\'item n\'a pas &eacute;t&eacute; modifi&eacute;.');
+				}
+        		
         	} else {
         		$this->Session->setFlash('L\'item n\'a pas pu être trouv&eacute;e.');
         	}

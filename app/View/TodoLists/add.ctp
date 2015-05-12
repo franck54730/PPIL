@@ -11,7 +11,7 @@
         echo $this->Form->input('nom',array("label" => false, 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nom', 'required autofocus', 'div' => false));
         echo '<br><div class="inline_labels">';
             echo $this->Form->input('date',array(
-                'label' => false, 'type' => 'date', 'required autofocus',
+                'label' => false, 'type' => 'date',
                 'dateFormat' =>'DMY',
                 'minYear' => date('Y'),
                 'empty' => '',

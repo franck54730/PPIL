@@ -46,7 +46,7 @@ class TodoListsController extends AppController {
                     }
                     $this->Session->setFlash(__('La liste a été sauvegardée'));
                     
-                    return $this->redirect(array('controller' => 'Items','action' => 'seeList/'.$id));
+                    return $this->redirect(array('controller' => 'TodoLists','action' => 'meslists'));
                 } else {
                     $this->Session->setFlash(__('La liste n\'a pas été sauvegard&eacute;e. Merci de r&eacute;essayer.'));
                 }
@@ -105,7 +105,7 @@ class TodoListsController extends AppController {
 
         if ($vielle != null) {
 
-            $this->TodoList->save(array(
+            if($this->TodoList->save(array(
                 'TodoList' => array('id' => $nouvelle['TodoList']['id'], 
                     'nom' => $nouvelle['TodoList']['nom'], 
                     'date' => $nouvelle['TodoList']['date'], 
@@ -113,9 +113,12 @@ class TodoListsController extends AppController {
                     'unite_frequence'=>$nouvelle['TodoList']['unite_frequence'], 
                     'date_fin'=>$nouvelle['TodoList']['date_fin'])
                     )
-            );
-            $this->Session->setFlash('La liste a pas pu être modifiée.');
-            return $this->redirect(array('controller' => 'Items', 'action' => 'seeList/' . $nouvelle['TodoList']['id']));
+            )){
+				$this->Session->setFlash('La liste a été modifiée.');
+				return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
+			}else{
+				$this->Session->setFlash('La liste n\'a pas pu être modifiée.');
+            }
             
         } else {
             $this->Session->setFlash('La liste n\'a pas pu être trouv&eacute;e.');
