@@ -1,4 +1,3 @@
-<h1 class='text-center login-title'>Cr&eacute;er une listes</h1>
 <?php 
     use Facebook\FacebookSession; 
     use Facebook\FacebookRedirectLoginHelper;
