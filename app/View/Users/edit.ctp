@@ -77,8 +77,7 @@ window.fbAsyncInit = function() {
 }(document, 'script', 'facebook-jssdk'));
 
 </script>
-
-<?php
+ <?php
 	echo $this->Form->create('User',array('class' => 'form-signin', 'type' => 'file')); 
 		echo $this->Form->input('nom',array('label'=>"Nom : ", 'class' => 'form-control', 'placeholder' => 'Nom', 'default'=>$user["nom"]));
 		echo $this->Form->input('prenom',array('label'=>"Prénom : ", 'class' => 'form-control', 'placeholder' => 'Prénom', 'default'=>$user["prenom"]));
