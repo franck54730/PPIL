@@ -19,13 +19,13 @@ class ItemsController extends AppController {
 
         if ($this->request->is('post')) {
             if ($this->request->data['Item']['nom'] == '') {
-                $this->Session->setFlash(__('Vous avez oublié de remplir le nom'));
+                $this->Session->setFlash(__('Vous avez oubli&eacute; de remplir le nom'));
             } else {
                 $this->Item->create();
                 if ($this->Item->save($this->request->data)) {
                     
                 } else {
-                    $this->Session->setFlash(__('echec de la création de l\'item'));
+                    $this->Session->setFlash(__('echec de la cr&eacute;ation de l\'item'));
                 }
             }
         }
@@ -44,7 +44,7 @@ class ItemsController extends AppController {
     		$this->Session->setFlash(__('L`\'item  a &eacute;t&eacute; supprim&eacute;.'));
     		return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
     	} else {
-    		$this->Session->setFlash('L item n\'a pas pu Ãªtre supprimÃ©.');
+    		$this->Session->setFlash('L item n\'a pas pu &ecirc;tre supprim&eacute;.');
     	}
     }
     
