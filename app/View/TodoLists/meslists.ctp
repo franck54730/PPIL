@@ -47,7 +47,7 @@
 				echo "<div class='row'>";
 					echo "<div class='col-sm-6 col-sm-offset-1 liste-item'>";
 						echo "<div class='col-sm-1 text-left'>";
-							echo $this->Form->checkbox('checked', array('onCLick' => 'submit()', 'class' => 'checkbox'));
+							echo $this->Form->checkbox('checked', array('checked' => $item['checked'], 'onCLick' => 'submit()', 'class' => 'checkbox'));
 						echo "</div>";
 						echo "<div class='col-sm-10 col-sm-offset-1 text-left'>";
 							echo $item['nom'];

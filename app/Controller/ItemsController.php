@@ -77,7 +77,7 @@ class ItemsController extends AppController {
     
         App::import('Controller', 'Notifications');
         $notification = new NotificationsController;
-    	if($coche != ""){
+    	if($coche != "0"){
     		//cochage
     		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '1')));
             $notification->create($id,1);
@@ -109,7 +109,7 @@ class ItemsController extends AppController {
         						'nom' => $nouvelle['Item']['nom']
         				)
         		))){
-					$this->Session->setFlash('L\'item a &eacute;t&eacute; modif&eacute;.');
+					$this->Session->setFlash('L\'item a &eacute;t&eacute; modifi&eacute;.');
 					return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
 				}else{
 					$this->Session->setFlash('L\'item n\'a pas &eacute;t&eacute; modifi&eacute;.');
