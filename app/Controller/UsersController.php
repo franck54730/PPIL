@@ -51,7 +51,9 @@ class UsersController extends AppController {
 		}
 	}
 
-	function signup(){		
+	function signup(){
+		$erreur = false;
+		$messageErreur = array();
 		$this->loadModel("User");
 		if($this->Session->read("User") == null){
 			if ($this->request->is('post')) {
@@ -60,45 +62,79 @@ class UsersController extends AppController {
 				$jour = $d['User']['date_de_naissance']['day'];
 				$mois = $d['User']['date_de_naissance']['month'];
 				$annee = $d['User']['date_de_naissance']['year'];
-				// on verifie le mot de passe 
-				$message = User::verifMotDePasse($d['User']['mot_de_passe']);
-				if($message == ""){
-					// Si le mot de passe n'est pas vide et que les 2 mots de passes concordent
-					if (!empty($d['User']['mot_de_passe']) && $d['User']['mot_de_passe'] == $d['User']['mot_de_passe_verif']) {
-						$d['User']['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);
-						// Si le mail n'est pas vide
-						if (!empty($d['User']['mail'])) {
-							if(checkdate($mois,$jour,$annee)){
-								// Si on arrive ï¿½ l'ï¿½crire en BDD
-								if($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'))){
-									// On rï¿½cupï¿½re l'objet qu'on vient d'ï¿½crire en BDD (pour rï¿½cupï¿½rer son ID)
-									$user = $this->User->find('first', array('conditions' => array('User.mail' => $d['User']['mail'])));
-									$user=$user['User'];
-									// On l'ï¿½crit en Session, l'utilisateur est maintenant inscrit ET connectï¿½
-									$this->Session->write("User",$user);
-									$this->Session->setFlash("Votre compte a bien &eacute;t&eacute; cr&eacute;&eacute","notif");
-					        		$this->redirect('/');
-					        	}else{
-					        		$this->Session->setFlash("Donnez un email correct");
-					        	}
-				        	}else{
-				        		$this->Session->setFlash("La date n'est pas correcte.");
-				        	}
-				        }else{
-				        	$this->Session->setFlash("Donnez un email.");
-				        }
+				
+				//verification du nom
+				if(strlen($d['User']['nom'])==0){
+					$erreur = true;
+					$messageErreur['nom'] = "Le nom est vide.";
+				}
+				//verification du prenom			
+				if(strlen($d['User']['prenom'])==0){
+					$erreur = true;
+					$messageErreur['prenom'] = "Le pr&eacute;nom est vide.";
+				}		
+				//verification de la date
+				if(!checkdate($mois,$jour,$annee)){
+					$erreur = true;
+					$messageErreur['date'] = "La date n'&eacute;xiste pas.";
+				}
+				//verifiacation de l'email			
+				if(strlen($d['User']['mail'])==0){
+					$erreur = true;
+					$messageErreur['mail'] = "L'email est vide.";
+				}else {
+					$mess = User::verifEmail($d['User']['mail']);
+					if($mess != ""){
+						$erreur = true;
+						$messageErreur['mail'] = $mess;
+					}
+				}
+				//verification du mot de passe
+				$mess = User::verifMotDePasse($d['User']['mot_de_passe']);
+				if($mess != ""){
+					$erreur = true;
+					$messageErreur['mot_de_passe'] = $mess;
+				}else{
+					if($d['User']['mot_de_passe'] != $d['User']['mot_de_passe_verif']){
+						$erreur = true;
+						$messageErreur['mot_de_passe_verif'] = "Les deux mots de passe doivent &ecirc;tre identique.";
+					}
+				}
+				//verification de l'extension du fichier
+				$jpg = preg_match("#.+[\.]jpg#",$d['User']['photo_file']['name']);
+				$png = preg_match("#.+[\.]png#",$d['User']['photo_file']['name']);
+				if(!$jpg && !$png){
+					$erreur = true;
+					$messageErreur['photo'] = "Format incorect.";
+				}
+				if(!$erreur){
+					$this->set('erreur', $erreur);
+					$this->set('messageErreur', $messageErreur);
+					$d['User']['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);
+					// Si on arrive ï¿½ l'ï¿½crire en BDD
+					if($this->User->save($d,true,array('nom','prenom','date_de_naissance','sexe','mail','mot_de_passe','photo'))){
+						// On rï¿½cupï¿½re l'objet qu'on vient d'ï¿½crire en BDD (pour rï¿½cupï¿½rer son ID)
+						$user = $this->User->find('first', array('conditions' => array('User.mail' => $d['User']['mail'])));
+						$user=$user['User'];
+						// On l'ï¿½crit en Session, l'utilisateur est maintenant inscrit ET connectï¿½
+						$this->Session->write("User",$user);
+						$this->Session->setFlash("Votre compte a bien &eacute;t&eacute; cr&eacute;&eacute","notif");
+						$this->redirect('/');
 					}else{
-						$this->Session->setFlash("Les 2 mots de passe ne correspondent pas");
+
+						$this->Session->setFlash("Erreur lors de l'inscription","notif");
 					}
 				}else{
-					$this->Session->setFlash($message);
+					$this->set('erreur', $erreur);
+					$this->set('messageErreur', $messageErreur);
 				}
 			}else{
-	
+				$this->set('erreur', $erreur);
+				$this->set('messageErreur', $messageErreur);
 			}
 		}else{
-				$this->Session->setFlash("Vous êtes d&eacute;jà connect&eacute;.");
-				$this->redirect('/TodoLists/meslists');
+			$this->Session->setFlash("Vous &ecirc;tes d&eacute;j&agrave; connect&eacute;.");
+			$this->redirect('/TodoLists/meslists');
 		}
 	}
 	

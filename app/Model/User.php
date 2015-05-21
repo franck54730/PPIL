@@ -98,7 +98,7 @@ class User extends AppModel {
 		$message = "Votre mot de passe est incorrect :";
 		if(strlen($mdp) < 6){
 			$bon = false;
-			$message .= "<br>- au moins 6 caract&eagrave;re.";
+			$message .= "<br>- au moins 6 caract&egrave;re.";
 		}
 		if(!preg_match("#[A-Z]#",$mdp)){
 			$bon = false;
@@ -117,6 +117,14 @@ class User extends AppModel {
 		}else{
 			return $message;
 		}
+	}
+	
+	public static function verifEmail($email){
+		$rep = "";
+		if(!preg_match("#[a-zA-Z0-9]+@[a-zA-Z0-9]+[\.][a-zA-Z]+#", $email)){
+			$rep = "L'email est incorrect";
+		}
+		return $rep;
 	}
 }
 ?>
