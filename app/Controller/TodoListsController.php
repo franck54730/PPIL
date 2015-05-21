@@ -22,7 +22,7 @@ class TodoListsController extends AppController {
         $user = $this->Session->read("User");
         if ($this->request->is('post')) {
             if ($this->request->data['TodoList']['nom'] == '') {
-                $this->Session->setFlash(__('Vous avez oublié de remplir le nom'));
+                $this->Session->setFlash(__('Vous avez oubli&eacute; de remplir le nom'));
             } else {
                 $this->TodoList->create();
                 if ($this->TodoList->save($this->request->data)) {
@@ -44,11 +44,11 @@ class TodoListsController extends AppController {
                              }
                         }
                     }
-                    $this->Session->setFlash(__('La liste a été sauvegardée'));
+                    $this->Session->setFlash(__('La liste a &eacute;t&eacute; sauvegard&eacute;e'));
                     
                     return $this->redirect(array('controller' => 'TodoLists','action' => 'meslists'));
                 } else {
-                    $this->Session->setFlash(__('La liste n\'a pas été sauvegard&eacute;e. Merci de r&eacute;essayer.'));
+                    $this->Session->setFlash(__('La liste n\'a pas &eacute;t&eacute; sauvegard&eacute;e. Merci de r&eacute;essayer.'));
                 }
             }
         }
@@ -93,7 +93,7 @@ class TodoListsController extends AppController {
                 $this->Session->setFlash(__('La liste  a &eacute;t&eacute; supprim&eacute;e.'));
                 return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
             } else {
-                $this->Session->setFlash('La liste n\'a pas pu être supprimée.');
+                $this->Session->setFlash('La liste n\'a pas pu être supprim&eacute;e.');
             }
         }
     }
@@ -116,10 +116,10 @@ class TodoListsController extends AppController {
                         'date_fin'=>$nouvelle['TodoList']['date_fin'])
                         )
                 )){
-    				$this->Session->setFlash('La liste a été modifiée    .');
+    				$this->Session->setFlash('La liste a &eacute;t&eacute; modifi&eacute;e    .');
     				return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
     			}else{
-    				$this->Session->setFlash('La liste n\'a pas pu être modifiée.');
+    				$this->Session->setFlash('La liste n\'a pas pu être modifi&eacute;e.');
                 }
                 
             } else {
