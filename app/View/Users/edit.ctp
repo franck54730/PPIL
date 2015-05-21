@@ -82,6 +82,7 @@ window.fbAsyncInit = function() {
 		echo $this->Form->create('User',array('class' => 'form-signin', 'type' => 'file')); 
 			echo $this->Form->input('nom',array('label'=>"Nom : ", 'class' => 'form-control', 'placeholder' => 'Nom', 'default'=>$user["nom"]));
 			echo $this->Form->input('prenom',array('label'=>"Prénom : ", 'class' => 'form-control', 'placeholder' => 'Prénom', 'default'=>$user["prenom"]));
+			echo '<b>Date de naissance</b>';
 			echo $this->Form->input('date_de_naissance', array( 'selected' => $user['date_de_naissance'],'label' => false, 
 									   'dateFormat' => 'DMY', 
 									   'minYear' => date('Y') - 100,

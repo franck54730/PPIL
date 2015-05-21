@@ -1,5 +1,12 @@
 <?php
 
+
+use Facebook\FacebookSession;
+use Facebook\FacebookRedirectLoginHelper;
+use Facebook\FacebookRequest;
+use Facebook\FacebookResponse;
+use Facebook\GraphObject;
+use Facebook\GraphUser;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -44,6 +51,21 @@ class TodoListsController extends AppController {
                              }
                         }
                     }
+                    
+                    $this->loadModel('Item');
+                    //Ajout items
+                    if($this->request->data['TodoList']['item']!=""){
+                    	$items = $this->request->data['TodoList']['item'];
+                    	foreach($items as $item){
+	                		$this->Item->create();
+	               			$this->Item->save(array(
+	                    					'Item' => array('nom' => $item, 'id_todo_lists' => $id)
+	                    			));
+                    	}
+                    }
+                    
+                    
+                    
                     $this->Session->setFlash(__('La liste a &eacute;t&eacute; sauvegard&eacute;e'));
                     
                     return $this->redirect(array('controller' => 'TodoLists','action' => 'meslists'));
@@ -134,7 +156,7 @@ class TodoListsController extends AppController {
             $this->Session->setFlash("Tu n'as pas le droit de faire ceci.");
         }
     }
-
+    
     public function alter($id=null) {
         if($id == null){
             $this->Session->setFlash("Il manque le paramètre");
@@ -144,13 +166,79 @@ class TodoListsController extends AppController {
                 $this->set('to', $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id))));
                 $this->loadModel('Item');
                 $this->set('it',$this->Item->find('all', array('conditions' => array('Item.id_todo_lists' => $id))));
+                
+                //recuperation des amis fb
+                $user = $this->Session->read("User");
+                $amisFacebook = array();
+                if($user["id_facebook"]!=0){
+                	$session = FacebookSession::setDefaultApplication('795142420534653', '4d3da35606e8450794bbeb3e7492c4c8');
+                	$facebookRedirect = Router::url('/users/edit', true);
+                	$helper = new FacebookRedirectLoginHelper($facebookRedirect);
+                	$session = FacebookSession::newAppSession();
+                
+                	try{
+                		$session->validate();
+                	}catch (FacebookRequestException $ex){
+                		echo $ex->getMessage();
+                	}catch (\Exception $ex) {
+                		echo $ex->getMessage();
+                	}
+                	$request = new FacebookRequest( $session, 'GET', '/'.$user['id_facebook'].'/friends' );
+                	$response = $request->execute();
+                	$users = $response->getGraphObject();
+                	$data = $users->asArray();
+                	$data = $data["data"];
+                	$i=0;
+                	foreach($data as $test){
+                		$ami = $this->User->find('first', array('conditions' => array('User.id_facebook' => $test->id)));
+                		if(!empty($ami)){
+                			$amiTab = array();
+                			$amiTab['name'] = $test->name;
+                			$amiTab['id_facebook'] = $test->id;
+                			$amiTab['id'] = $ami['User']['id'];
+                			$assoc = $this->Association->find('first', Array('conditions' => Array('Association.id_todo_lists' => $id, 'id_users'=> $amiTab['id'])));
+                			if(!empty($assoc))
+                				$amiTab['associer'] = true;
+                			else{
+                				$amiTab['associer'] = false;
+                			}
+                			$amisFacebook[] = $amiTab;
+                		}
+                		$i++;
+                	}
+                }
+                $this->set('amis',$amisFacebook);
             }else{
                 $this->Session->setFlash('Pour modifier une liste, il faut le faire sur la page de la liste, petit voyou.');
             }
        }
-        
-        
-        
+    }
+    
+    public function check($id_todo_list, $id_user, $check){
+    	if($check == 1)
+    		$this->redirect(array('controller' => 'TodoLists', 'action' => 'addUser', $id_todo_list, $id_user));
+    	else
+    		$this->redirect(array('controller' => 'TodoLists', 'action' => 'removeUser', $id_todo_list, $id_user));
+    }
+    
+    public function addUser($id_todo_list, $id_user){
+    	$this->loadModel('Association');
+    	$this->Association->create();
+    	if($this->Association->save(array(
+    			'Association' => array('id_users' => $id_user, 'id_todo_lists' => $id_todo_list)
+    	))){
+        	$this->Session->setFlash("L'utilisateur &agrave; &eacute;t&eacute; ajout&eacute; avec succes");
+    	}else{
+    		$this->Session->setFlash("L'utilisateur n'a pas pu &eacute;tre retir&eacute;");
+    	}
+    	return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
+    }
+
+    public function removeUser($id_todo_list, $id_user){
+    	$this->loadModel('Association');
+    	$this->Association->deleteAll(array('id_todo_lists' => $id_todo_list, 'id_users'=> $id_user));
+        $this->Session->setFlash("L'utilisateur &agrave; &eacute;t&eacute; retir&eacute; avec succes");
+        return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
     }
 
     public function seeList($id){
