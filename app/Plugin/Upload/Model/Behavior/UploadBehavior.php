@@ -30,11 +30,12 @@ class UploadBehavior extends ModelBehavior{
                 }
                 $model->deleteOldUpload($field);
                 $model->move_uploaded_file(
-                    $file['tmp_name'],
-                    WWW_ROOT . $path
+                		$file['tmp_name'],
+                		WWW_ROOT . $path
                 );
                 chmod(WWW_ROOT . $path, 0777);
                 $model->saveField($field, '/' . $path);
+                
            }
         }
     }

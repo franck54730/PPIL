@@ -97,6 +97,9 @@ window.fbAsyncInit = function() {
 			echo $this->Form->radio('sexe',$options,$attributes);
 			echo "</div>";
 
+			echo $this->Form->input('photo_file', array('label'=>'Votre photo (format : jpg ou png)','type'=>'file', 'class' => 'form-control'));
+			echo "<br>";
+			
 			if($user['id_facebook']== 0){
 				echo '<br><fb:login-button scope="public_profile,user_friends" onlogin="checkLoginState();">';
 				echo '</fb:login-button><br>';

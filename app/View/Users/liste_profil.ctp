@@ -67,6 +67,13 @@ if($this->Session->read("User")!=null){
                         echo "<div class='col-sm-2 text-left'>";
                              if($user['User']["photo"]!=""){
                                 echo $this->Html->image($user['User']['photo'], array('class' => 'profile-img', 'alt' => 'Photo de profil', 'width' => '100', 'height' => '200'));
+                             }else{
+                             if($user['User']['sexe'] == 'F'){
+									echo $this->Html->image("avatars/defautF.jpg", array('class' => 'profile-img', 'alt' => 'Photo de profil', 'width' => '100', 'height' => '200'));
+								}
+								else{
+									echo $this->Html->image("avatars/defautM.jpg", array('class' => 'profile-img', 'alt' => 'Photo de profil', 'width' => '100', 'height' => '200'));
+								}
                              }
                         echo "</div>";
                         echo "<div class='col-sm-3 col-sm-offset-5 text-right liste-profil'>";
