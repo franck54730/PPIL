@@ -1,4 +1,10 @@
-<table>
+
+<?php if($this->request->is("get")){
+    echo "Tu n'as pas l'authorisation de faire ceci, petit coquin";
+}else{
+
+    ?>
+    <table>
      <?php if(!isset($lists)){
          $lists = array();
      }
@@ -14,3 +20,4 @@
     
     
 </table>
+<?php }?>

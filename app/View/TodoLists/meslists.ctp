@@ -17,12 +17,16 @@
 		$id = $list[$i]['TodoList']['id'];
 		echo "<div class='container'>
 				<div class='row' >
-					<div class='col-sm-6 col-sm-offset-1 liste-item' onclick=\"toggle($id)\">
-        				<div class='col-sm-5 text-left'>";
+					<div class='col-sm-6 col-sm-offset-1 liste-item' >
+        				<div class='col-sm-2 text-left'>";
 							echo $list[$i]['TodoList']['nom'];
-							echo $this->Html->link(
-									$this->Html->image('crayon.png', array('alt' => 'Modifier', 'title'=>'Modifier la liste', 'class' => 'img-liste')),
-									array('action' => 'alter/'. $list[$i]['TodoList']['id']), array('escape' => false));
+						echo "</div>";
+						echo"<div class='col-sm-1 col-sm-offset-2 text-left'>";
+							//echo $this->Form->submit());
+						echo $this->Form->create('TodoList', array('action' => 'alter/' . $list[$i]['TodoList']['id']));
+						echo $this->Form->end('crayon.png', array('alt' => 'Modifier', 'title'=>'Modifier l\'item', 'class' => 'img-liste'));
+									/*$this->Html->image('crayon.png', array('alt' => 'Modifier', 'title'=>'Modifier la liste', 'class' => 'img-liste')),
+									array('action' => 'alter/'. $list[$i]['TodoList']['id'], 'method' => 'post'), array('escape' => false));*/
 						echo "</div>";
 						echo "<div class='col-sm-5 col-sm-offset-2 text-right'>";
 							echo $list[$i]['TodoList']['date'];
@@ -31,7 +35,7 @@
 				echo "</div>";
 	
 	/* Ne dois pas être ici !
-	echo $this->Form->create('TodoList', array('action' => 'delete/' . $list[$i]['TodoList']['id']));
+	
 	echo $this->Form->end('Supprimer');*/
       
 	$disabled = '';//a ameliorer pour désactiver le bouton count($arrayitems[$list[$i]['TodoList']['id']])>0?'':'disabled';
@@ -68,6 +72,6 @@
 	unset($lists);
 }
 else{
-	echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der à cette page.";
+	echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
 }
 ?>

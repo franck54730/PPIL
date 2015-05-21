@@ -78,40 +78,43 @@ window.fbAsyncInit = function() {
 
 </script>
  <?php
-	echo $this->Form->create('User',array('class' => 'form-signin', 'type' => 'file')); 
-		echo $this->Form->input('nom',array('label'=>"Nom : ", 'class' => 'form-control', 'placeholder' => 'Nom', 'default'=>$user["nom"]));
-		echo $this->Form->input('prenom',array('label'=>"Prénom : ", 'class' => 'form-control', 'placeholder' => 'Prénom', 'default'=>$user["prenom"]));
-		echo $this->Form->input('date_de_naissance', array( 'selected' => $user['date_de_naissance'],'label' => false, 
-								   'dateFormat' => 'DMY', 
-								   'minYear' => date('Y') - 100,
-								   'maxYear' => date('Y')));
+ 	if($this->Session->read("User")!=null){
+		echo $this->Form->create('User',array('class' => 'form-signin', 'type' => 'file')); 
+			echo $this->Form->input('nom',array('label'=>"Nom : ", 'class' => 'form-control', 'placeholder' => 'Nom', 'default'=>$user["nom"]));
+			echo $this->Form->input('prenom',array('label'=>"Prénom : ", 'class' => 'form-control', 'placeholder' => 'Prénom', 'default'=>$user["prenom"]));
+			echo $this->Form->input('date_de_naissance', array( 'selected' => $user['date_de_naissance'],'label' => false, 
+									   'dateFormat' => 'DMY', 
+									   'minYear' => date('Y') - 100,
+									   'maxYear' => date('Y')));
 
-	
-		echo "<br>";
+		
+			echo "<br>";
 
-		$options=array('M'=>'Masculin','F'=>'Féminin');
-		$attributes=array('legend'=>false,'value'=>$user["sexe"]);
-		echo "<div class='inline_labels'>";
-		echo $this->Form->radio('sexe',$options,$attributes);
-		echo "</div>";
+			$options=array('M'=>'Masculin','F'=>'Féminin');
+			$attributes=array('legend'=>false,'value'=>$user["sexe"]);
+			echo "<div class='inline_labels'>";
+			echo $this->Form->radio('sexe',$options,$attributes);
+			echo "</div>";
 
-		if($user['id_facebook']== 0){
-			echo '<br><fb:login-button scope="public_profile,user_friends" onlogin="checkLoginState();">';
-			echo '</fb:login-button><br>';
-		}else{
-		  echo"
-		  <button type=\"button\" onclick=\"dissociationFacebookId();\">
-		    Dissocier son compte Facebook
-		   </button>";	
-		}
+			if($user['id_facebook']== 0){
+				echo '<br><fb:login-button scope="public_profile,user_friends" onlogin="checkLoginState();">';
+				echo '</fb:login-button><br>';
+			}else{
+			  echo"
+			  <button type=\"button\" onclick=\"dissociationFacebookId();\">
+			    Dissocier son compte Facebook
+			   </button>";	
+			}
 
-		echo "<br>";
+			echo "<br>";
 
-		echo $this->Form->button("Valider les modifications", array('class' => 'btn btn-lg btn-primary btn-block', 'type' => 'submit', 'div' => false));
+			echo $this->Form->button("Valider les modifications", array('class' => 'btn btn-lg btn-primary btn-block', 'type' => 'submit', 'div' => false));
 
-	echo $this->Form->end();
-	echo $this->Html->link("Supprimer mon compte", array('controller' => 'users', 'action' => 'delete'));
-
+		echo $this->Form->end();
+		echo $this->Html->link("Supprimer mon compte", array('controller' => 'users', 'action' => 'delete'));
+	}else{
+		echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
+	}
 ?>
 
 <div id="status">

@@ -1,3 +1,6 @@
+<?php
+	if($this->Session->read("User") != null && $this->request->is("post")){	
+?>
 <div class='container'>
 	<div class='row' >
 		<div class='col-sm-7'>
@@ -61,5 +64,12 @@
 				echo "</div>";
 		echo "</div>";
 		echo $this->Form->Hidden("id_todo_lists",array('value'=>$to['TodoList']['id']));
-	echo $this->Form->end()
+	echo $this->Form->end();
+
+}else{
+	if($this->Session->read("User") == null){
+		echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
+	}
+}
+	
 ?>
