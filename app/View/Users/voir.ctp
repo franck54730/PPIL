@@ -72,6 +72,14 @@
                 if($utilisateur["photo"]!=""){
                     echo $this->Html->image($utilisateur["photo"], array('alt' => 'Photo de profil', 'width'=>200, 'height'=>200));
                 }
+                else{
+                	if($user['User']['sexe'] == 'F'){
+                		echo $this->Html->image("avatars/defautF.jpg", array('class' => 'profile-img', 'alt' => 'Photo de profil', 'width' => '100', 'height' => '200'));
+                	}
+                	else{
+                		echo $this->Html->image("avatars/defautM.jpg", array('class' => 'profile-img', 'alt' => 'Photo de profil', 'width' => '100', 'height' => '200'));
+                	}
+                }
 		echo"</td>";
 
 		echo "</tr>";

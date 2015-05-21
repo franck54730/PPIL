@@ -101,11 +101,13 @@ class UsersController extends AppController {
 					}
 				}
 				//verification de l'extension du fichier
-				$jpg = preg_match("#.+[\.]jpg#",$d['User']['photo_file']['name']);
-				$png = preg_match("#.+[\.]png#",$d['User']['photo_file']['name']);
-				if(!$jpg && !$png){
-					$erreur = true;
-					$messageErreur['photo'] = "Format incorect.";
+				if(strlen($d['User']['photo_file']['name']) != 0){
+					$jpg = preg_match("#.+[\.]jpg#",$d['User']['photo_file']['name']);
+					$png = preg_match("#.+[\.]png#",$d['User']['photo_file']['name']);
+					if(!$jpg && !$png){
+						$erreur = true;
+						$messageErreur['photo'] = "Format incorect.";
+					}
 				}
 				if(!$erreur){
 					$this->set('erreur', $erreur);
