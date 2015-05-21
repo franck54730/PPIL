@@ -100,6 +100,32 @@ class UsersController extends AppController {
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
 	}
 
+	public function delete(){
+		$this->loadModel('Notification');
+		$this->loadModel('Association');
+		if(!empty($this->data['User']['mot_de_passe'])){
+			$mdp = Security::hash(trim($this->data['User']['mot_de_passe']), 'md5', $this->salt);
+			$user = $this->Session->read("User");
+			$user2 = $this->User->find('first', array('conditions' => array('User.id' => $user['id'])));
+			if($user['mot_de_passe'] == $mdp){
+				$id = $user['id'];
+				$this->Association->deleteAll(array('id_users' => $id));
+				$this->Notification->deleteAll(array('id_utilisateur' => $id));
+				$this->User->deleteAll(array('id' => $user['id']));
+				$this->Session->destroy();
+				$this->redirect(array('controller' => 'users','action' => 'connect'));
+				$this->Session->setFlash("Votre compte a &eacute;t&eacute; supprim&eacute;");
+			}
+			else{
+				$this->Session->setFlash("Le mot de passe est incorrect.");
+			}			
+		}
+		else{
+			$this->Session->setFlash("Le champ mot de passe est vide.");
+		}
+
+	}
+
 	public function profil(){
 		$this->set('user', $this->Session->read("User"));
 		$this->set('title_for_layout', "Mon Compte");

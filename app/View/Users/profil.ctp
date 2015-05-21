@@ -1,6 +1,6 @@
-	<?php
+		<?php
 
-		echo "<h1 class='text-center login-title'>Gérer mon compte</h1>";
+		echo "<h1 class='text-center login-title'>Mon profil</h1>";
 		echo "<div class='row'>";
 			echo "<div class='col-sm-3'>";
 				echo "Nom : ";
