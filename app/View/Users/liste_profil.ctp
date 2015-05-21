@@ -1,26 +1,62 @@
+<script type="text/javascript">
+    function toggle(id){
+        var divId = document.getElementById(id);
+        var toggled = divId.style.display;
+        divId.style.display = divId.style.display=='inline'?'none':'inline';
+        var button = document.getElementById("b"+id);
+        button.value = divId.style.display=='inline'?"Hide":"Show";
+    }
+</script>
+
 <?php
     echo "<h1 class='text-center login-title'>Liste des profils :</h1>";
-?>
-<table>
-    <?php
+    $i = 0;
     foreach ($utilisateurs as $user):
-        ?>
-    <tr>
-        <td>
-        <?php
-        
-        echo $user['User']['nom']; ?> 
-        </td>
-            <td>
-                <?php
-                echo $this->Form->create('User', array('action' => 'voir/' . $user['User']['id'],'class' => 'form-signin'));
-                echo $this->Form->button("Voir", array('class' => 'btn btn-sm btn-primary btn-block', 'type' => 'submit', 'div' => false));
-                echo $this->Form->end();
-                ?>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-<?php unset($utilisateurs); ?>
+        $id = $user['User']['id'];
+        echo "<div class='container'>
+                <div class='row' >
+                    <div class='col-sm-6 col-sm-offset-1 liste-item' onclick=\"toggle($id)\">
+                        <div class='col-sm-5 text-left'>";
+                            echo $user['User']['nom']." ".$user['User']['prenom'];
+                        echo "</div>";
+                    echo "</div>";
+                echo "</div>";
+?>
 
+<div id="<?php echo $id;?>" style="display:none;"> 
+    <!-- <table style="display:inline;"> -->
+    <?php 
+        foreach($utilisateurs as $user){
+            echo "<div class='row'>";
+                echo "<div class='col-sm-6 col-sm-offset-1 liste-item'>";
+                    echo "<div class='col-sm-2 text-left'>";
+                         if($user['User']["photo"]!=""){
+                            echo $this->Html->image($user['User']['photo'], array('class' => 'profile-img', 'alt' => 'Photo de profil', 'width' => '100', 'height' => '200'));
+                         }
+                    echo "</div>";
+                    echo "<div class='col-sm-3 col-sm-offset-5 text-right liste-profil'>";
+                        echo "<div class='row'>";
+                            echo $user['User']['date_de_naissance'];
+                        echo "</div>";
+                        echo "<div class='row'>";
+                        if($user['User']['sexe'] == 'F'){
+                            echo "Femme";
+                        }
+                        else{
+                            echo "Homme";
+                        }
+                        echo "</div>";
+                    echo "</div>";
+                echo "</div>";
+            echo "</div>";
+            //}
+        }
+        echo "</div>";
+    ?>
+    <!--  </table> -->
+</div>
 
-</table>
+<?php
+    endforeach;
+    unset($utilisateurs);
+?>

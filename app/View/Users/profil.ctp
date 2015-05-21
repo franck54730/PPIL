@@ -52,7 +52,7 @@
 			echo "</div>";
 			echo "<div class='col-sm-offset-0 col-sm-2'>";
 				if($user["photo"]!=""){
-                	echo $this->Html->image($user["photo"], array('alt' => 'Photo de profil', 'width'=>200, 'height'=>200));
+                	echo $this->Html->image($user["photo"], array('class' => 'profile-img', 'alt' => 'Photo de profil', 'width'=>200, 'height'=>200));
             	}
             echo "</div>";
         echo "</div>";
