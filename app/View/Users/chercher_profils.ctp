@@ -1,52 +1,7 @@
-<script type="text/javascript">
-
-    function toggle(id){
-        var divId = document.getElementById(id);
-        var toggled = divId.style.display;
-        divId.style.display = divId.style.display=='inline'?'none':'inline';
-        var button = document.getElementById("b"+id);
-        button.value = divId.style.display=='inline'?"Hide":"Show";
-    }
-
-    function createRequestObject() {
-        var tmpXmlHttpObject;
-        if (window.XMLHttpRequest) { 
-            tmpXmlHttpObject = new XMLHttpRequest();
-        } else if (window.ActiveXObject) { 
-            tmpXmlHttpObject = new ActiveXObject("Microsoft.XMLHTTP");
-        }       
-        return tmpXmlHttpObject;
-    }
-
-    var http = createRequestObject();
-
-    function chercherProfils() {
-        var texte = document.getElementById("texte").value;
-        http.open('get', 'chercher_profils/'+texte);
-        http.onreadystatechange = processResponse;
-        http.send(null);
-        return false;
-    }
-
-    function processResponse() {
-        if(http.readyState == 4){
-            document.getElementById('status').innerHTML = http.responseText;
-            document.getElementById('status').innerHTML = document.getElementById("profils").innerHTML;
-        }
-    }
-
-</script>
-
+<div id ='profils'>
 <?php
-if($this->Session->read("User")!=null){
-    echo "<h1 class='text-center login-title'>Rechercher un profil :</h1>";
-        echo "<form id='form' onSubmit='return chercherProfils();'><input type ='text' id ='texte'></form>";
-      
-        echo "<h1 class='text-center login-title'>Liste des profils :</h1>";
-        
-        echo "<div id='status'>";
-        $i = 0;
-        foreach ($utilisateurs as $user):
+$i = 0;
+        foreach ($users as $user):
             $id = $user['User']['id'];
             echo "<div class='container'>
                     <div class='row' >
@@ -92,9 +47,6 @@ if($this->Session->read("User")!=null){
     </div>
 
     <?php
-        endforeach;?></div><?php
-        unset($utilisateurs);
-    }else{
-        echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
-    }
+        endforeach;
 ?>
+</div>
