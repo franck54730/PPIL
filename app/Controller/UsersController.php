@@ -140,8 +140,11 @@ class UsersController extends AppController {
 	
 	public function deconnexion(){
 		$this->set('title_for_layout', "Deconnexion");
+		
 		$this->Session->destroy();
+		$this->Session->setFlash("Vous vous &ecirc;tes d&eacute;connect&eacute;(e)");
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
+		
 	}
 
 	public function delete(){
@@ -176,33 +179,36 @@ class UsersController extends AppController {
 	}
 	
 	public function edit(){
-		$this->set('title_for_layout', "Modifier mon profil");
-		$this->set('user', $this->Session->read("User"));
-		$user = $this->Session->read("User");
-		if(!empty($this->data)){
-			$user['nom'] = $this->data['User']['nom'];
-			$user['prenom'] = $this->data['User']['prenom'];
+			$this->set('title_for_layout', "Modifier mon profil");
+			$this->set('user', $this->Session->read("User"));
+			$user = $this->Session->read("User");
 
-			$jour = $this->data['User']['date_de_naissance']['day'];
-			$mois = $this->data['User']['date_de_naissance']['month'];
-			$annee = $this->data['User']['date_de_naissance']['year'];
-			$datenaiss = $annee.'-'.$mois.'-'.$jour;
-			$user['date_de_naissance'] = $datenaiss;
-			$user['sexe'] = $this->data['User']['sexe'];
-			if(checkdate($mois, $jour, $annee)){
-				$this->Session->write("User",$user);
-				if($this->User->save($user)){
-					$this->Session->setFlash("Vos modifications ont bien &eacute;t&eacute; enregistr&eacute;es","notif");
-				    $this->redirect('/users/profil');
+
+			if(!empty($this->data)){
+				$user['nom'] = $this->data['User']['nom'];
+				$user['prenom'] = $this->data['User']['prenom'];
+
+				$jour = $this->data['User']['date_de_naissance']['day'];
+				$mois = $this->data['User']['date_de_naissance']['month'];
+				$annee = $this->data['User']['date_de_naissance']['year'];
+				$datenaiss = $annee.'-'.$mois.'-'.$jour;
+				$user['date_de_naissance'] = $datenaiss;
+				$user['sexe'] = $this->data['User']['sexe'];
+				if(checkdate($mois, $jour, $annee)){
+					$this->Session->write("User",$user);
+					if($this->User->save($user)){
+						$this->Session->setFlash("Vos modifications ont bien &eacute;t&eacute; enregistr&eacute;es","notif");
+					    $this->redirect('/users/profil');
+					}
+					else{
+						$this->Session->setFlash("Erreur lors de la modification de vos donn&eacute;es.");
+					}
 				}
 				else{
-					$this->Session->setFlash("Erreur lors de la modification de vos donn&eacute;es.");
+					$this->Session->setFlash("La date n'est pas correcte.");
 				}
 			}
-			else{
-				$this->Session->setFlash("La date n'est pas correcte.");
-			}
-		}
+		
 	}
 	
 	public function association_facebook(){

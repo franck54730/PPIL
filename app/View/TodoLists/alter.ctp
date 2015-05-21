@@ -1,3 +1,6 @@
+<?php
+	if($this->Session->read("User") != null && $this->request->is("post")){	
+?>
 <div class='container'>
 	<div class='row' >
 		<div class='col-sm-7'>
@@ -6,7 +9,8 @@
 			</div>
 			<div class='col-sm-1 col-sm-offset-3 text-right'>
 				<?php
-					echo $this->Form->create('Todolist', array('action' => 'delete/' . $to['TodoList']['id']));
+					echo $this->Form->create('Todolist', array('action' => 'delete/' . $to['TodoList']['id'],'onsubmit'=>'if(confirm("are you sure?")){return true;}else{return false;}'));
+					//echo $this->Form->create('Todolist', array('onsubmit'=>'if(confirm("Etes vous sur de vouloir supprimer ?")){return true;}else{return false;}'));
 						echo $this->Form->submit('poubelle.png', array('alt' => 'Supprimer', 'title'=>'Supprimer la liste', 'class' => 'poubelle'));
 					echo $this->Form->end();
 				?>
@@ -61,5 +65,12 @@
 				echo "</div>";
 		echo "</div>";
 		echo $this->Form->Hidden("id_todo_lists",array('value'=>$to['TodoList']['id']));
-	echo $this->Form->end()
+	echo $this->Form->end();
+
+}else{
+	if($this->Session->read("User") == null){
+		echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
+	}
+}
+	
 ?>

@@ -12,6 +12,7 @@
 			if($erreur)
 				echo  empty($messageErreur['prenom'])?"":$messageErreur['prenom'];
 			echo '<br><div class="inline_labels">';
+			echo '<b>Date de naissance</b>';
 			echo $this->Form->input('date_de_naissance', array(
 									'label' => false, 'type' => 'date', 'required autofocus',
 									'before' => '',
