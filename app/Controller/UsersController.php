@@ -104,7 +104,9 @@ class UsersController extends AppController {
 	
 	public function deconnexion(){
 		$this->set('title_for_layout', "Deconnexion");
+		
 		$this->Session->destroy();
+		$this->Session->setFlash("Vous vous &ecirc;tes d&eacute;connect&eacute;(e)");
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
 		
 	}
