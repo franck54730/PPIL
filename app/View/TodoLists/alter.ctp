@@ -1,6 +1,36 @@
 <?php
 	if($this->Session->read("User") != null && $this->request->is("post")){	
 ?>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Supprimer</h4>
+      </div>
+      <div class="modal-body">
+        Voulez vous vraiment supprimer la liste <?php echo $to['TodoList']['nom']?> ?
+      </div>
+      <div class="modal-footer">
+      	<div class="row">
+      		<div class="col-sm-1 col-sm-offset-3">
+        		<button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+        	</div>
+        	<div class="col-sm-1 col-sm-offset-3">
+        		<?php
+        			echo $this->Form->create('TodoList', array('action' => 'delete/' . $to['TodoList']['id']));
+        				echo $this->Form->submit('Oui', array('alt' => 'Modifier', 'title'=>'Modifier l\'item', 'class' => 'btn btn-primary'));;
+        			echo $this->Form->end();
+        		?>
+        	</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class='container'>
 	<div class='row' >
 		<div class='col-sm-7'>
@@ -9,9 +39,7 @@
 			</div>
 			<div class='col-sm-1 col-sm-offset-3 text-right'>
 				<?php
-					echo $this->Form->create('Todolist', array('action' => 'delete/' . $to['TodoList']['id']));
-						echo $this->Form->submit('poubelle.png', array('alt' => 'Supprimer', 'title'=>'Supprimer la liste', 'class' => 'poubelle'));
-					echo $this->Form->end();
+					echo $this->Html->image('poubelle.png', array('alt' => "Supprimer la liste", 'title'=>'Supprimer la liste', 'class' => 'poubelle', 'data-toggle'=>'modal', 'data-target'=>'#myModal'));
 				?>
 			</div>
 		</div>
