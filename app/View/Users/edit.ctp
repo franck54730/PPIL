@@ -1,3 +1,32 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Deconnexion Facebook</h4>
+      </div>
+      <div class="modal-body">
+        Voulez vous vraiment dissocier votre compte de Facebook ?
+      </div>
+      <div class="modal-footer">
+      	<div class="row">
+      		<div class="col-sm-1 col-sm-offset-3">
+        		<button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+        	</div>
+        	<div class="col-sm-1 col-sm-offset-3">
+        		<?php
+        			echo $this->Form->create('TodoList', array('onclick' => 'dissociationFacebookId()'));
+        				echo $this->Form->submit('Oui', array('alt' => 'Modifier', 'title'=>'Modifier l\'item', 'class' => 'btn btn-primary'));;
+        			echo $this->Form->end();
+        		?>
+        	</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 
 function createRequestObject() {
@@ -78,6 +107,7 @@ window.fbAsyncInit = function() {
 
 </script>
  <?php
+ 	echo "<h1 class='text-center login-title'>Modifier mon profil :</h1>";
  	if($this->Session->read("User")!=null){
 		echo $this->Form->create('User',array('class' => 'form-signin', 'type' => 'file')); 
 			echo $this->Form->input('nom',array('label'=>"Nom : ", 'class' => 'form-control', 'placeholder' => 'Nom', 'default'=>$user["nom"]));
@@ -104,10 +134,9 @@ window.fbAsyncInit = function() {
 				echo '<br><fb:login-button scope="public_profile,user_friends" onlogin="checkLoginState();">';
 				echo '</fb:login-button><br>';
 			}else{
-			  echo"
-			  <button type=\"button\" onclick=\"dissociationFacebookId();\">
-			    Dissocier son compte Facebook
-			   </button>";	
+				echo "<h1 class='text-center login-title'>Dissocier son compte de facebook :</h1><center>";
+				echo $this->Html->image('facebook.png', array('alt' => "Deconnexion Facebook", 'title'=>'Deconnexion Facebook', 'class' => 'img-facebook', 'data-toggle'=>'modal', 'data-target'=>'#myModal'));
+				echo "</center>";
 			}
 
 			echo "<br>";

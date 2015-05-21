@@ -94,12 +94,23 @@
 		echo $this->Form->Hidden("id_todo_lists",array('value'=>$to['TodoList']['id']));
 	echo $this->Form->end();
 	
+	echo "<div class='container'>
+                        <div class='row'>";
+
 	foreach($amis as $ami){
 		echo $this->Form->create('Todolist', array('controller' => "TodoLists",'action' => 'check/'.$to['TodoList']['id'].'/'.$ami['id'].'/'.($ami['associer']?0:1)));
-		echo $ami['name'];
-		echo $this->Form->checkbox('checked', array('checked' => $ami['associer'], 'onCLick' => 'submit()', 'class' => 'checkbox'));
+				echo "<div class='col-sm-2 col-sm-offset-2 text-left'>";
+					echo $this->Form->checkbox('checked', array('checked' => $ami['associer'], 'onCLick' => 'submit()', 'class' => 'checkbox'));
+				echo "</div>";
+				echo "<div class='col-sm-2 text-left'>";
+					echo $ami['name'];
+				echo "</div>";
 		echo $this->Form->end();
 	}
+
+	echo "</div>";
+        echo "</div>";
+            echo "</div>";
 	
 
 }else{

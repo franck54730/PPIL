@@ -14,7 +14,7 @@
 
 			echo "<div class='row'>";
 				echo "<div class='col-sm-3'>";
-					echo "Prénom : ";
+					echo "Pr&eacute;nom : ";
 				echo "</div>";
 				echo "<div class='col-sm-offset-0 col-sm-2'>";
 					echo $user["prenom"];

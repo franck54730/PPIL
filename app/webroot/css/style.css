@@ -44,7 +44,7 @@ body {
     font-size: 16px;
     height: auto;
     padding: 10px;
-    margin : 10px;
+    /*margin: 10px;*/
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -116,6 +116,7 @@ body {
 {
     background-color: #564CDC;
     display: inline-block;
+    margin: 0px;
 }
 
 [class="btn btn-lg btn-primary btn-block"]:hover
@@ -346,4 +347,12 @@ body
     background-color: #1C1C1C;
     display: inline-block;
     width: 50%;
+}
+
+.img-facebook
+{
+    width: 50px;
+    height: 50px;
+    display: block;
+    border-radius: 5%;
 }
