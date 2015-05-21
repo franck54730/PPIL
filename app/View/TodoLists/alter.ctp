@@ -9,7 +9,8 @@
 			</div>
 			<div class='col-sm-1 col-sm-offset-3 text-right'>
 				<?php
-					echo $this->Form->create('Todolist', array('action' => 'delete/' . $to['TodoList']['id']));
+					echo $this->Form->create('Todolist', array('action' => 'delete/' . $to['TodoList']['id'],'onsubmit'=>'if(confirm("are you sure?")){return true;}else{return false;}'));
+					//echo $this->Form->create('Todolist', array('onsubmit'=>'if(confirm("Etes vous sur de vouloir supprimer ?")){return true;}else{return false;}'));
 						echo $this->Form->submit('poubelle.png', array('alt' => 'Supprimer', 'title'=>'Supprimer la liste', 'class' => 'poubelle'));
 					echo $this->Form->end();
 				?>
