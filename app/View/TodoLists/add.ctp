@@ -16,6 +16,7 @@
 		
 		input.type = \"text\";
 		input.id = 'item'+i;
+        input.innerHTML = 'je suis un item';
 		input.name='data[TodoList][item]['+i+']';
 		input.required=true;
 		submit.parentNode.insertBefore(input,submit);
@@ -56,7 +57,7 @@
 
             $user = $this->Session->read("User");
             if($user["id_facebook"]!=0){
-                echo "<p>Liste des amis facebook: </p>";
+                echo "<h1 class='text-center login-title'>Liste des amis facebook</h1>";
                 $session = FacebookSession::setDefaultApplication('795142420534653', '4d3da35606e8450794bbeb3e7492c4c8');
                 $facebookRedirect = Router::url('/users/edit', true);
                 $helper = new FacebookRedirectLoginHelper($facebookRedirect);
@@ -80,22 +81,33 @@
                     $i++;
                     
                 }
-                echo $this->Form->input('amis',array('multiple' => 'checkbox', 'options' => $options));
+                echo "<div class='container'>
+                        <div class='row'>
+                            <div class='col-sm-2 col-sm-offset-1 text-left'>";
+                                echo $this->Form->input('amis',array('label' => false, 'multiple' => 'checkbox', 'options' => $options));
+                            echo "</div>";
+                        echo "</div>";
+                    echo "</div>";
             }
             
-          //Ajout des items 
+            echo "<div class='container'>
+                    <div class='row'>
+                        <div class='col-sm-3'>";
+                        echo "<h1 class='text-center login-title'>Ajouter des items</h1>";
+            echo "</div></div></div>";
+
           	echo "<div class='container'>
-				<div class='row'>
-					<div class='col-sm-6' text-left>
-        				<div class='col-sm-6 text-left'>";
-        					echo "<button type=\"button\" id = 'add' onclick = \"ajouter()\"> Ajouter un item </button>";
-							echo "<button type=\"button\" id = 'suppr' onclick = \"supprimer()\"> Supprimer un item </button>";
-						echo "</div>";
-						echo "<div class='col-sm-6 text-left'>";
-						echo "</div>";
-					echo "</div>";
-				echo "</div>";
-		echo "</div>";	  
+				    <div class='row'>
+					    <div class='col-sm-6'>
+        				    <div class='col-sm-3'>";
+        					   echo "<button class = \"btn btn-lg btn-primary btn-block ajouter-item\" type=\"button\" id = 'add' onclick = \"ajouter()\"> + </button>";
+                            echo "</div>";
+                            echo "<div class='col-sm-3'>";
+                                echo "<button class = \"btn btn-lg btn-primary btn-block supp-item\" type=\"button\" id = 'suppr' onclick = \"supprimer()\"> - </button>";
+                            echo "</div>";
+				        echo "</div>";
+                    echo "</div>";
+            echo "</div>";
             
         //Bouton valider
         echo $this->Form->button("Valider", array('class' => 'btn btn-lg btn-primary btn-block', 'type' => 'submit', 'div' => false, 'id' => 'lol'));

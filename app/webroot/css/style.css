@@ -317,3 +317,33 @@ body
     font-style: bold;
     color: red;
 }
+
+.ajouter-item
+{
+    background-color: #2E2E2E;
+    display: inline-block;
+    width: 50%;
+    margin: 10px;
+}
+
+.supp-item
+{
+    background-color: #2E2E2E;
+    display: inline-block;
+    width: 50%;
+    margin : 10px;
+}
+
+.ajouter-item:hover
+{
+    background-color: #1C1C1C;
+    display: inline-block;
+    width: 50%;
+}
+
+.supp-item:hover
+{
+    background-color: #1C1C1C;
+    display: inline-block;
+    width: 50%;
+}
