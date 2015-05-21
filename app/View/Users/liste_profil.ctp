@@ -70,6 +70,9 @@ if($this->Session->read("User")!=null){
                              }
                         echo "</div>";
                         echo "<div class='col-sm-3 col-sm-offset-5 text-right liste-profil'>";
+                         echo "<div class='row'>";
+                                echo $user['User']['mail'];
+                            echo "</div>";
                             echo "<div class='row'>";
                                 echo $user['User']['date_de_naissance'];
                             echo "</div>";
