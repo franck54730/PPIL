@@ -44,6 +44,7 @@ body {
     font-size: 16px;
     height: auto;
     padding: 10px;
+    margin : 10px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -309,4 +310,10 @@ body
     background-color: #1C1C1C;
     display: inline-block;
     width: 50%;
+}
+
+.form-erreur
+{
+    font-style: bold;
+    color: red;
 }
