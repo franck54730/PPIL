@@ -26,7 +26,7 @@ class NotificationsController extends AppController {
 		if($check == 1)
 			$texte = 'L\'item "'.$nomItem.'" de la liste '.$liste['TodoList']['nom'].' a &eacute;t&eacute; s&eacute;l&eacute;ctionn&eacute.';
 		else 
-			$texte = 'L\'item "'.$nomItem.'" de la liste '.$liste['TodoList']['nom'].' a &eacute;t&eacute; d&eacute;s&eacute;l&eacute;ctionn&eacute.';
+			$texte = 'L\'item "'.$nomItem.'" de la liste '.$liste['TodoList']['nom'].' a &eacute;t&eacute; d&eacute;s&eacute;lectionn&eacute.';
 		foreach($users as $user){
 			$this->Notification->create();
 			$this->Notification->save(array('Notification' => array('id_utilisateur' => $user['Association']['id_users'], 'id_todolist' => $item['Item']['id_todo_lists'],'texte' => $texte, 'consulte' => '0')));
