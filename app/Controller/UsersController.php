@@ -188,4 +188,14 @@ class UsersController extends AppController {
 		$this->Session->write("User",$user);
 		$this->User->save($user);
 	}
+
+	public function chercher_profils($texte){
+		$users = $this->User->find('all', 
+			array('conditions' => 
+				array('OR' =>
+					array('User.nom LIKE'=> '%'.$texte.'%',
+						'User.prenom LIKE'=> '%'.$texte.'%',
+						'User.mail LIKE'=> '%'.$texte.'%'))));
+		$this->set('users', $users);
+	}
 }
