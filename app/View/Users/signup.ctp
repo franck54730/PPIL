@@ -10,6 +10,7 @@
 			echo $this->Form->input('prenom',array("label" => false, 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Prénom', 'required autofocus', 'div' => false));
 
 			echo '<br><div class="inline_labels">';
+			echo '<b>Date de naissance</b>';
 			echo $this->Form->input('date_de_naissance', array(
 									'label' => false, 'type' => 'date', 'required autofocus',
 									'before' => '',

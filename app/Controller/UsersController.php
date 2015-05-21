@@ -106,6 +106,7 @@ class UsersController extends AppController {
 		$this->set('title_for_layout', "Deconnexion");
 		$this->Session->destroy();
 		$this->redirect(array('controller' => 'users','action' => 'connect'));
+		
 	}
 
 	public function delete(){

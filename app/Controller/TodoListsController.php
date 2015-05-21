@@ -99,6 +99,8 @@ class TodoListsController extends AppController {
     }
 
     public function modif() {
+        App::import('Controller', 'Notifications');
+        $notification = new NotificationsController;
         if($this->request->is("post")){
             $this->set('title_for_layout', "Modifier une liste");
             $nouvelle = $this->data;
@@ -114,9 +116,12 @@ class TodoListsController extends AppController {
                         'frequence'=>$nouvelle['TodoList']['frequence'], 
                         'unite_frequence'=>$nouvelle['TodoList']['unite_frequence'], 
                         'date_fin'=>$nouvelle['TodoList']['date_fin'])
-                        )
-                )){
-    				$this->Session->setFlash('La liste a &eacute;t&eacute; modifi&eacute;e    .');
+                        )))
+                {
+                    $id = $nouvelle['TodoList']['id'];
+                    $id_user = $this->Session->read('User')['id'];
+                    $notification->createNotifListe($id,$id_user);
+    				$this->Session->setFlash('La liste a été modifi&eacute;e.');
     				return $this->redirect(array('controller' => 'TodoLists', 'action' => 'meslists'));
     			}else{
     				$this->Session->setFlash('La liste n\'a pas pu être modifi&eacute;e.');
