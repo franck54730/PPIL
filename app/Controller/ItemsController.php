@@ -81,11 +81,11 @@ class ItemsController extends AppController {
     	if($coche != "0"){
     		//cochage
     		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '1')));
-            $notification->create($id,1,$id_user);
+            $notification->createNotifItem($id,1,$id_user);
     	}else{
     		//décochage
     		$this->Item->save(array('Item' => array('id' => $id, 'checked' => '0')));
-            $notification->create($id,0,$id_user);
+            $notification->createNotifItem($id,0,$id_user);
     	}
     	
 		
