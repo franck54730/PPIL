@@ -17,7 +17,7 @@
 		$id = $list[$i]['TodoList']['id'];
 		echo "<div class='container'>
 				<div class='row' >
-					<div class='col-sm-6 col-sm-offset-1 liste-item' >
+					<div class='col-sm-6 col-sm-offset-1 liste-item' onclick=\"toggle($id)\">
         				<div class='col-sm-2 text-left'>";
 							echo $list[$i]['TodoList']['nom'];
 						echo "</div>";

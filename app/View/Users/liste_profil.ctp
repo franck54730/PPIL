@@ -27,7 +27,7 @@ if($this->Session->read("User")!=null){
     <div id="<?php echo $id;?>" style="display:none;"> 
         <!-- <table style="display:inline;"> -->
         <?php 
-            foreach($utilisateurs as $user){
+           
                 echo "<div class='row'>";
                     echo "<div class='col-sm-6 col-sm-offset-1 liste-item'>";
                         echo "<div class='col-sm-2 text-left'>";
@@ -51,7 +51,7 @@ if($this->Session->read("User")!=null){
                     echo "</div>";
                 echo "</div>";
                 //}
-            }
+            
             echo "</div>";
         ?>
         <!--  </table> -->
