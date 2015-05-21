@@ -1,5 +1,4 @@
 <?php 
-
 	echo "<div class='row'>
                <h1 class='text-center login-title'>Inscription</h1>
                     <div class='account-wall'>";
@@ -42,5 +41,4 @@
 
 		echo "          </div> 
            </div>";
-
 	?>

@@ -42,9 +42,10 @@
             foreach($data as $test){
                 $options[$test->id]=$test->name;
                 $i++;
-            }
+            
 	  
-            echo $this->Form->input('amis',array('multiple' => 'checkbox', 'options' => $options));
+                echo $this->Form->input('amis',array('multiple' => 'checkbox', 'options' => $options));
+            }
         }
     
     echo $this->Form->button("Valider", array('class' => 'btn btn-lg btn-primary btn-block', 'type' => 'submit', 'div' => false));
