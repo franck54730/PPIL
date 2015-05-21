@@ -91,7 +91,32 @@ class User extends AppModel {
 		),
 			
 	);
-
 	
+	public static function verifMotDePasse($mdp){
+		$bon = true;
+		//il faut 6c une Maj, une minuscule et un chiffre
+		$message = "Votre mot de passe est incorrect :";
+		if(strlen($mdp) < 6){
+			$bon = false;
+			$message .= "<br>- au moins 6 caract&eagrave;re.";
+		}
+		if(!preg_match("#[A-Z]#",$mdp)){
+			$bon = false;
+			$message .= "<br>- au moins une majuscule.";
+		}
+		if(!preg_match("#[a-z]#",$mdp)){
+			$bon = false;
+			$message .= "<br>- au moins une minuscule.";
+		}
+		if(!preg_match("#[0-9]#",$mdp)){
+			$bon = false;
+			$message .= "<br>- au moins un chiffre.";
+		}
+		if($bon){
+			return "";
+		}else{
+			return $message;
+		}
+	}
 }
 ?>
