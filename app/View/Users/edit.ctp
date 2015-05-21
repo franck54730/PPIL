@@ -131,7 +131,8 @@ window.fbAsyncInit = function() {
 			echo "<br>";
 			
 			if($user['id_facebook']== 0){
-				echo '<br><fb:login-button scope="public_profile,user_friends" onlogin="checkLoginState();">';
+				echo "<h1 class='text-center login-title'>Associer son compte &agrave; facebook :</h1>";
+				echo '<fb:login-button scope="public_profile,user_friends" onlogin="checkLoginState();">';
 				echo '</fb:login-button><br>';
 			}else{
 				echo "<h1 class='text-center login-title'>Dissocier son compte de facebook :</h1><center>";
