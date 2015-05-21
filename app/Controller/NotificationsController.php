@@ -15,14 +15,14 @@ class NotificationsController extends AppController {
 	  }
 	}
 	
-	public function create($id_Item, $check){
+	public function create($id_Item, $check, $id_user){
 		$this->loadModel('Item');
 		$this->loadModel('TodoList');
 		$this->loadModel('Association');
 		$item = $this->Item->find('first', array('conditions' => array('Item.id'=> $id_Item)));
 		$nomItem = $item['Item']['nom'];
-		$liste = $this->TodoList->find('first', array('conditions' => array('TodoList.id' => $item['Item']['id_todo_lists'])));
-		$users = $this->Association->find('all', array('conditions' => array('Association.id_todo_lists' => $liste['TodoList']['id'])));
+		$liste = $this->TodoList->find('first', array('conditions' => array('TodoList.id' => $item['Item']['id_todo_lists'])));	
+		$users = $this->Association->find('all', array('conditions' => array(array('Association.id_todo_lists' => $liste['TodoList']['id']),array('Association.id_users !=' => $id_user))));
 		if($check == 1)
 			$texte = 'L\'item "'.$nomItem.'" de la liste '.$liste['TodoList']['nom'].' a &eacute;t&eacute; s&eacute;l&eacute;ctionn&eacute.';
 		else 
