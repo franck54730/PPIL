@@ -44,6 +44,21 @@ class TodoListsController extends AppController {
                              }
                         }
                     }
+                    
+                    $this->loadModel('Item');
+                    //Ajout items
+                    if($this->request->data['TodoList']['item']!=""){
+                    	$items = $this->request->data['TodoList']['item'];
+                    	foreach($items as $item){
+	                		$this->Item->create();
+	               			$this->Item->save(array(
+	                    					'Item' => array('nom' => $item, 'id_todo_lists' => $id)
+	                    			));
+                    	}
+                    }
+                    
+                    
+                    
                     $this->Session->setFlash(__('La liste a &eacute;t&eacute; sauvegard&eacute;e'));
                     
                     return $this->redirect(array('controller' => 'TodoLists','action' => 'meslists'));
