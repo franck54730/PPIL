@@ -110,6 +110,7 @@ window.fbAsyncInit = function() {
 		echo $this->Form->button("Valider les modifications", array('class' => 'btn btn-lg btn-primary btn-block', 'type' => 'submit', 'div' => false));
 
 	echo $this->Form->end();
+	echo $this->Html->link("Supprimer mon compte", array('controller' => 'users', 'action' => 'delete'));
 
 ?>
 
