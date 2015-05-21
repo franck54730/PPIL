@@ -97,7 +97,7 @@ class UsersController extends AppController {
 	
 			}
 		}else{
-				$this->Session->setFlash("Vous êtes d&eacute;jà connect&eacute;.");
+				$this->Session->setFlash("Vous &ecirc;tes d&eacute;j&agrave; connect&eacute;.");
 				$this->redirect('/TodoLists/meslists');
 		}
 	}

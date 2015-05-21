@@ -29,7 +29,12 @@ App::uses('AppController', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers/pages-controller.html
  */
 class PagesController extends AppController {
-
+	
+	
+public function index() {
+	
+	 $this->redirect('/TodoLists/meslists');
+	}
 /**
  * This controller does not use a model
  *
@@ -46,6 +51,10 @@ class PagesController extends AppController {
  *	or MissingViewException in debug mode.
  */
 	public function display() {
+		if($this->Session->read("User")==null){
+			$this->redirect('/Users/signup');
+		}else{
+		$this->redirect('/TodoLists/meslists');
 		$path = func_get_args();
 
 		$count = count($path);
@@ -72,6 +81,7 @@ class PagesController extends AppController {
 				throw $e;
 			}
 			throw new NotFoundException();
+		}
 		}
 	}
 }
