@@ -181,36 +181,81 @@ class UsersController extends AppController {
 	}
 	
 	public function edit(){
-			$this->set('title_for_layout', "Modifier mon profil");
-			$this->set('user', $this->Session->read("User"));
-			$user = $this->Session->read("User");
+		$this->loadModel('User');
+		$this->set('title_for_layout', "Modifier mon profil");
+		$user = $this->Session->read("User");
+		$user['mot_de_passe'] = "ancien";
+		$user['mot_de_passe_verif'] = "ancien";
+		$this->set('user', $user);
+		
+		$erreur = false;
 
-
-			if(!empty($this->data)){
-				$user['nom'] = $this->data['User']['nom'];
-				$user['prenom'] = $this->data['User']['prenom'];
-
-				$jour = $this->data['User']['date_de_naissance']['day'];
-				$mois = $this->data['User']['date_de_naissance']['month'];
-				$annee = $this->data['User']['date_de_naissance']['year'];
-				$datenaiss = $annee.'-'.$mois.'-'.$jour;
-				$user['date_de_naissance'] = $datenaiss;
-				$user['sexe'] = $this->data['User']['sexe'];
-				if(checkdate($mois, $jour, $annee)){
-					$this->Session->write("User",$user);
-					if($this->User->save($user)){
-						$this->Session->setFlash("Vos modifications ont bien &eacute;t&eacute; enregistr&eacute;es","notif");
-					    $this->redirect('/users/profil');
+		if(!empty($this->data)){
+			$d =$this->data;
+			$jour = $d['User']['date_de_naissance']['day'];
+			$mois = $d['User']['date_de_naissance']['month'];
+			$annee = $d['User']['date_de_naissance']['year'];
+			
+			//verification du nom
+			if(strlen($d['User']['nom'])==0){
+				$erreur = true;
+				$messageErreur['nom'] = "Le nom est vide.";
+			}
+			//verification du prenom
+			if(strlen($d['User']['prenom'])==0){
+				$erreur = true;
+				$messageErreur['prenom'] = "Le pr&eacute;nom est vide.";
+			}
+			//verification de la date
+			if(!checkdate($mois,$jour,$annee)){
+				$erreur = true;
+				$messageErreur['date'] = "La date n'&eacute;xiste pas.";
+			}
+			//verification du mot de passe
+			if($d['User']['mot_de_passe'] != "ancien" && $d['User']['mot_de_passe_verif'] != "ancien" ){
+				$mess = User::verifMotDePasse($d['User']['mot_de_passe']);
+				if($mess != ""){
+					$erreur = true;
+					$messageErreur['mot_de_passe'] = $mess;
+				}else{
+					if($d['User']['mot_de_passe'] != $d['User']['mot_de_passe_verif']){
+						$erreur = true;
+						$messageErreur['mot_de_passe_verif'] = "Les deux mots de passe doivent &ecirc;tre identique.";
 					}
-					else{
-						$this->Session->setFlash("Erreur lors de la modification de vos donn&eacute;es.");
-					}
-				}
-				else{
-					$this->Session->setFlash("La date n'est pas correcte.");
 				}
 			}
-		
+			//verification de l'extension du fichier
+			if(strlen($d['User']['photo_file']['name']) != 0){
+				$jpg = preg_match("#.+[\.]jpg#",$d['User']['photo_file']['name']);
+				$png = preg_match("#.+[\.]png#",$d['User']['photo_file']['name']);
+				if(!$jpg && !$png){
+					$erreur = true;
+					$messageErreur['photo'] = "Format incorect.";
+				}
+			}
+			if(!$erreur){
+
+				$jour = $d['User']['date_de_naissance']['day'];
+				$mois = $d['User']['date_de_naissance']['month'];
+				$annee = $d['User']['date_de_naissance']['year'];
+				$user['nom'] = $d['User']['nom'];
+				$user['prenom'] = $d['User']['prenom'];
+				$user['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);;
+				$user['mot_de_passe_verif'] = $d['User']['mot_de_passe_verif'];
+				$user['date_de_naissance'] = $annee.'-'.$mois.'-'.$jour;
+				$user['sexe'] = $d['User']['sexe'];
+				if(isset($this->data['User']['photo_file']))
+					$user['photo_file'] = $this->data['User']['photo_file'];
+				if($this->User->save($user)){
+					$this->Session->setFlash("Vos modifications ont bien &eacute;t&eacute; enregistr&eacute;es","notif");
+					$this->Session->write("User",$user);
+					$this->redirect('/users/profil');
+				}
+			}else{
+				$this->set('erreur', $erreur);
+				$this->set('messageErreur', $messageErreur);
+			}
+		}
 	}
 	
 	public function association_facebook(){

@@ -11,16 +11,16 @@ class UploadBehavior extends ModelBehavior{
 
     public function afterSave(Model $model, $created, $options = array()){
         $data = $model->data;
+//         print_r($data);
         foreach($this->options[$model->alias]['fields'] as $field => $path){
-           if(
-                isset($data[$model->alias][$field . '_file']) &&
-                !empty($data[$model->alias][$field . '_file']['name']) &&
-                (
-                    !$model->whitelist ||
-                    empty($model->whitelist) ||
-                    in_array($field, $model->whitelist)
-                )
-            ){
+        	$t1 = isset($data[$model->alias][$field . '_file']);
+        	$t2 =  !empty($data[$model->alias][$field . '_file']['name']);
+        	$t3 = (!$model->whitelist || empty($model->whitelist) || in_array($field, $model->whitelist));
+//         	echo "<br>t1 : ".($t1?"true":"false");
+//         	echo "<br>t2 : ".($t2?"true":"false");
+//         	echo "<br>t3 : ".($t3?"true":"false");
+//         	echo "<br> $field = ".$data[$model->alias][$field . '_file']['name']."<br>";
+           if($t1 && $t2 && $t3){
                 $file = $data[$model->alias][$field . '_file'];
                 $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
                 $path = $this->getUploadPath($model, $path, $extension);
