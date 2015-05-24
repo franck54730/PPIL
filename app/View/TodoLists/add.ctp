@@ -43,7 +43,7 @@
 </script>";
 
     if($this->Session->read("User") != null){
-        echo "<h1 class='text-center login-title'>Créer une liste</h1>";
+        echo "<h1 class='text-center login-title'>Cr&eacute;er une liste</h1>";
         echo $this->Form->create('TodoList',array('type' => 'file', 'class' => 'form-signin', 'id' => 'ajout'));
             echo $this->Form->input('nom',array("label" => false, 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nom', 'required autofocus', 'div' => false));
             echo '<br><div class="inline_labels">';
@@ -56,39 +56,20 @@
             echo "</div><br>";
 
             $user = $this->Session->read("User");
-            if($user["id_facebook"]!=0){
-                echo "<h1 class='text-center login-title'>Liste des amis facebook</h1>";
-                $session = FacebookSession::setDefaultApplication('795142420534653', '4d3da35606e8450794bbeb3e7492c4c8');
-                $facebookRedirect = Router::url('/users/edit', true);
-                $helper = new FacebookRedirectLoginHelper($facebookRedirect);
-                $session = FacebookSession::newAppSession();
 
-                try{
-                    $session->validate();
-                }catch (FacebookRequestException $ex){
-                    echo $ex->getMessage();
-                }catch (\Exception $ex) {
-                    echo $ex->getMessage();
-                }
-                $request = new FacebookRequest( $session, 'GET', '/'.$user['id_facebook'].'/friends' );
-                $response = $request->execute();   
-                $users = $response->getGraphObject();
-                $data = $users->asArray();
-                $data = $data["data"];
-                $i=0;
-                foreach($data as $test){
-                    $options[$test->id]=$test->name;
-                    $i++;
-                    
-                }
-                echo "<div class='container'>
-                        <div class='row'>
-                            <div class='col-sm-2 col-sm-offset-1 text-left'>";
-                                echo $this->Form->input('amis',array('label' => false, 'multiple' => 'checkbox', 'options' => $options));
-                            echo "</div>";
-                        echo "</div>";
-                    echo "</div>";
-            }
+                
+           	foreach($amis as $test){
+            	$options[$test['id_facebook']]=$test['name'];
+	        }
+            echo "<div class='container'>
+            	<div class='row'>
+            		<div class='col-sm-2 col-sm-offset-1 text-left'>";
+            			echo $this->Form->input('amis',array('label' => false, 'multiple' => 'checkbox', 'options' => $options));
+            		echo "</div>";
+            	echo "</div>";
+            echo "</div>";
+            
+            
             
             echo "<div class='container'>
                     <div class='row'>
@@ -119,5 +100,6 @@
     }else{
         echo "Petit filou connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
     }
+
         
  ?>
