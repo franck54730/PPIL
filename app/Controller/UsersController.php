@@ -184,6 +184,7 @@ class UsersController extends AppController {
 		$this->loadModel('User');
 		$this->set('title_for_layout', "Modifier mon profil");
 		$user = $this->Session->read("User");
+		$mdp = $user['mot_de_passe'];
 		$user['mot_de_passe'] = "ancien";
 		$user['mot_de_passe_verif'] = "ancien";
 		$this->set('user', $user);
@@ -221,8 +222,15 @@ class UsersController extends AppController {
 					if($d['User']['mot_de_passe'] != $d['User']['mot_de_passe_verif']){
 						$erreur = true;
 						$messageErreur['mot_de_passe_verif'] = "Les deux mots de passe doivent &ecirc;tre identique.";
+					}else{
+						$user['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);;
+						$user['mot_de_passe_verif'] = $d['User']['mot_de_passe_verif'];
 					}
 				}
+			}else{
+				echo "ancien<br> $mdp";
+				$user['mot_de_passe'] = $mdp;
+				$user['mot_de_passe_verif'] = $mdp;
 			}
 			//verification de l'extension du fichier
 			if(strlen($d['User']['photo_file']['name']) != 0){
@@ -240,8 +248,6 @@ class UsersController extends AppController {
 				$annee = $d['User']['date_de_naissance']['year'];
 				$user['nom'] = $d['User']['nom'];
 				$user['prenom'] = $d['User']['prenom'];
-				$user['mot_de_passe'] = Security::hash(trim($d['User']['mot_de_passe']), 'md5', $this->salt);;
-				$user['mot_de_passe_verif'] = $d['User']['mot_de_passe_verif'];
 				$user['date_de_naissance'] = $annee.'-'.$mois.'-'.$jour;
 				$user['sexe'] = $d['User']['sexe'];
 				if(isset($this->data['User']['photo_file']))

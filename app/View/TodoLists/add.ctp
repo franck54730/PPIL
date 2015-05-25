@@ -1,3 +1,47 @@
+
+<script type="text/javascript">
+
+    function toggle(id){
+        var divId = document.getElementById(id);
+        var toggled = divId.style.display;
+        divId.style.display = divId.style.display=='inline'?'none':'inline';
+        var button = document.getElementById("b"+id);
+        button.value = divId.style.display=='inline'?"Hide":"Show";
+    }
+
+    function createRequestObject() {
+        var tmpXmlHttpObject;
+        if (window.XMLHttpRequest) { 
+            tmpXmlHttpObject = new XMLHttpRequest();
+        } else if (window.ActiveXObject) { 
+            tmpXmlHttpObject = new ActiveXObject("Microsoft.XMLHTTP");
+        }       
+        return tmpXmlHttpObject;
+    }
+
+    var http = createRequestObject();
+
+    function chercherAmis() {
+        var texte = document.getElementById("texte").value;
+        http.open('get', 'chercher_amis/'+texte);
+        http.onreadystatechange = processResponse;
+        http.send(null);
+        return false;
+    }
+
+    function processResponse() {
+        if(http.readyState == 4){  
+            	
+            document.getElementById('status').innerHTML = http.responseText;
+            //alert(document.getElementById("status_new").innerHTML);
+            document.getElementById('status').innerHTML = document.getElementById("status_new").innerHTML;
+          
+            
+            //document.getElementById('status').innerHTML = document.getElementById("status_new").innerHTML;
+        }
+    }
+
+</script>
 <?php 
     
     use Facebook\FacebookSession; 
@@ -56,12 +100,15 @@
             echo "</div><br>";
 
             $user = $this->Session->read("User");
-
+            echo "<h1 class='text-center login-title'>Rechercher un profil :</h1>";
+            echo "<input onKeyUp=\"chercherAmis()\" type ='text' id ='texte'>";
+//             echo "<form id='form' onSubmit='return chercherProfils();'><input type ='text' id ='texte'></form>";
                 
+            $options = array();
            	foreach($amis as $test){
             	$options[$test['id_facebook']]=$test['name'];
 	        }
-            echo "<div class='container'>
+            echo "<div id='status' class='container'>
             	<div class='row'>
             		<div class='col-sm-2 col-sm-offset-1 text-left'>";
             			echo $this->Form->input('amis',array('label' => false, 'multiple' => 'checkbox', 'options' => $options));

@@ -1,8 +1,7 @@
-<?php
-	if($this->Session->read("User") != null && $this->request->is("post")){	
-?>
 
-<!-- Modal -->
+<?php
+	if($this->Session->read("User") != null){	
+?>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -94,25 +93,75 @@
 		echo $this->Form->Hidden("id_todo_lists",array('value'=>$to['TodoList']['id']));
 	echo $this->Form->end();
 	
+	
+	echo "<h1 class='text-center login-title'>Rechercher un profil :</h1>";
+	echo $this->Form->create('TodoList', Array('class' => 'form-signin', 'action' => 'alter/'.$to['TodoList']['id']));
+	echo $this->Form->input('texte', array('value' => "", "label" => false, 'type' => 'text', 'class' => 'form-control', 'placeholder' => 'Filtre', 'required autofocus', 'div' => false));
+	echo $this->Form->button("Filtrer", array('class' => 'btn btn-lg btn-primary btn-block', 'type' => 'submit', 'div' => false));
+	echo $this->Form->end();
+	
 	echo "<div class='container'>
                         <div class='row'>";
-
-	foreach($amis as $ami){
+	foreach($amisFacebook as $ami){
+		echo "<br>";
 		echo $this->Form->create('Todolist', array('controller' => "TodoLists",'action' => 'check/'.$to['TodoList']['id'].'/'.$ami['id'].'/'.($ami['associer']?0:1)));
-				echo "<div class='col-sm-2 col-sm-offset-2 text-left'>";
-					echo $this->Form->checkbox('checked', array('checked' => $ami['associer'], 'onCLick' => 'submit()', 'class' => 'checkbox'));
+				echo "<div class='col-sm-2 col-sm-offset-1 text-left'>";
+					echo "<input type=\"hidden\" name=\"data[Todolist][checked]\" id=\"TodolistChecked_\" value=\"0\">";
+					echo "<input type=\"checkbox\" name=\"data[Todolist][checked]\" onclick=\"submit()\" class=\"checkbox\" value=\"1\" id=\"TodolistChecked\" ".($ami['associer']?"checked":"").">";
+					//echo $this->Form->checkbox('checked', array('checked' => $ami['associer'], 'onCLick' => 'submit()', 'class' => 'checkbox'));
 				echo "</div>";
 				echo "<div class='col-sm-2 text-left'>";
 					echo $ami['name'];
 				echo "</div>";
 		echo $this->Form->end();
 	}
-
 	echo "</div>";
         echo "</div>";
             echo "</div>";
+// 	$options = array();
+// 	foreach($amisFacebook as $test){
+// 		$options[$test['id_facebook']]=$test['name'];
+// 	}
+// 	echo "<div id='status' class='container'>
+//             	<div class='row'>
+//             		<div class='col-sm-2 col-sm-offset-1 text-left'>";
+// 	echo $this->Form->input('amis',array('label' => false, 'multiple' => 'checkbox', 'options' => $options));
+// 	echo "</div>";
+// 	echo "</div>";
+// 	echo "</div>";
+	
+	
+	
+// 	$user = $this->Session->read("User");
+// 	echo "<div id='status' class='container'>
+//             	<div class='row'>
+//             		<div class='col-sm-2 col-sm-offset-1 text-left'>
+// 						<div class=\"input select\">
+//        						<input  type=\"hidden\"
+//        								name=\"data[TodoList][amis]\"
+//        								value=\"\"
+//        								id=\"TodoListAmis\">";
+
+	
+// 	foreach ($amisFacebook as $test){
+// 					echo 	"<div class=\"checkbox\">
+// 			       				<input  type=\"checkbox\"
+// 			       						name=\"data[TodoList][amis][]\"
+// 			       						value=\"".$test['id_facebook']."\"
+// 			       						id=\"TodoListAmis".$test['id_facebook']."\">
+// 								<label for=\"TodoListAmis".$test['id_facebook']."\">
+// 			       					".$test['name']."
+// 			       				</label>
+// 			       			</div>";
+// 	}
+// 			echo		"</div>
+//     				</div>";
 	
 
+// 		echo    "</div>";
+// 	//        	echo FormHelper::input('amis',array('label' => false, 'multiple' => 'checkbox', 'options' => $options));
+// 	echo    "</div>";
+	
 }else{
 	if($this->Session->read("User") == null){
 		echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";

@@ -1,3 +1,5 @@
+
+
 <?php
 
 
@@ -24,6 +26,56 @@ class TodoListsController extends AppController {
         $this->set('lists', $this->TodoList->find('all'));
     }
 
+    public function chercher_amis($texte){
+    	/*
+    	$users = $this->User->find('all',
+    			array('conditions' =>
+    					array('OR' =>
+    							array('User.nom LIKE'=> '%'.$texte.'%',
+    									'User.prenom LIKE'=> '%'.$texte.'%',
+    									'User.mail LIKE'=> '%'.$texte.'%'))));
+    	$this->set('users', $users);
+    	*/
+        $user = $this->Session->read("User");
+    	$amisFacebook = array();
+    	if($user["id_facebook"]!=0){
+    		$session = FacebookSession::setDefaultApplication('795142420534653', '4d3da35606e8450794bbeb3e7492c4c8');
+    		$facebookRedirect = Router::url('/users/edit', true);
+    		$helper = new FacebookRedirectLoginHelper($facebookRedirect);
+    		$session = FacebookSession::newAppSession();
+    	
+    		try{
+    			$session->validate();
+    		}catch (FacebookRequestException $ex){
+    			echo $ex->getMessage();
+    		}catch (\Exception $ex) {
+    			echo $ex->getMessage();
+    		}
+    		$request = new FacebookRequest( $session, 'GET', '/'.$user['id_facebook'].'/friends' );
+    		$response = $request->execute();
+    		$users = $response->getGraphObject();
+    		$data = $users->asArray();
+    		$data = $data["data"];
+    		$i=0;
+    		foreach($data as $test){
+    			$ami = $this->User->find('first', array('conditions' => array('User.id_facebook' => $test->id)));
+    			if(!empty($ami)){
+    				$amiTab = array();
+    				$amiTab['name'] = $test->name;
+    				$amiTab['id_facebook'] = $test->id;
+    				$amiTab['id'] = $ami['User']['id'];
+    				$amiTab['associer'] = false;
+    				if(preg_match("#.*$texte.*#", $amiTab['name'])){
+    					$amisFacebook[] = $amiTab;
+    				}
+    			}
+    			$i++;
+    		}
+    	}
+    	
+       	$this->set('amisFacebook',$amisFacebook);
+    }
+    
     public function add() {
         $this->set('title_for_layout', "Nouvelle Liste");
         $user = $this->Session->read("User");
@@ -55,14 +107,16 @@ class TodoListsController extends AppController {
                     
                     $this->loadModel('Item');
                     //Ajout items
-                    if($this->request->data['TodoList']['item']!=""){
-                    	$items = $this->request->data['TodoList']['item'];
-                    	foreach($items as $item){
-	                		$this->Item->create();
-	               			$this->Item->save(array(
-	                    					'Item' => array('nom' => $item, 'id_todo_lists' => $id)
-	                    			));
-                    	}
+                    if(isset($this->request->data['TodoList']['item'])){
+	                    if($this->request->data['TodoList']['item']!=""){
+	                    	$items = $this->request->data['TodoList']['item'];
+	                    	foreach($items as $item){
+		                		$this->Item->create();
+		               			$this->Item->save(array(
+		                    					'Item' => array('nom' => $item, 'id_todo_lists' => $id)
+		                    			));
+	                    	}
+	                    }
                     }
                     
                     
@@ -110,6 +164,7 @@ class TodoListsController extends AppController {
         	}
         	$this->set('amis',$amisFacebook);
         }
+        
     }
 
     public function meslists() {
@@ -194,58 +249,144 @@ class TodoListsController extends AppController {
     }
     
     public function alter($id=null) {
+        $user = $this->Session->read("User");
         if($id == null){
             $this->Session->setFlash("Il manque le paramètre");
         }else{
+        	$list = $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id)));
+        	$this->set('to', $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id))));
+        	$this->loadModel('Item');
+        	$this->set('it',$this->Item->find('all', array('conditions' => array('Item.id_todo_lists' => $id))));
             if($this->request->is("post")){
-                $list = $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id)));
-                $this->set('to', $this->TodoList->find('first', Array('conditions' => Array('TodoList.id' => $id))));
-                $this->loadModel('Item');
-                $this->set('it',$this->Item->find('all', array('conditions' => array('Item.id_todo_lists' => $id))));
-                
-                //recuperation des amis fb
-                $user = $this->Session->read("User");
-                $amisFacebook = array();
-                if($user["id_facebook"]!=0){
-                	$session = FacebookSession::setDefaultApplication('795142420534653', '4d3da35606e8450794bbeb3e7492c4c8');
-                	$facebookRedirect = Router::url('/users/edit', true);
-                	$helper = new FacebookRedirectLoginHelper($facebookRedirect);
-                	$session = FacebookSession::newAppSession();
-                
-                	try{
-                		$session->validate();
-                	}catch (FacebookRequestException $ex){
-                		echo $ex->getMessage();
-                	}catch (\Exception $ex) {
-                		echo $ex->getMessage();
-                	}
-                	$request = new FacebookRequest( $session, 'GET', '/'.$user['id_facebook'].'/friends' );
-                	$response = $request->execute();
-                	$users = $response->getGraphObject();
-                	$data = $users->asArray();
-                	$data = $data["data"];
-                	$i=0;
-                	foreach($data as $test){
-                		$ami = $this->User->find('first', array('conditions' => array('User.id_facebook' => $test->id)));
-                		if(!empty($ami)){
-                			$amiTab = array();
-                			$amiTab['name'] = $test->name;
-                			$amiTab['id_facebook'] = $test->id;
-                			$amiTab['id'] = $ami['User']['id'];
-                			$assoc = $this->Association->find('first', Array('conditions' => Array('Association.id_todo_lists' => $id, 'id_users'=> $amiTab['id'])));
-                			if(!empty($assoc))
-                				$amiTab['associer'] = true;
-                			else{
-                				$amiTab['associer'] = false;
-                			}
-                			$amisFacebook[] = $amiTab;
+                if(isset($this->data['TodoList']['texte'])){
+                	$amisFacebook = array();
+                	if($user["id_facebook"]!=0){
+                		$session = FacebookSession::setDefaultApplication('795142420534653', '4d3da35606e8450794bbeb3e7492c4c8');
+                		$facebookRedirect = Router::url('/users/edit', true);
+                		$helper = new FacebookRedirectLoginHelper($facebookRedirect);
+                		$session = FacebookSession::newAppSession();
+                		 
+                		try{
+                			$session->validate();
+                		}catch (FacebookRequestException $ex){
+                			echo $ex->getMessage();
+                		}catch (\Exception $ex) {
+                			echo $ex->getMessage();
                 		}
-                		$i++;
+                		$request = new FacebookRequest( $session, 'GET', '/'.$user['id_facebook'].'/friends' );
+                		$response = $request->execute();
+                		$users = $response->getGraphObject();
+                		$data = $users->asArray();
+                		$data = $data["data"];
+                		$i=0;
+                		foreach($data as $test){
+                			$ami = $this->User->find('first', array('conditions' => array('User.id_facebook' => $test->id)));
+                			if(!empty($ami)){
+                				$amiTab = array();
+                				$amiTab['name'] = $test->name;
+                				$amiTab['id_facebook'] = $test->id;
+                				$amiTab['id'] = $ami['User']['id'];
+                				$assoc = $this->Association->find('first', Array('conditions' => Array('Association.id_todo_lists' => $id, 'id_users'=> $amiTab['id'])));
+	                			if(!empty($assoc))
+	            					$amiTab['associer'] = true;
+	            				else{
+	            					$amiTab['associer'] = false;
+	            				}
+                				$reg = "#.*".$this->data['TodoList']['texte'].".*#";
+                				if(preg_match($reg, $amiTab['name'])){
+                					echo $amiTab['associer']."<br>";
+                					$amisFacebook[] = $amiTab;
+                				}
+                			}
+                			$i++;
+                		}
                 	}
+                	$this->set('amisFacebook',$amisFacebook);
+                }else{
+                	//recuperation des amis fb
+                	$user = $this->Session->read("User");
+                	$amisFacebook = array();
+                	if($user["id_facebook"]!=0){
+                		$session = FacebookSession::setDefaultApplication('795142420534653', '4d3da35606e8450794bbeb3e7492c4c8');
+                		$facebookRedirect = Router::url('/users/edit', true);
+                		$helper = new FacebookRedirectLoginHelper($facebookRedirect);
+                		$session = FacebookSession::newAppSession();
+                		try{
+                			$session->validate();
+                		}catch (FacebookRequestException $ex){
+                			echo $ex->getMessage();
+                		}catch (\Exception $ex) {
+                			echo $ex->getMessage();
+                		}
+                		$request = new FacebookRequest( $session, 'GET', '/'.$user['id_facebook'].'/friends' );
+                		$response = $request->execute();
+                		$users = $response->getGraphObject();
+                		$data = $users->asArray();
+                		$data = $data["data"];
+                		$i=0;
+                		foreach($data as $test){
+                			$ami = $this->User->find('first', array('conditions' => array('User.id_facebook' => $test->id)));
+                			if(!empty($ami)){
+                				$amiTab = array();
+                				$amiTab['name'] = $test->name;
+                				$amiTab['id_facebook'] = $test->id;
+                				$amiTab['id'] = $ami['User']['id'];
+                				$assoc = $this->Association->find('first', Array('conditions' => Array('Association.id_todo_lists' => $id, 'id_users'=> $amiTab['id'])));
+	                			if(!empty($assoc))
+	            					$amiTab['associer'] = true;
+	            				else{
+	            					$amiTab['associer'] = false;
+	            				}
+                				echo $amiTab['associer']."<br>";
+                				$amisFacebook[] = $amiTab;
+                			}
+                			$i++;
+                		}
+                	}
+                	$this->set('amisFacebook',$amisFacebook);
                 }
-                $this->set('amis',$amisFacebook);
             }else{
-                $this->Session->setFlash('Pour modifier une liste, il faut le faire sur la page de la liste, petit voyou.');
+            	$amisFacebook = array();
+            	if($user["id_facebook"]!=0){
+            		$session = FacebookSession::setDefaultApplication('795142420534653', '4d3da35606e8450794bbeb3e7492c4c8');
+            		$facebookRedirect = Router::url('/users/edit', true);
+            		$helper = new FacebookRedirectLoginHelper($facebookRedirect);
+            		$session = FacebookSession::newAppSession();
+            		 
+            		try{
+            			$session->validate();
+            		}catch (FacebookRequestException $ex){
+            			echo $ex->getMessage();
+            		}catch (\Exception $ex) {
+            			echo $ex->getMessage();
+            		}
+            		$request = new FacebookRequest( $session, 'GET', '/'.$user['id_facebook'].'/friends' );
+            		$response = $request->execute();
+            		$users = $response->getGraphObject();
+            		$data = $users->asArray();
+            		$data = $data["data"];
+            		$i=0;
+            		foreach($data as $test){
+            			$ami = $this->User->find('first', array('conditions' => array('User.id_facebook' => $test->id)));
+            			if(!empty($ami)){
+            				$amiTab = array();
+            				$amiTab['name'] = $test->name;
+            				$amiTab['id_facebook'] = $test->id;
+            				$amiTab['id'] = $ami['User']['id'];
+            				$assoc = $this->Association->find('first', Array('conditions' => Array('Association.id_todo_lists' => $id, 'id_users'=> $amiTab['id'])));
+            				if(!empty($assoc))
+            					$amiTab['associer'] = true;
+            				else{
+            					$amiTab['associer'] = false;
+            				}
+                			echo $amiTab['associer']."<br>";
+            				
+            				$amisFacebook[] = $amiTab;
+            			}
+            			$i++;
+            		}
+            	}
+            	$this->set('amisFacebook',$amisFacebook);
             }
        }
     }
