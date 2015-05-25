@@ -108,7 +108,10 @@
            	foreach($amis as $test){
             	$options[$test['id_facebook']]=$test['name'];
 	        }
-            echo "<div id='status' class='container'>
+            if(empty($options)){
+                $options = null;
+            }
+            echo "<div class='container'>
             	<div class='row'>
             		<div class='col-sm-2 col-sm-offset-1 text-left'>";
             			echo $this->Form->input('amis',array('label' => false, 'multiple' => 'checkbox', 'options' => $options));
