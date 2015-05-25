@@ -61,6 +61,9 @@
            	foreach($amis as $test){
             	$options[$test['id_facebook']]=$test['name'];
 	        }
+            if(empty($options)){
+                $options = null;
+            }
             echo "<div class='container'>
             	<div class='row'>
             		<div class='col-sm-2 col-sm-offset-1 text-left'>";
