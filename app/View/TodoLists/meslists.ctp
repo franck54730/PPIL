@@ -72,6 +72,6 @@
 	unset($lists);
 }
 else{
-	echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
+	echo "Petit hacker connecte-toi <a href =\"../Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
 }
 ?>

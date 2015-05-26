@@ -153,7 +153,7 @@ window.fbAsyncInit = function() {
 		echo $this->Form->end();
 		echo $this->Html->link("Supprimer mon compte", array('controller' => 'users', 'action' => 'delete'));
 	}else{
-		echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
+		echo "Petit hacker connecte-toi <a href =\"../Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
 	}
 ?>
 

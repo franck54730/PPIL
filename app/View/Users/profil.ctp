@@ -1,6 +1,6 @@
 		<?php
 		if($this->Session->read("User")==null){
-			echo "Petit hacker connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
+			echo "Petit hacker connecte-toi <a href =\"../Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
 		}else{
 			echo "<h1 class='text-center login-title'>Mon profil</h1>";
 			echo "<div class='row'>";

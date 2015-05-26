@@ -100,8 +100,8 @@
             echo "</div><br>";
 
             $user = $this->Session->read("User");
-            echo "<h1 class='text-center login-title'>Rechercher un profil :</h1>";
-            echo "<input onKeyUp=\"chercherAmis()\" type ='text' id ='texte'>";
+            //echo "<h1 class='text-center login-title'>Rechercher un profil :</h1>";
+            //echo "<input onKeyUp=\"chercherAmis()\" type ='text' id ='texte'>";
 //             echo "<form id='form' onSubmit='return chercherProfils();'><input type ='text' id ='texte'></form>";
                 
             $options = array();
@@ -148,7 +148,7 @@
 		
 
     }else{
-        echo "Petit filou connecte-toi <a href =\"http://localhost/ppil/Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
+        echo "Petit filou connecte-toi <a href =\"../Users/connect\">ici</a> pour acc&eacute;der &agrave; cette page.";
     }
 
         
